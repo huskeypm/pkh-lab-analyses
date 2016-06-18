@@ -2,7 +2,22 @@ All code written in support of this publication are publicly available at https:
 
 The paths to our data (on the internal network) are at
 
-/net/share/shared/papers/XXXXXXXXXXXX
+/net/share/shared/papers/PV_MSA_data/  ## (contains RDFs, RMSD, RMSF, contact, MMGBSA, SASA, MD .pdb files, and MD .dcd files)
+
+## For .in, .out, prmtop, inpcrd, and .cdf files, please consult the following directories:
+
+$PREFIX_DIRECTORY=/net/share/anku223/mdjobsbpv/
+
+CAWT_holo_amber_1
+CAWT_holo_amber_2
+CAWT_holo_amber_3
+WT_apo_amber_1
+WT_apo_amber_2
+WT_apo_amber_3
+MGWT_holo_amber_1
+MGWT_holo_amber_2
+MGWT_holo_amber_3
+
 
 
 ipython notebooks used for our manuscripts are located in this repository. 
