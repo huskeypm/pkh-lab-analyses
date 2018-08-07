@@ -367,16 +367,16 @@ def ValidateDebyeHuckel(meshFile):
 
   ## 3D mesh interpolation
   #mesh = Mesh("sphere_mesh.xml.gz")
-  mesh = UnitSphere(50)
-  mesh.coordinates()[:] = 50*mesh.coordinates()[:]
-  V = FunctionSpace(mesh,"CG",1)
-  phi = interpolate(f,V)
-  #(gx,gy,gz) = np.mgrid[0:0:1j,0:0:1j,-255:255:500j]
-  (gx,gy,gz) = np.mgrid[0:0:1j,0:0:1j,minr:maxr:100j]
-  interp = griddata(mesh.coordinates(),phi.vector(),(gx,gy,gz))
-  interp[np.isnan(interp)]=0
-  interp = np.reshape(interp,100)
-  gz = np.reshape(gz,100)
+# mesh = UnitSphere(50)
+# mesh.coordinates()[:] = 50*mesh.coordinates()[:]
+# V = FunctionSpace(mesh,"CG",1)
+# phi = interpolate(f,V)
+# #(gx,gy,gz) = np.mgrid[0:0:1j,0:0:1j,-255:255:500j]
+# (gx,gy,gz) = np.mgrid[0:0:1j,0:0:1j,minr:maxr:100j]
+# interp = griddata(mesh.coordinates(),phi.vector(),(gx,gy,gz))
+# interp[np.isnan(interp)]=0
+# interp = np.reshape(interp,100)
+# gz = np.reshape(gz,100)
   
   ## GAMER 
   meshg = Mesh(meshFile)                
@@ -393,7 +393,7 @@ def ValidateDebyeHuckel(meshFile):
   
   ## 1D mesh
   f = DebyeHuckelExpr(dim=1)
-  mesh1 = UnitInterval(150) # 0..1
+  mesh1 = UnitIntervalMesh(150) # 0..1
   m=mesh1.coordinates()
   mesh1.coordinates()[:]=m*(maxr-minr) + minr
   V1 = FunctionSpace(mesh1,"CG",1)
@@ -417,7 +417,7 @@ def ValidateDebyeHuckel(meshFile):
   
   ## compare 
   plt.figure()
-  plt.plot(gz,interp,"r", label="3d UnitSphere")
+  #plt.plot(gz,interp,"r", label="3d UnitSphere")
   plt.plot(gzg,interpg,"r.", label="3d gamer")
   plt.plot(gz1,interp1,"g",label="1d UnitInterval")
   plt.plot(gz1,vecf(gz1),"b",label="analytical")
@@ -476,7 +476,7 @@ def Validations():
   # 200 ensures all points at boundary r=225 are found   
 #  parms.innerBound = 15
 #  parms.outerBound = 220
-  meshFile = "./example/sphere/sphere_mesh.xml.gz"
+  meshFile = "./sphere_mesh.xml.gz"
 
 
   # if these fail, check that correct Debye Huckel expression 
