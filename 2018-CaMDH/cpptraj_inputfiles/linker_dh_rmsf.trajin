@@ -1,0 +1,10 @@
+trajin prod1.traj 1 -1 10
+trajin 6prod.traj 1 -1 10
+trajin 7prod.traj 1 -1 10
+trajin 7prod2.traj 1 -1 10
+trajin 7prod3.traj 1 -1 10
+trajin 8prod.traj 1 -1 10
+trajin 9prod.traj 1 -1 10
+trajin 10prod.traj 1 -1 10
+rms first mass :1-168@CA,C,N,O
+atomicfluct out linker_dh.dat (:170-213)&(!@H=) byres

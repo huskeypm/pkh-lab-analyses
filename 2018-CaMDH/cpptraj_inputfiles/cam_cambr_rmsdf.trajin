@@ -1,0 +1,13 @@
+parm 4q5u.top [crystal]
+parm x.top [sim]
+reference 4q5u.crd parm [crystal] [crystal_crd]
+trajin prod1.traj 1 -1 10 parm [sim]
+trajin 6prod.traj 1 -1 10 parm [sim]
+trajin 7prod.traj 1 -1 10 parm [sim]
+trajin 7prod2.traj 1 -1 10 parm [sim]
+trajin 7prod3.traj 1 -1 10 parm [sim]
+trajin 8prod.traj 1 -1 10 parm [sim]
+trajin 9prod.traj 1 -1 10 parm [sim]
+trajin 10prod.traj 1 -1 10 parm [sim]
+rms rmsd ref [crystal_crd] :1-168&@CA,C,N,O out cam-cambr-rmsd.dat   # residue 1-168 is CaM_CaMBR
+atomicfluct out cam-cambr-rmsf.dat (:1-168)&(!@H=) byres
