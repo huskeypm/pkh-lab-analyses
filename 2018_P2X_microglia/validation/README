@@ -1,0 +1,4 @@
+Adding validation data sets here
+Files are named according to my bibtex reference codes (e.g. \cite{Ferrari1999} --> Ferrari1999_Fig2.csv), but that need not be strict
+I put a comment inside the file to clarify important details 
+
