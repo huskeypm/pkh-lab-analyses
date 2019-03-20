@@ -1,0 +1,30 @@
+All code written in support of this publication are publicly available at https://bitbucket.org/pkhlab/pkh-lab-analyses. Simulation input files and generate data are available upon request.
+
+The paths to our data (on the internal network) are at
+
+/net/share/shared/papers/PV_MSA_data/  ## (contains RDFs, RMSD, RMSF, contact, MMGBSA, SASA, MD .pdb files, and MD .dcd files)
+
+## For .in, .out, prmtop, inpcrd, and .cdf files, please consult the following directories:
+
+$PREFIX_DIRECTORY=/net/share/anku223/mdjobsbpv/
+
+CAWT_holo_amber_1
+CAWT_holo_amber_2
+CAWT_holo_amber_3
+WT_apo_amber_1
+WT_apo_amber_2
+WT_apo_amber_3
+MGWT_holo_amber_1
+MGWT_holo_amber_2
+MGWT_holo_amber_3
+
+##Note: there are also some mini and full length simulations of Mg-bound PV based on my initial attempts at overlaying 1RRO with 4PAL. These are located in $PREFIX_DIRECTORYtesting/. However, CES did a more advanced rotameric analysis for the Mg binding case in Chimera; those files can be found in:
+
+##CES: INCLUDE YOUR MG BOUND SIMS HERE PLEASE AND REMOVE THIS COMMENT WHEN DONE.
+
+
+
+ipython notebooks used for our manuscripts are located in this repository. 
+
+
+MISSING Files in /home/AD/anku223/source/labscripts_6a939a7/efhands
