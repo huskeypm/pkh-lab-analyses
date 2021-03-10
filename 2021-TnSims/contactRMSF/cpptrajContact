@@ -1,0 +1,14 @@
+trajin r1prod1.nc 1 -1 10
+trajin r1prod2.nc 1 -1 10
+trajin r1prod3.nc 1 -1 20
+trajin r2prod1.nc 1 -1 10
+trajin r2prod2.nc 1 -1 10
+trajin r2prod3.nc 1 -1 10
+trajin r2prod4.nc 1 -1 20
+trajin r3prod1.nc 1 -1 10
+trajin r3prod2.nc 1 -1 20
+#
+nativecontacts :2-161&!@H= writecontacts cout resout residupair out numofctact first resoffset 6 contactpdb cpdb.pdb byresidue map mapout cmap # within TnC itself
+
+nativecontacts :2-161,312-324&!@H= writecontacts Betcout resout Betresidupair out Betnumofctact first resoffset 6 contactpdb Betcpdb.pdb byresidue map mapout Betcmap # between TnI 150-162 and TnC
+

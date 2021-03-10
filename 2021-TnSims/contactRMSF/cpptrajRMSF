@@ -1,0 +1,13 @@
+trajin r1prod1.nc 1 -1 20
+trajin r1prod2.nc 1 -1 20
+trajin r1prod3.nc 1 -1 20
+trajin r2prod1.nc 1 -1 20
+trajin r2prod2.nc 1 -1 20
+trajin r2prod3.nc 1 -1 20
+trajin r2prod4.nc 1 -1 20
+trajin r3prod1.nc 1 -1 20
+trajin r3prod2.nc 1 -1 20
+rms first out rms.dat :1-100@CA,C,N,O
+atomicfluct out rmsf :1-100@CA byres
+atomicfluct out TnIrmsf :312-324@CA byres
+

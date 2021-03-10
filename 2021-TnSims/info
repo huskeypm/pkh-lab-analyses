@@ -1,0 +1,2 @@
+We will use the CPPTRAJ program from Amber MD package for contact map/RMSF analyses
+Figure plotting is done use python matplotlib library
