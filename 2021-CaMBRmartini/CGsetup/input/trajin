@@ -1,0 +1,5 @@
+trajin viz.pdb
+reference 4q5u_CG.pdb [reff]
+rms test1 ref [reff]  out rmsd.dat
+#secstruct out ss :75-93,168-186 sumout assignout assout
+#atomicfluct out rmsf :1-186@CA,C,N,O byres

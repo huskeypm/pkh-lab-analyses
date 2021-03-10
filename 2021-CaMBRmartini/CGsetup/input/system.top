@@ -1,0 +1,13 @@
+#include "martini22.itp"
+#include "Protein_A.itp"
+#include "Protein_C.itp"
+
+[ system ]
+; name
+Martini system from 3cln.pdb
+
+[ molecules ]
+; name        number
+Protein_A 	 1
+Protein_C        1
+W               XXX

@@ -1,0 +1,238 @@
+; MARTINI (martini22) Coarse Grained topology file for "Protein_C"
+; Created by py version 2.6_3 
+; Using the following options:  -f cambr.pdb -o cambr_CG.top -x cambr_CG.pdb -dssp /usr/bin/dssp -p backbone -ff martini22
+; Sequence:
+; ARKEVIRNKIRAIGKMARVFSVLR
+; Secondary Structure:
+; CC1111HHHHHHHHHHHHH2222C
+
+[ moleculetype ]
+; Name         Exclusions
+Protein_C         1
+
+[ atoms ]
+    1    Qd     1   ALA    BB     1  1.0000 ; C
+    2    P5     2   ARG    BB     2  0.0000 ; C
+    3    N0     2   ARG   SC1     3  0.0000 ; C
+    4    Qd     2   ARG   SC2     4  1.0000 ; C
+    5    Nd     3   LYS    BB     5  0.0000 ; 1
+    6    C3     3   LYS   SC1     6  0.0000 ; 1
+    7    Qd     3   LYS   SC2     7  1.0000 ; 1
+    8    Nd     4   GLU    BB     8  0.0000 ; 1
+    9    Qa     4   GLU   SC1     9 -1.0000 ; 1
+   10    Nd     5   VAL    BB    10  0.0000 ; 1
+   11   AC2     5   VAL   SC1    11  0.0000 ; 1
+   12    Nd     6   ILE    BB    12  0.0000 ; 1
+   13   AC1     6   ILE   SC1    13  0.0000 ; 1
+   14    N0     7   ARG    BB    14  0.0000 ; H
+   15    N0     7   ARG   SC1    15  0.0000 ; H
+   16    Qd     7   ARG   SC2    16  1.0000 ; H
+   17    N0     8   ASN    BB    17  0.0000 ; H
+   18    P5     8   ASN   SC1    18  0.0000 ; H
+   19    N0     9   LYS    BB    19  0.0000 ; H
+   20    C3     9   LYS   SC1    20  0.0000 ; H
+   21    Qd     9   LYS   SC2    21  1.0000 ; H
+   22    N0    10   ILE    BB    22  0.0000 ; H
+   23   AC1    10   ILE   SC1    23  0.0000 ; H
+   24    N0    11   ARG    BB    24  0.0000 ; H
+   25    N0    11   ARG   SC1    25  0.0000 ; H
+   26    Qd    11   ARG   SC2    26  1.0000 ; H
+   27    C5    12   ALA    BB    27  0.0000 ; H
+   28    N0    13   ILE    BB    28  0.0000 ; H
+   29   AC1    13   ILE   SC1    29  0.0000 ; H
+   30    N0    14   GLY    BB    30  0.0000 ; H
+   31    N0    15   LYS    BB    31  0.0000 ; H
+   32    C3    15   LYS   SC1    32  0.0000 ; H
+   33    Qd    15   LYS   SC2    33  1.0000 ; H
+   34    N0    16   MET    BB    34  0.0000 ; H
+   35    C5    16   MET   SC1    35  0.0000 ; H
+   36    C5    17   ALA    BB    36  0.0000 ; H
+   37    N0    18   ARG    BB    37  0.0000 ; H
+   38    N0    18   ARG   SC1    38  0.0000 ; H
+   39    Qd    18   ARG   SC2    39  1.0000 ; H
+   40    N0    19   VAL    BB    40  0.0000 ; H
+   41   AC2    19   VAL   SC1    41  0.0000 ; H
+   42    Na    20   PHE    BB    42  0.0000 ; 2
+   43   SC5    20   PHE   SC1    43  0.0000 ; 2
+   44   SC5    20   PHE   SC2    44  0.0000 ; 2
+   45   SC5    20   PHE   SC3    45  0.0000 ; 2
+   46    Na    21   SER    BB    46  0.0000 ; 2
+   47    P1    21   SER   SC1    47  0.0000 ; 2
+   48    Na    22   VAL    BB    48  0.0000 ; 2
+   49   AC2    22   VAL   SC1    49  0.0000 ; 2
+   50    Na    23   LEU    BB    50  0.0000 ; 2
+   51   AC1    23   LEU   SC1    51  0.0000 ; 2
+   52    Qa    24   ARG    BB    52 -1.0000 ; C
+   53    N0    24   ARG   SC1    53  0.0000 ; C
+   54    Qd    24   ARG   SC2    54  1.0000 ; C
+
+[ bonds ]
+; Backbone bonds
+    1     2      1   0.35000  1250 ; ALA(C)-ARG(C)
+; Sidechain bonds
+    2     3      1   0.33000  5000 ; ARG
+    3     4      1   0.34000  5000 ; ARG
+    5     6      1   0.33000  5000 ; LYS
+    6     7      1   0.28000  5000 ; LYS
+    8     9      1   0.40000  5000 ; GLU
+   14    15      1   0.33000  5000 ; ARG
+   15    16      1   0.34000  5000 ; ARG
+   17    18      1   0.32000  5000 ; ASN
+   19    20      1   0.33000  5000 ; LYS
+   20    21      1   0.28000  5000 ; LYS
+   24    25      1   0.33000  5000 ; ARG
+   25    26      1   0.34000  5000 ; ARG
+   31    32      1   0.33000  5000 ; LYS
+   32    33      1   0.28000  5000 ; LYS
+   34    35      1   0.40000  2500 ; MET
+   37    38      1   0.33000  5000 ; ARG
+   38    39      1   0.34000  5000 ; ARG
+   42    43      1   0.31000  7500 ; PHE
+   46    47      1   0.25000  7500 ; SER
+   50    51      1   0.33000  7500 ; LEU
+   52    53      1   0.33000  5000 ; ARG
+   53    54      1   0.34000  5000 ; ARG
+
+[ constraints ]
+    2     5      1   0.33000 ; ARG(C)-LYS(1)
+    5     8      1   0.31000 ; LYS(1)-GLU(1)
+    8    10      1   0.31000 ; GLU(1)-VAL(1)
+   10    12      1   0.31000 ; VAL(1)-ILE(1)
+   12    14      1   0.31000 ; ILE(1)-ARG(H)
+   14    17      1   0.31000 ; ARG(H)-ASN(H)
+   17    19      1   0.31000 ; ASN(H)-LYS(H)
+   19    22      1   0.31000 ; LYS(H)-ILE(H)
+   22    24      1   0.31000 ; ILE(H)-ARG(H)
+   24    27      1   0.31000 ; ARG(H)-ALA(H)
+   27    28      1   0.31000 ; ALA(H)-ILE(H)
+   28    30      1   0.31000 ; ILE(H)-GLY(H)
+   30    31      1   0.31000 ; GLY(H)-LYS(H)
+   31    34      1   0.31000 ; LYS(H)-MET(H)
+   34    36      1   0.31000 ; MET(H)-ALA(H)
+   36    37      1   0.31000 ; ALA(H)-ARG(H)
+   37    40      1   0.31000 ; ARG(H)-VAL(H)
+   40    42      1   0.31000 ; VAL(H)-PHE(2)
+   42    46      1   0.31000 ; PHE(2)-SER(2)
+   46    48      1   0.31000 ; SER(2)-VAL(2)
+   48    50      1   0.31000 ; VAL(2)-LEU(2)
+   50    52      1   0.33000 ; LEU(2)-ARG(C)
+   10    11      1   0.26500 ; VAL
+   12    13      1   0.31000 ; ILE
+   22    23      1   0.31000 ; ILE
+   28    29      1   0.31000 ; ILE
+   40    41      1   0.26500 ; VAL
+   43    44      1   0.27000 ; PHE
+   43    45      1   0.27000 ; PHE
+   44    45      1   0.27000 ; PHE
+   48    49      1   0.26500 ; VAL
+
+[ angles ]
+; Backbone angles
+    1     2     5      2    127    20 ; ALA(C)-ARG(C)-LYS(1)
+    2     5     8      2    127    20 ; ARG(C)-LYS(1)-GLU(1)
+    5     8    10      2     96   700 ; LYS(1)-GLU(1)-VAL(1)
+    8    10    12      2     96   700 ; GLU(1)-VAL(1)-ILE(1)
+   10    12    14      2     96   700 ; VAL(1)-ILE(1)-ARG(H)
+   12    14    17      2     96   700 ; ILE(1)-ARG(H)-ASN(H)
+   14    17    19      2     96   700 ; ARG(H)-ASN(H)-LYS(H)
+   17    19    22      2     96   700 ; ASN(H)-LYS(H)-ILE(H)
+   19    22    24      2     96   700 ; LYS(H)-ILE(H)-ARG(H)
+   22    24    27      2     96   700 ; ILE(H)-ARG(H)-ALA(H)
+   24    27    28      2     96   700 ; ARG(H)-ALA(H)-ILE(H)
+   27    28    30      2     96   700 ; ALA(H)-ILE(H)-GLY(H)
+   28    30    31      2     96   700 ; ILE(H)-GLY(H)-LYS(H)
+   30    31    34      2     96   700 ; GLY(H)-LYS(H)-MET(H)
+   31    34    36      2     96   700 ; LYS(H)-MET(H)-ALA(H)
+   34    36    37      2     96   700 ; MET(H)-ALA(H)-ARG(H)
+   36    37    40      2     96   700 ; ALA(H)-ARG(H)-VAL(H)
+   37    40    42      2     96   700 ; ARG(H)-VAL(H)-PHE(2)
+   40    42    46      2     96   700 ; VAL(H)-PHE(2)-SER(2)
+   42    46    48      2     96   700 ; PHE(2)-SER(2)-VAL(2)
+   46    48    50      2     96   700 ; SER(2)-VAL(2)-LEU(2)
+   48    50    52      2    127    20 ; VAL(2)-LEU(2)-ARG(C)
+; Backbone-sidechain angles
+    1     2     3      2    100    25 ; ALA(C)-ARG(C) SBB
+    2     5     6      2    100    25 ; ARG(C)-LYS(1) SBB
+    5     8     9      2    100    25 ; LYS(1)-GLU(1) SBB
+    8    10    11      2    100    25 ; GLU(1)-VAL(1) SBB
+   10    12    13      2    100    25 ; VAL(1)-ILE(1) SBB
+   12    14    15      2    100    25 ; ILE(1)-ARG(H) SBB
+   14    17    18      2    100    25 ; ARG(H)-ASN(H) SBB
+   17    19    20      2    100    25 ; ASN(H)-LYS(H) SBB
+   19    22    23      2    100    25 ; LYS(H)-ILE(H) SBB
+   22    24    25      2    100    25 ; ILE(H)-ARG(H) SBB
+   27    28    29      2    100    25 ; ALA(H)-ILE(H) SBB
+   30    31    32      2    100    25 ; GLY(H)-LYS(H) SBB
+   31    34    35      2    100    25 ; LYS(H)-MET(H) SBB
+   36    37    38      2    100    25 ; ALA(H)-ARG(H) SBB
+   37    40    41      2    100    25 ; ARG(H)-VAL(H) SBB
+   40    42    43      2    100    25 ; VAL(H)-PHE(2) SBB
+   42    46    47      2    100    25 ; PHE(2)-SER(2) SBB
+   46    48    49      2    100    25 ; SER(2)-VAL(2) SBB
+   48    50    51      2    100    25 ; VAL(2)-LEU(2) SBB
+   50    52    53      2    100    25 ; LEU(2)-ARG(C) SBB
+; Sidechain angles
+    2     3     4      2    180    25 ; ARG
+    5     6     7      2    180    25 ; LYS
+   14    15    16      2    180    25 ; ARG
+   19    20    21      2    180    25 ; LYS
+   24    25    26      2    180    25 ; ARG
+   31    32    33      2    180    25 ; LYS
+   37    38    39      2    180    25 ; ARG
+   42    43    44      2    150    50 ; PHE
+   42    43    45      2    150    50 ; PHE
+   52    53    54      2    180    25 ; ARG
+
+[ dihedrals ]
+; Backbone dihedrals
+    5     8    10    12      1   -120   400     1 ; LYS(1)-GLU(1)-VAL(1)-ILE(1)
+    8    10    12    14      1   -120   400     1 ; GLU(1)-VAL(1)-ILE(1)-ARG(H)
+   10    12    14    17      1   -120   400     1 ; VAL(1)-ILE(1)-ARG(H)-ASN(H)
+   12    14    17    19      1   -120   400     1 ; ILE(1)-ARG(H)-ASN(H)-LYS(H)
+   14    17    19    22      1   -120   400     1 ; ARG(H)-ASN(H)-LYS(H)-ILE(H)
+   17    19    22    24      1   -120   400     1 ; ASN(H)-LYS(H)-ILE(H)-ARG(H)
+   19    22    24    27      1   -120   400     1 ; LYS(H)-ILE(H)-ARG(H)-ALA(H)
+   22    24    27    28      1   -120   400     1 ; ILE(H)-ARG(H)-ALA(H)-ILE(H)
+   24    27    28    30      1   -120   400     1 ; ARG(H)-ALA(H)-ILE(H)-GLY(H)
+   27    28    30    31      1   -120   400     1 ; ALA(H)-ILE(H)-GLY(H)-LYS(H)
+   28    30    31    34      1   -120   400     1 ; ILE(H)-GLY(H)-LYS(H)-MET(H)
+   30    31    34    36      1   -120   400     1 ; GLY(H)-LYS(H)-MET(H)-ALA(H)
+   31    34    36    37      1   -120   400     1 ; LYS(H)-MET(H)-ALA(H)-ARG(H)
+   34    36    37    40      1   -120   400     1 ; MET(H)-ALA(H)-ARG(H)-VAL(H)
+   36    37    40    42      1   -120   400     1 ; ALA(H)-ARG(H)-VAL(H)-PHE(2)
+   37    40    42    46      1   -120   400     1 ; ARG(H)-VAL(H)-PHE(2)-SER(2)
+   40    42    46    48      1   -120   400     1 ; VAL(H)-PHE(2)-SER(2)-VAL(2)
+   42    46    48    50      1   -120   400     1 ; PHE(2)-SER(2)-VAL(2)-LEU(2)
+; Sidechain improper dihedrals
+   42    44    45    43      2      0    50 ; PHE
+
+#ifdef POSRES
+#ifndef POSRES_FC
+#define POSRES_FC 1000.00
+#endif
+ [ position_restraints ]
+      1    1    POSRES_FC    POSRES_FC    POSRES_FC
+      2    1    POSRES_FC    POSRES_FC    POSRES_FC
+      5    1    POSRES_FC    POSRES_FC    POSRES_FC
+      8    1    POSRES_FC    POSRES_FC    POSRES_FC
+     10    1    POSRES_FC    POSRES_FC    POSRES_FC
+     12    1    POSRES_FC    POSRES_FC    POSRES_FC
+     14    1    POSRES_FC    POSRES_FC    POSRES_FC
+     17    1    POSRES_FC    POSRES_FC    POSRES_FC
+     19    1    POSRES_FC    POSRES_FC    POSRES_FC
+     22    1    POSRES_FC    POSRES_FC    POSRES_FC
+     24    1    POSRES_FC    POSRES_FC    POSRES_FC
+     27    1    POSRES_FC    POSRES_FC    POSRES_FC
+     28    1    POSRES_FC    POSRES_FC    POSRES_FC
+     30    1    POSRES_FC    POSRES_FC    POSRES_FC
+     31    1    POSRES_FC    POSRES_FC    POSRES_FC
+     34    1    POSRES_FC    POSRES_FC    POSRES_FC
+     36    1    POSRES_FC    POSRES_FC    POSRES_FC
+     37    1    POSRES_FC    POSRES_FC    POSRES_FC
+     40    1    POSRES_FC    POSRES_FC    POSRES_FC
+     42    1    POSRES_FC    POSRES_FC    POSRES_FC
+     46    1    POSRES_FC    POSRES_FC    POSRES_FC
+     48    1    POSRES_FC    POSRES_FC    POSRES_FC
+     50    1    POSRES_FC    POSRES_FC    POSRES_FC
+     52    1    POSRES_FC    POSRES_FC    POSRES_FC
+#endif
