@@ -1,0 +1,26 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Post-processing specification
+#Each document defines an instance of postproc.PostProcParameters
+---
+modelparamsfile: yummy-press.yaml
+do_collection: True
+collection_exclusions: [dirichlet, dataextraction]
+---
+modelparamsfile: yummy-press.yaml
+modelnames: [yummy-press_nonhomog_05, yummy-press_nonhomog_10, yummy-press_nonhomog_15, yummy-press_nonhomog_20]
+model_plots:
+  - figsize: [11, 8.5]
+    filename: profile_CL_c.pdf
+    plotname: CL_c
+    plotfunctions:
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, X2],kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, X4],kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'concentration (#/nm^3)'
+    title: 'Concentration Profile along Pore Centerline'
+    fmts: ['k-']

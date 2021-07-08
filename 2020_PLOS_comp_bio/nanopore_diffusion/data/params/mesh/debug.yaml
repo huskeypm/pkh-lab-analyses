@@ -1,0 +1,25 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+---
+meshname: debug
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 7.5
+  R: 2.5
+  H: 50
+  tm: 75
+---
+meshname: debug2d
+geomdefname: rectangle
+tmplvalues:
+  mscale: 1.0
+  mcar: 0.75
+  Lx: 40
+  Ly: 40

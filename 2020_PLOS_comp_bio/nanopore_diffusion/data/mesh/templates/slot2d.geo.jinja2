@@ -1,0 +1,35 @@
+{% extends "common.geo.jinja2" %}
+{# parameter definitions section for body-centered geometry #}
+
+{# Required input variables:
+    mscale =  scaling factor for mesh refinement
+    mcarh, mcarl = characteristic lengths for mesh refinement
+    L = unit cell separation in 1D
+    R = slot half-width
+    H = bulk distance above and below slot included in model
+    tm = slot length
+  No optional input variables.
+  Use trim_blocks=True.
+  #}
+
+{% block paramdefs %}
+//Mesh density control
+mcarh={{ mscale }}*{{ mcarh }};
+mcarl={{ mscale }}*{{ mcarl }};
+
+//Geometric inputs
+L={{ L }};
+R={{ R }};
+H={{ H }};
+tm={{ tm }};
+
+//Point ordinates
+X1=0;
+X2=H;
+X3=H+tm/2;
+X4=H+tm;
+X5=2*H+tm;
+Y1=0;
+Y2=R;
+Y3=L;
+{% endblock %}

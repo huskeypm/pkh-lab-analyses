@@ -1,0 +1,53 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Post-processing specification
+#Each document defines an instance of postproc.PostProcParameters
+---
+modelparamsfile: che580-sp18.yaml
+model_plots:
+  - figsize: [11, 8.5]
+    filename: profile_CL_phi.pdf
+    plotname: CL_phi
+    plotfunctions: &cl_plotfuncs
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, Z2], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, Z3], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Field Profile along Pore Centerline'
+    fmts: ['k-']
+  - figsize: [11, 8.5]
+    filename: profile_CL_c.pdf
+    plotname: CL_c
+    plotfunctions:
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, Z2],kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, Z3],kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'concentration (count/nm^3)'
+    title: 'Concentration Profile along Pore Centerline'
+    fmts: ['k-']
+  - figsize: [11, 8.5]
+    filename: radial_phi.pdf
+    plotname: radial_phi
+    plotfunctions:
+      - &poreboundary [plot_vline, {locspec: [mesh_metadata, R], kwargs: {label: 'Pore Boundary',color: 'k',linestyle: '--'}}]
+      - [plot_hline, {locspec: [conditions, potential, conditions, dirichlet, 11],kwargs: {label: 'Potential at Pore Boundary',color: 'k',linestyle: ":"}}]
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+    xlabel: 'Radial Distance (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Potential along Radial Lines'
+    fmts: ['r-','g-','b-']
+  - figsize: [11, 8.5]
+    filename: radial_c.pdf
+    plotname: radial_c
+    plotfunctions:
+      - *poreboundary
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper right'}}]
+    xlabel: 'Radial Distance (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Concentration Profile along Radial Lines'
+    fmts: ['r-','g-','b-']

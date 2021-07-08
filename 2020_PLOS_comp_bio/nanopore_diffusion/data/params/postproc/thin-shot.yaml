@@ -1,0 +1,53 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Post-processing specification
+#Each document defines an instance of postproc.PostProcParameters
+---
+modelparamsfile: thin-shot.yaml
+do_collection: True
+collection_exclusions: [dirichlet, equation]
+collection_plots:
+  - &collectionplotdef
+    figsize: [11, 8.5]
+    filename: ratio_vs_phi.pdf
+    calcfunctions:
+      - [calc_Dratio,{}]
+    prepfunctions:
+      - [prep_series_equality,{}]
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+    xlabel: '$\phi$'
+    ylabel: '$D_{eff}/D_{bulk}$'
+    fmts: ['k.','r+','bx','g-']
+    seriesdefs:
+      - [free_volume_frac, ratio_D, 'q=0', 'q==0']
+      - [free_volume_frac, ratio_D, 'q=+1', 'q==1']
+      - [free_volume_frac, ratio_D, 'q=-1', 'q==-1']
+  - #reuse basic definition
+    <<: *collectionplotdef
+    figsize: [9, 7]
+    filename: ratio_vs_phi.png
+---
+modelparamsfile: thin-shot.yaml
+modelnames:
+  - thin-shot_model_001
+  - thin-shot_model_119
+  - thin-shot_model_237
+  - thin-shot_model_023
+  - thin-shot_model_141
+  - thin-shot_model_259
+model_plots:
+  - figsize: [11, 8.5]
+    filename: profile_CL_c.pdf
+    plotname: CL_c
+    plotfunctions:
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, Z2], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, Z3], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'concentration (count/nm^3)'
+    title: 'Concentration Profile along Pore Centerline'
+    fmts: ['k-']

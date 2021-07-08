@@ -1,0 +1,20 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Parameter Generation
+#Each document defines an instance of paramgen.ParameterGenerator
+---
+outfile: mesh/exotic-earth.yaml
+tmplfile: mesh_two_rectangles.yaml.jinja2
+constfields: {hrhash: exotic-earth, geomdefname: two_rectangles, mscale: 1.0, mcarl: 0.01, mcarh: 0.01, Lx: 1.0, Ly: 1.0}
+rangefields:
+  alpha1: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+---
+outfile: model/exotic-earth.yaml
+tmplfile: model_exotic-earth.yaml.jinja2
+constfields: {hrhash: exotic-earth, elementorder: 3}
+otherfiles:
+  mesh/exotic-earth.yaml:
+    meshname: [meshname]

@@ -1,0 +1,237 @@
+
+// basics parameter for the unitcell
+radius = 3e0; // radius of pore
+hsp = 3e0; // horizontal spacing
+vsp = 3e0; // vertical spacing
+
+//---------------
+RevW = 2*(hsp + radius); // width of reservoir
+RevH = 2*(vsp + radius); // height of reservoir
+RevD = 40e0; // depth of reservoir
+length = 90e0; // length of pore
+incRadius = 1.5e0; // radius of spherical inclusion
+incDist = {inclusion_dist}; //distance from pore surface to inclusion
+vShift = incRadius - incDist; 
+incDepth =  2.0e0; // how far inside the pore the inclusion is
+
+lc2 = 5e0;
+
+
+// Corners
+Point(1) = {{0, 0, 0, lc2}};
+Point(2) = {{0, RevH,0, lc2}};
+Point(3) = {{RevW, RevH, 0, lc2}};
+Point(4) = {{RevW, 0, 0, lc2}};
+
+// 1/4 pores
+Point(11) = {{radius, 0, 0, lc2}};
+Point(12) = {{0, radius, 0, lc2}};
+Circle(110) = {{11, 1, 12}};
+
+Point(21) = {{0, RevH - radius, 0, lc2}};
+Point(22) = {{radius, RevH, 0, lc2}};
+Circle(210) = {{21, 2, 22}};
+
+Point(31) = {{RevW - radius, RevH, 0, lc2}};
+Point(32) = {{RevW, RevH - radius, 0, lc2}};
+Circle(310) = {{31, 3, 32}};
+
+Point(41) = {{RevW, radius, 0, lc2}};
+Point(42) = {{RevW - radius, 0, 0, lc2}};
+Circle(410) = {{41, 4, 42}};
+
+// Full pore in center
+Point(5) = {{RevW/2, RevH/2, 0, lc2}};
+Point(51) = {{RevW/2 - radius, RevH/2, 0, lc2}};
+Point(52) = {{RevW/2, RevH/2 + radius, 0, lc2}};
+Point(53) = {{RevW/2 + radius, RevH/2, 0, lc2}};
+Point(54) = {{RevW/2, RevH/2 - radius, 0, lc2}};
+Circle(510) = {{51, 5, 52}};
+Circle(520) = {{52, 5, 53}};
+Circle(530) = {{53, 5, 54}};
+Circle(540) = {{54, 5, 51}};
+
+// Edges
+Line(1) = {{1, 12}};
+Line(2) = {{12, 21}};
+Line(3) = {{21, 2}};
+Line(4) = {{2, 22}};
+Line(5) = {{22, 31}};
+Line(6) = {{31, 3}};
+Line(7) = {{3, 32}};
+Line(8) = {{32, 41}};
+Line(9) = {{41, 4}};
+Line(10) = {{4, 42}};
+Line(11) = {{42, 11}};
+Line(12) = {{11, 1}};
+
+// Pore surfaces
+Line Loop(1) = {{110, 2, 210, 5, 310, 8, 410, 11}};
+Line Loop(2) = {{12, 1, -110}};
+Line Loop(3) = {{3, 4, -210}};
+Line Loop(4) = {{6, 7, -310}};
+Line Loop(5) = {{9, 10, -410}};
+Line Loop(6) = {{510, 520, 530, 540}};
+
+Plane Surface(1) = {{1, 6}};
+Plane Surface(2) = {{2}};
+Plane Surface(3) = {{3}};
+Plane Surface(4) = {{4}};
+Plane Surface(5) = {{5}};
+Plane Surface(6) = {{6}};
+
+// Sphere points
+Point(7) = {{RevW/2, RevH/2 + vShift, incDepth, lc2}};
+Point(71) = {{RevW/2 - incRadius, RevH/2 + vShift, incDepth, lc2}};
+Point(72) = {{RevW/2, RevH/2 + incRadius + vShift, incDepth, lc2}};
+Point(73) = {{RevW/2 + incRadius, RevH/2 + vShift, incDepth, lc2}};
+Point(74) = {{RevW/2, RevH/2 - incRadius + vShift, incDepth, lc2}};
+Point(75) = {{RevW/2, RevH/2 + vShift, incDepth - incRadius, lc2}};
+Point(76) = {{RevW/2, RevH/2 + vShift, incDepth + incRadius, lc2}};
+
+// Sphere edges
+Circle(701) = {{71, 7, 72}};
+Circle(702) = {{72, 7, 73}};
+Circle(703) = {{73, 7, 74}};
+Circle(704) = {{74, 7, 71}};
+Circle(705) = {{71, 7, 76}};
+Circle(706) = {{76, 7, 73}};
+Circle(707) = {{73, 7, 75}};
+Circle(708) = {{75, 7, 71}};
+Circle(709) = {{75, 7, 72}};
+Circle(710) = {{72, 7, 76}};
+Circle(711) = {{76, 7, 74}};
+Circle(712) = {{74, 7, 75}};
+
+// Sphere surfaces
+Line Loop(101) = {{701, -709, 708}};
+Line Loop(102) = {{702, 707, 709}};
+Line Loop(103) = {{703, 712, -707}};
+Line Loop(104) = {{704, -708, -712}};
+Line Loop(105) = {{701, 710, -705}};
+Line Loop(106) = {{702, -706, -710}};
+Line Loop(107) = {{703, -711, 706}};
+Line Loop(108) = {{704, 705, 711}};
+
+Surface(101) = {{101}};
+Surface(102) = {{102}};
+Surface(103) = {{103}};
+Surface(104) = {{104}};
+Surface(105) = {{105}};
+Surface(106) = {{106}};
+Surface(107) = {{107}};
+Surface(108) = {{108}};
+
+// Extrude pore surfaces
+out1[] = Extrude {{0, 0, length}} {{Surface{{2, 3, 4, 5}};}};
+out2[] = Extrude {{0, 0, length}} {{Surface{{6}};}};
+
+// Volume inside central pore excluding sphere
+Surface Loop(2) = {{6, out2[2], out2[3], out2[4], out2[5], out2[0], 101, 102, 103, 104, 105, 106, 107, 108}};
+Volume(6) = {{2}};
+
+// Points, edges, surfaces and volume for reservoirs
+Point(200) = {{0, 0, -RevD, lc2}};
+Point(201) = {{0, RevH, -RevD, lc2}};
+Point(202) = {{RevW, RevH, -RevD, lc2}};
+Point(203) = {{RevW, 0, -RevD, lc2}};
+Line(201) = {{200, 201}};
+Line(202) = {{201, 202}};
+Line(203) = {{202, 203}};
+Line(204) = {{203, 200}};
+Line(205) = {{200, 1}};
+Line(206) = {{201, 2}};
+Line(207) = {{202, 3}};
+Line(208) = {{203, 4}};
+Line Loop(21) = {{201, 202, 203, 204}};
+Line Loop(22) = {{205, -12, -11, -10, -208, 204}};
+Line Loop(23) = {{206, -3, -2, -1, -205, 201}};
+Line Loop(24) = {{207, -6, -5, -4, -206, 202}};
+Line Loop(25) = {{208, -9, -8, -7, -207, 203}};
+Plane Surface(21) = {{21}};
+Plane Surface(22) = {{22}};
+Plane Surface(23) = {{23}};
+Plane Surface(24) = {{24}};
+Plane Surface(25) = {{25}};
+Surface Loop(3) = {{1, 2, 3, 4, 5, 6, 21, 22, 23, 24, 25}};
+Volume(10) = {{3}};
+
+
+NewSurf1[] = Translate {{0, 0, length}} {{Duplicata{{Surface{{1}};}}}};
+Point(300) = {{0, 0, RevD + length, lc2}};
+Point(301) = {{0, RevH, RevD + length, lc2}};
+Point(302) = {{RevW, RevH, RevD + length, lc2}};
+Point(303) = {{RevW, 0, RevD + length, lc2}};
+Line(301) = {{300, 301}};
+Line(302) = {{301, 302}};
+Line(303) = {{302, 303}};
+Line(304) = {{303, 300}};
+Line(305) = {{300, 78}};
+Line(306) = {{301, 84}};
+Line(307) = {{302, 90}};
+Line(308) = {{303, 96}};
+Line Loop(31) = {{301, 302, 303, 304}};
+Line Loop(32) = {{305, -714, -811, -766, -308, 304}};
+Line Loop(33) = {{306, -731, -805, -715, -305, 301}};
+Line Loop(34) = {{307, -748, -807, -732, -306, 302}};
+Line Loop(35) = {{308, -765, -809, -749, -307, 303}};
+Plane Surface(31) = {{31}};
+Plane Surface(32) = {{32}};
+Plane Surface(33) = {{33}};
+Plane Surface(34) = {{34}};
+Plane Surface(35) = {{35}};
+Surface Loop(4) = {{803, 802, 729, 746, 763, 780, 31, 32, 33, 34, 35}};
+Volume(20) = {{4}};
+
+
+// Mesh refinement
+Field[2] = Box;
+Field[2].VIn = lc2/4;
+Field[2].VOut = lc2;
+Field[2].XMin = -1e0;
+Field[2].XMax = RevW + 1e0;
+Field[2].YMin = -1e0;
+Field[2].YMax = RevH + 1e0;
+Field[2].ZMin = -1e0;
+Field[2].ZMax = length + 1e0;
+
+Field[3] = Box;
+Field[3].VIn = lc2/10;
+Field[3].VOut = lc2;   
+Field[3].XMin = RevW/2 - radius - 1e0;
+Field[3].XMax = RevW/2 + radius + 1e0;
+Field[3].YMin = RevH/2 - radius - 1e0;
+Field[3].YMax = RevH/2 + radius + 1e0;
+Field[3].ZMin = incDepth - radius - 1e0;
+Field[3].ZMax = incDepth + radius + 1e0;
+
+
+Field[7] = Min;
+Field[7].FieldsList = {{2, 3}};
+
+Background Field = 7;
+
+// Labelling physical groups
+Physical Surface(1) = {{728}}; // 1/4 pore surfaces
+Physical Surface(2) = {{745}};
+Physical Surface(3) = {{762}};
+Physical Surface(4) = {{779}};
+Physical Surface(5) = {{789, 793, 797, 801}}; // Full pore surface
+Physical Surface(6) = {{101, 102, 103, 104, 105, 106, 107, 108}}; // Sphere surface
+
+Physical Surface(7) = {{1}}; // Ends of channel
+Physical Surface(8) = {{802}};
+Physical Surface(9) = {{21}}; // Ends of reservoirs
+Physical Surface(10) = {{31}};
+
+Physical Surface(11) = {{6}};// 
+Physical Surface(12) = {{802}};
+
+Physical Volume(1) = {{1, 2, 3, 4, 6, 10, 20}}; // Total volume
+
+
+//Define mesh
+Mesh 3;
+
+
+

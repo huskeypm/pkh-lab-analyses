@@ -1,0 +1,20 @@
+#Define properties specific to the 2D slot geometry template
+dimensions: 2
+
+tmplfile: rectangle.geo.jinja2
+tmplvars: ['mscale','mcar','Lx','Ly']
+outvars:  [mcar, Lx, Ly, X1, X2, Y1, Y2, Xmid, Ymid]
+
+#Dictionary of points and their corresponding mesh density variable
+#(mcarh for high-density regions, mcarl for low-density regions)
+ptdict: {11: mcar, 12: mcar, 21: mcar, 22: mcar}
+
+#Mapping of surfaces to points
+#In the following table of values, each tuple is a line loop that will be turned into a surface.
+#Circles can be included by including 'center' followed by the center point.
+#The preceeding and next points are the circle start and end points, respectively.
+geomtable: {1:  [11, 12, 22, 21, 11]}
+
+#2D geometry, so we're done
+surfloops: {}
+nonplanar: []

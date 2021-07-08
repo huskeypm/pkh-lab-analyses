@@ -1,0 +1,19 @@
+{% extends "common.geo.jinja2" %}
+{# parameter definitions section for body-centered geometry #}
+
+{% block paramdefs %}
+//Mesh density control
+mcar={{ mscale }}*{{ mcar }};
+
+//Geometric inputs
+Lx={{ Lx }};
+Ly={{ Ly }};
+
+//Point ordinates
+X1=0;
+X2=Lx;
+Y1=0;
+Y2=Ly;
+Xmid=Lx/2;
+Ymid=Ly/2;
+{% endblock %}

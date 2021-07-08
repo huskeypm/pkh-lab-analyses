@@ -1,0 +1,76 @@
+//Generate mesh
+//usage:
+//gmsh thisfile.geo
+{# This file is a jinja2 template for a gmsh .geo file.
+  Use trim_blocks=True.
+  #}
+
+{% block paramdefs %}{% endblock %}
+
+//Mesh metadata output
+Printf("# Mesh metadata output") > meshmetafile;
+{% for varname in metadata_vars %}
+Printf("{{ varname }}: %f", {{ varname }}) >> meshmetafile;
+{% endfor %}
+
+//Points
+{% for ptnum,meshvar in ptstrs.items()|sort %}
+{% if dimensions==2 %}
+p{{ ptnum }}=newp; Point(p{{ ptnum }})={X{{ ptnum[0] }},Y{{ ptnum[1] }},0,{{ meshvar }}};
+{% elif dimensions==3 %}
+p{{ ptnum }}=newp; Point(p{{ ptnum }})={X{{ ptnum[0] }},Y{{ ptnum[1] }},Z{{ ptnum[2] }},{{ meshvar }}};
+{% endif %}
+{% endfor %}
+
+//Lines
+{% for lname, lptstr in lines.items()|sort %}
+{{ lname }}=newl; Line({{ lname }})={ {{- lptstr -}} };
+{% endfor %}
+
+//Circles
+{% for cname, cptstr in circles.items()|sort %}
+{{ cname }}=newl; Circle({{ cname }})={ {{- cptstr -}} };
+{% endfor %}
+
+//Line Loops
+{% for lpnum, lents in loops.items()|sort %}
+Line Loop({{ lpnum }})={ {{- lents -}} };
+{% endfor %}
+
+//Surfaces (each is a physical surface)
+{% for lpnum, stype in surftypes.items()|sort %}
+{{ stype }}({{ lpnum }})={ {{- lpnum -}} };
+Physical Surface({{ lpnum }})={ {{- lpnum -}} };
+{% endfor %}
+
+{% if dimensions==2 %}
+//Physical Lines
+{% for lnum,lname in phys_lines.items()|sort %}
+Physical Line({{ lnum }})={ {{- lname -}} };
+{% endfor %}
+
+//Mesh
+Mesh 2;
+{% elif dimensions==3 %}
+//Surface Loops
+{% for lpnum, sents in surfloops.items()|sort %}
+Surface Loop({{ lpnum }})={ {{- sents -}} };
+{% endfor %}
+
+//Volumes
+{% for lpnum in surfloops.keys()|sort %}
+Volume({{ lpnum }})={ {{- lpnum -}} };
+Physical Volume({{ lpnum }})={ {{- lpnum -}} };
+{% endfor %}
+
+//Mesh
+Mesh 3;
+{% endif %}
+
+//Blank lines
+//because gmsh gets confused without them
+
+
+
+
+

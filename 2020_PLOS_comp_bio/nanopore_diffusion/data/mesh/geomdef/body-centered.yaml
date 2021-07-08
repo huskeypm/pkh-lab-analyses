@@ -1,0 +1,37 @@
+#Define properties specific to the body-centered geometry template
+dimensions: 3
+
+tmplfile: body-centered.geo.jinja2
+tmplvars: ['mscale','mcarh','mcarl','Lx','Ly','R','H','tm']
+outvars:  [mcarh, mcarl, Lx, Ly, R, H, tm, X1, X2, X3, Y1, Y2, Y3, Z1, Z2, Z3, Z4, pore_area, cell_area]
+
+#Dictionary of points and their corresponding mesh density variable
+#(mcarh for high-density regions, mcarl for low-density regions)
+ptdict: {111: mcarl,             311: mcarl, 331: mcarl, 131: mcarl, 
+         112: mcarh, 212: mcarh, 312: mcarh, 332: mcarh, 132: mcarh, 122: mcarh, 
+         113: mcarh, 213: mcarh, 313: mcarh, 333: mcarh, 133: mcarh, 123: mcarh, 
+         114: mcarl,             314: mcarl, 334: mcarl, 134: mcarl}
+
+#Mapping of surfaces to points
+#In the following table of values, each tuple is a line loop that will be turned into a surface.
+#Circles can be included by including 'center' followed by the center point.
+#The preceeding and next points are the circle start and end points, respectively.
+geomtable: {1:  [111, 311, 331, 131, 111],
+            2:  [212, 312, 332, 132, 122, 'center', 112, 212],
+            3:  [213, 313, 333, 133, 123, 'center', 113, 213],
+            4:  [114, 314, 334, 134, 114],
+            5:  [111, 311, 312, 212, 213, 313, 314, 114, 111],
+            6:  [111, 131, 132, 122, 123, 133, 134, 114, 111],
+            7:  [331, 131, 132, 332, 331],
+            8:  [311, 331, 332, 312, 311],
+            9:  [333, 133, 134, 334, 333],
+            10: [313, 333, 334, 314, 313],
+            11: [212, 'center', 112, 122, 123, 'center', 113, 213, 212]}
+
+#Mapping of surface loops to surfaces
+#Each tuple is a surface loop that will be turned into a volume.
+#Use a negative sign to reverse the order of a loop, where needed.
+surfloops: {1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}
+
+#Nonplanar surfaces ('Ruled Surface' in gmsh 2, 'Surface' in gmsh)
+nonplanar: [11]

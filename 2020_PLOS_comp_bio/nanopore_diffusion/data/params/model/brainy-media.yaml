@@ -1,0 +1,4494 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+
+##TODO: put in the fields
+
+---
+modelname: brainy-media_model_001
+meshname: brainy-media_mesh_001
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_002
+meshname: brainy-media_mesh_002
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_003
+meshname: brainy-media_mesh_003
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_004
+meshname: brainy-media_mesh_004
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_005
+meshname: brainy-media_mesh_005
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_006
+meshname: brainy-media_mesh_006
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_007
+meshname: brainy-media_mesh_007
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_008
+meshname: brainy-media_mesh_008
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_009
+meshname: brainy-media_mesh_009
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_010
+meshname: brainy-media_mesh_010
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_011
+meshname: brainy-media_mesh_011
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_012
+meshname: brainy-media_mesh_012
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_013
+meshname: brainy-media_mesh_013
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_014
+meshname: brainy-media_mesh_014
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_015
+meshname: brainy-media_mesh_015
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_016
+meshname: brainy-media_mesh_016
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_017
+meshname: brainy-media_mesh_017
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_018
+meshname: brainy-media_mesh_018
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_019
+meshname: brainy-media_mesh_019
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_020
+meshname: brainy-media_mesh_020
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_021
+meshname: brainy-media_mesh_021
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_022
+meshname: brainy-media_mesh_022
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_023
+meshname: brainy-media_mesh_023
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_024
+meshname: brainy-media_mesh_024
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_025
+meshname: brainy-media_mesh_025
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_026
+meshname: brainy-media_mesh_026
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_027
+meshname: brainy-media_mesh_027
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_028
+meshname: brainy-media_mesh_028
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_029
+meshname: brainy-media_mesh_029
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_030
+meshname: brainy-media_mesh_030
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_031
+meshname: brainy-media_mesh_031
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_032
+meshname: brainy-media_mesh_032
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_033
+meshname: brainy-media_mesh_033
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_034
+meshname: brainy-media_mesh_034
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_035
+meshname: brainy-media_mesh_035
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_036
+meshname: brainy-media_mesh_036
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_037
+meshname: brainy-media_mesh_037
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_038
+meshname: brainy-media_mesh_038
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_039
+meshname: brainy-media_mesh_039
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_040
+meshname: brainy-media_mesh_040
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_041
+meshname: brainy-media_mesh_041
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_042
+meshname: brainy-media_mesh_042
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_043
+meshname: brainy-media_mesh_043
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_044
+meshname: brainy-media_mesh_044
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_045
+meshname: brainy-media_mesh_045
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_046
+meshname: brainy-media_mesh_046
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_047
+meshname: brainy-media_mesh_047
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_048
+meshname: brainy-media_mesh_048
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_049
+meshname: brainy-media_mesh_049
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_050
+meshname: brainy-media_mesh_050
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_051
+meshname: brainy-media_mesh_051
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_052
+meshname: brainy-media_mesh_052
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_053
+meshname: brainy-media_mesh_053
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_054
+meshname: brainy-media_mesh_054
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_055
+meshname: brainy-media_mesh_055
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_056
+meshname: brainy-media_mesh_056
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_057
+meshname: brainy-media_mesh_057
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_058
+meshname: brainy-media_mesh_058
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_059
+meshname: brainy-media_mesh_059
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_060
+meshname: brainy-media_mesh_060
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_061
+meshname: brainy-media_mesh_061
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_062
+meshname: brainy-media_mesh_062
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_063
+meshname: brainy-media_mesh_063
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_064
+meshname: brainy-media_mesh_064
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_065
+meshname: brainy-media_mesh_065
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_066
+meshname: brainy-media_mesh_066
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_067
+meshname: brainy-media_mesh_067
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_068
+meshname: brainy-media_mesh_068
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_069
+meshname: brainy-media_mesh_069
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_070
+meshname: brainy-media_mesh_070
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_071
+meshname: brainy-media_mesh_071
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_072
+meshname: brainy-media_mesh_072
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_073
+meshname: brainy-media_mesh_073
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_074
+meshname: brainy-media_mesh_074
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_075
+meshname: brainy-media_mesh_075
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_076
+meshname: brainy-media_mesh_076
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_077
+meshname: brainy-media_mesh_077
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_078
+meshname: brainy-media_mesh_078
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_079
+meshname: brainy-media_mesh_079
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_080
+meshname: brainy-media_mesh_080
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_081
+meshname: brainy-media_mesh_081
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_082
+meshname: brainy-media_mesh_082
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_083
+meshname: brainy-media_mesh_083
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_084
+meshname: brainy-media_mesh_084
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_085
+meshname: brainy-media_mesh_085
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_086
+meshname: brainy-media_mesh_086
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_087
+meshname: brainy-media_mesh_087
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_088
+meshname: brainy-media_mesh_088
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_089
+meshname: brainy-media_mesh_089
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_090
+meshname: brainy-media_mesh_090
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_091
+meshname: brainy-media_mesh_091
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_092
+meshname: brainy-media_mesh_092
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_093
+meshname: brainy-media_mesh_093
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_094
+meshname: brainy-media_mesh_094
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_095
+meshname: brainy-media_mesh_095
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_096
+meshname: brainy-media_mesh_096
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_097
+meshname: brainy-media_mesh_097
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_098
+meshname: brainy-media_mesh_098
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_099
+meshname: brainy-media_mesh_099
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_100
+meshname: brainy-media_mesh_100
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_101
+meshname: brainy-media_mesh_101
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_102
+meshname: brainy-media_mesh_102
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_103
+meshname: brainy-media_mesh_103
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_104
+meshname: brainy-media_mesh_104
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_105
+meshname: brainy-media_mesh_105
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_106
+meshname: brainy-media_mesh_106
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_107
+meshname: brainy-media_mesh_107
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_108
+meshname: brainy-media_mesh_108
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_109
+meshname: brainy-media_mesh_109
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_110
+meshname: brainy-media_mesh_110
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_111
+meshname: brainy-media_mesh_111
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_112
+meshname: brainy-media_mesh_112
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_113
+meshname: brainy-media_mesh_113
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_114
+meshname: brainy-media_mesh_114
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_115
+meshname: brainy-media_mesh_115
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_116
+meshname: brainy-media_mesh_116
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_117
+meshname: brainy-media_mesh_117
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_118
+meshname: brainy-media_mesh_118
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_119
+meshname: brainy-media_mesh_001
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_120
+meshname: brainy-media_mesh_002
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_121
+meshname: brainy-media_mesh_003
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_122
+meshname: brainy-media_mesh_004
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_123
+meshname: brainy-media_mesh_005
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_124
+meshname: brainy-media_mesh_006
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_125
+meshname: brainy-media_mesh_007
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_126
+meshname: brainy-media_mesh_008
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_127
+meshname: brainy-media_mesh_009
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_128
+meshname: brainy-media_mesh_010
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_129
+meshname: brainy-media_mesh_011
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_130
+meshname: brainy-media_mesh_012
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_131
+meshname: brainy-media_mesh_013
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_132
+meshname: brainy-media_mesh_014
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_133
+meshname: brainy-media_mesh_015
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_134
+meshname: brainy-media_mesh_016
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_135
+meshname: brainy-media_mesh_017
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_136
+meshname: brainy-media_mesh_018
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_137
+meshname: brainy-media_mesh_019
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_138
+meshname: brainy-media_mesh_020
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_139
+meshname: brainy-media_mesh_021
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_140
+meshname: brainy-media_mesh_022
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_141
+meshname: brainy-media_mesh_023
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_142
+meshname: brainy-media_mesh_024
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_143
+meshname: brainy-media_mesh_025
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_144
+meshname: brainy-media_mesh_026
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_145
+meshname: brainy-media_mesh_027
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_146
+meshname: brainy-media_mesh_028
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_147
+meshname: brainy-media_mesh_029
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_148
+meshname: brainy-media_mesh_030
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_149
+meshname: brainy-media_mesh_031
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_150
+meshname: brainy-media_mesh_032
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_151
+meshname: brainy-media_mesh_033
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_152
+meshname: brainy-media_mesh_034
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_153
+meshname: brainy-media_mesh_035
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_154
+meshname: brainy-media_mesh_036
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_155
+meshname: brainy-media_mesh_037
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_156
+meshname: brainy-media_mesh_038
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_157
+meshname: brainy-media_mesh_039
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_158
+meshname: brainy-media_mesh_040
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_159
+meshname: brainy-media_mesh_041
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_160
+meshname: brainy-media_mesh_042
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_161
+meshname: brainy-media_mesh_043
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_162
+meshname: brainy-media_mesh_044
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_163
+meshname: brainy-media_mesh_045
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_164
+meshname: brainy-media_mesh_046
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_165
+meshname: brainy-media_mesh_047
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_166
+meshname: brainy-media_mesh_048
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_167
+meshname: brainy-media_mesh_049
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_168
+meshname: brainy-media_mesh_050
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_169
+meshname: brainy-media_mesh_051
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_170
+meshname: brainy-media_mesh_052
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_171
+meshname: brainy-media_mesh_053
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_172
+meshname: brainy-media_mesh_054
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_173
+meshname: brainy-media_mesh_055
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_174
+meshname: brainy-media_mesh_056
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_175
+meshname: brainy-media_mesh_057
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_176
+meshname: brainy-media_mesh_058
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_177
+meshname: brainy-media_mesh_059
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_178
+meshname: brainy-media_mesh_060
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_179
+meshname: brainy-media_mesh_061
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_180
+meshname: brainy-media_mesh_062
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_181
+meshname: brainy-media_mesh_063
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_182
+meshname: brainy-media_mesh_064
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_183
+meshname: brainy-media_mesh_065
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_184
+meshname: brainy-media_mesh_066
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_185
+meshname: brainy-media_mesh_067
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_186
+meshname: brainy-media_mesh_068
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_187
+meshname: brainy-media_mesh_069
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_188
+meshname: brainy-media_mesh_070
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_189
+meshname: brainy-media_mesh_071
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_190
+meshname: brainy-media_mesh_072
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_191
+meshname: brainy-media_mesh_073
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_192
+meshname: brainy-media_mesh_074
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_193
+meshname: brainy-media_mesh_075
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_194
+meshname: brainy-media_mesh_076
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_195
+meshname: brainy-media_mesh_077
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_196
+meshname: brainy-media_mesh_078
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_197
+meshname: brainy-media_mesh_079
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_198
+meshname: brainy-media_mesh_080
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_199
+meshname: brainy-media_mesh_081
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_200
+meshname: brainy-media_mesh_082
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_201
+meshname: brainy-media_mesh_083
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_202
+meshname: brainy-media_mesh_084
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_203
+meshname: brainy-media_mesh_085
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_204
+meshname: brainy-media_mesh_086
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_205
+meshname: brainy-media_mesh_087
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_206
+meshname: brainy-media_mesh_088
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_207
+meshname: brainy-media_mesh_089
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_208
+meshname: brainy-media_mesh_090
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_209
+meshname: brainy-media_mesh_091
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_210
+meshname: brainy-media_mesh_092
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_211
+meshname: brainy-media_mesh_093
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_212
+meshname: brainy-media_mesh_094
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_213
+meshname: brainy-media_mesh_095
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_214
+meshname: brainy-media_mesh_096
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_215
+meshname: brainy-media_mesh_097
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_216
+meshname: brainy-media_mesh_098
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_217
+meshname: brainy-media_mesh_099
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_218
+meshname: brainy-media_mesh_100
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_219
+meshname: brainy-media_mesh_101
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_220
+meshname: brainy-media_mesh_102
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_221
+meshname: brainy-media_mesh_103
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_222
+meshname: brainy-media_mesh_104
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_223
+meshname: brainy-media_mesh_105
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_224
+meshname: brainy-media_mesh_106
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_225
+meshname: brainy-media_mesh_107
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_226
+meshname: brainy-media_mesh_108
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_227
+meshname: brainy-media_mesh_109
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_228
+meshname: brainy-media_mesh_110
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_229
+meshname: brainy-media_mesh_111
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_230
+meshname: brainy-media_mesh_112
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_231
+meshname: brainy-media_mesh_113
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_232
+meshname: brainy-media_mesh_114
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_233
+meshname: brainy-media_mesh_115
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_234
+meshname: brainy-media_mesh_116
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_235
+meshname: brainy-media_mesh_117
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: brainy-media_model_236
+meshname: brainy-media_mesh_118
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 10.0, 1: 1.0}
+  D_bulk: 1.0
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]

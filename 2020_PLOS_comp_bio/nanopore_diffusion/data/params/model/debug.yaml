@@ -1,0 +1,340 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+---
+modelname: debug01
+meshname: debug
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: debug01_test
+meshname: debug
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [facet_area, {pfacet: 4, name: area_04}]
+  - [effective_D, {name: D_eff, totflux_name: totflux_12, area_name: area_04, startloc: [0,0,Z2], endloc: [0,0,Z3]}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: debug02
+meshname: debug
+equation: smol_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 1.0}
+  D_bulk: 1
+  q: 1
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet: {2: 25.E-3, 3: 25.E-3, 11: 25.E-3, 15: 25.E-3, 1: 0.0, 4: 0.0}
+      debye_length: 1
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+      - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_phi, label: 'electric potential along centerline'}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=0 deg', theta: 0, zval: Z5}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=45 deg', theta: 45, zval: Z5}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=90 deg', theta: 90, zval: Z5}]
+dataextraction:
+  - [solutionfield, {filename: Dbar.pvd, attrname: Dbar_proj}]
+  - [solutionfield, {filename: trans_conc.pvd, attrname: sb_soln}]
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_cbar, label: 'cbar along centerline', attrname: sb_soln}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_Dbar, label: 'Dbar along centerline', attrname: Dbar_proj}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: 'concentration along theta=0 deg', theta: 0, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: 'concentration along theta=45 deg', theta: 45, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: 'concentration along theta=90 deg', theta: 90, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_cbar, label: 'cbar along theta=0 deg', theta: 0, attrname: sb_soln, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_cbar, label: 'cbar along theta=45 deg', theta: 45, attrname: sb_soln, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_cbar, label: 'cbar along theta=90 deg', theta: 90, attrname: sb_soln, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_Dbar, label: 'Dbar along theta=0 deg', theta: 0, attrname: Dbar_proj, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_Dbar, label: 'Dbar along theta=45 deg', theta: 45, attrname: Dbar_proj, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_Dbar, label: 'Dbar along theta=90 deg', theta: 90, attrname: Dbar_proj, zval: Z5}]
+---
+modelname: debug03
+meshname: debug2d
+equation: tdpnp_unhomog
+customizations:
+  modules: [output_td, rxnrates_ill-sleep]
+  initializations:
+    rxnrates_ill-sleep: {BT: 5.0e-6}
+conditions:
+  elementorder: 3
+  dirichlet:
+    1222: [null, null, null, 0.02]
+    1121: [null, null, null, -0.02]
+  temperature: 298 #Kelvin
+  eps_r: 78.5
+  species_info:
+    symbol:   [Ca2+, Cl-,  CaCaM]
+    z:        [2,    -1,   2]
+    initconc: [0.1, 0.200005, 2.5e-06]
+    D:        [1.9,  2.03, null]
+  reaction_info:
+    constants: [0.0016605390404271642, 1.0e-09]
+    functions: [rate_forward, rate_backward]
+    stoichio: [[-1,0,1],[1,0,-1]]
+  initial_potential: 0.0
+  timedomain:
+    stepsize: 1.0
+    stopping:
+      t_end: 10.0
+datasteps:
+  - [splitfield, {namewhole: u, namesplit: ulist}] ##the tdpnp simulation module still uses u for namewhole
+  # - [splitfield, {namewhole: soln, namesplit: ulist}] ##the notebook test uses soln for namewhole
+  - [calc_netcharge, {solnname: ulist}]
+  - [td_solutionfield, {filename: Ca2+.pvd,  attrname: ulist, idx: 0}]
+  - [td_solutionfield, {filename: Cl-.pvd,   attrname: ulist, idx: 1}]
+  - [td_solutionfield, {filename: CaCaM.pvd, attrname: ulist, idx: 2}]
+  - [td_solutionfield, {filename: Phi.pvd,   attrname: ulist, idx: 3}]
+  - [td_solutionfield, {filename: rho.pvd,   attrname: netcharge}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_phi, label: 'Potential', attrname: ulist, idx: 3}]
+dataextraction:
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_phi, label: 'Potential', attrname: ulist, idx: 3}]
+---
+modelname: debug03_no_charge
+meshname: debug2d
+equation: tdpnp_unhomog
+customizations:
+  modules: [output_td, rxnrates_CaM]
+  initializations:
+    rxnrates_CaM: {BT: 5.0e-6}
+conditions:
+  elementorder: 3
+  dirichlet:
+    1222: [null, null, 0]
+    1121: [null, null, 0]
+  temperature: 298 #Kelvin
+  eps_r: 78.5
+  species_info:
+    symbol:   [Ca2+, CaCaM]
+    z:        [0,    0]
+    initconc: [0.1,  2.5e-06]
+    D:        [1.9,  null]
+  reaction_info:
+    constants: [0.0016605390404271642, 1.0e-09]
+    functions: [rate_forward, rate_backward]
+    stoichio: [[-1,1],[1,-1]]
+  initial_potential: 0.0
+  timedomain:
+    stepsize: 500.0
+    stopping:
+      numsteps: 10
+datasteps:
+  - [splitfield, {namewhole: u, namesplit: ulist}]
+  - [calc_netcharge, {solnname: ulist}]
+  # - [td_solutionfield, {filename: Ca2+.pvd,  attrname: ulist, idx: 0}]
+  # - [td_solutionfield, {filename: CaCaM.pvd, attrname: ulist, idx: 1}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_1, label: 'CaCaM', attrname: ulist, idx: 1}]
+dataextraction:
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_1, label: 'CaCaM', attrname: ulist, idx: 1}]
+---
+modelname: debug03_lintest
+meshname: debug2d
+equation: tdpnp_unhomog
+customizations:
+  modules: [output_td, rxnrates_ill-sleep]
+  initializations:
+    rxnrates_ill-sleep: {BT: 5.0e-6}
+conditions:
+  elementorder: 3
+  dirichlet:
+    1222: [0.1, 0.02]
+    1121: [0.3, -0.02]
+  temperature: 298 #Kelvin
+  eps_r: 78.5
+  species_info:
+    symbol:   [Ca2+]
+    z:        [2]
+    initconc: [0.1]
+    D:        [1.9]
+  reaction_info:
+    constants: []
+    functions: []
+    stoichio: []
+  initial_potential: 0.0
+  timedomain:
+    stepsize: 1.0
+    stopping:
+      t_end: 10.0
+datasteps:
+  # - [splitfield, {namewhole: u, namesplit: ulist}] ##the tdpnp simulation module still uses u for namewhole
+  - [splitfield, {namewhole: soln, namesplit: ulist}] ##the notebook test uses soln for namewhole
+  - [calc_netcharge, {solnname: ulist}]
+  - [td_solutionfield, {filename: Ca2+.pvd,  attrname: ulist, idx: 0}]
+  - [td_solutionfield, {filename: Phi.pvd,   attrname: ulist, idx: 1}]
+  - [td_solutionfield, {filename: rho.pvd,   attrname: netcharge}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_phi, label: 'Potential', attrname: ulist, idx: 1}]
+dataextraction:
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_phi, label: 'Potential', attrname: ulist, idx: 1}]
+---
+modelname: debug_smol_multi
+meshname: debug
+equation: smol_reactive_surface
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet:
+    4: [10.0, 5.0]
+    1: [2.0, 1.0]
+  reactive:
+    11: [Cl, Ca]
+    15: [Cl, Ca]
+  species:
+    - {symbol: Cl, z: -1, D: 1.0}
+    - {symbol: Ca, z: +2, D: 1.0}
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet: {2: 25.E-3, 3: 25.E-3, 11: 25.E-3, 15: 25.E-3, 1: 0.0, 4: 0.0}
+      debye_length: 1
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+      - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_phi, label: 'electric potential along centerline'}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=0 deg', theta: 0, zval: Z5}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=45 deg', theta: 45, zval: Z5}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=90 deg', theta: 90, zval: Z5}]
+dataextraction:
+  # - [solutionfield, {filename: Dbar_0.pvd, attrname: Dbar_proj, idx: 0}]
+  # - [solutionfield, {filename: Dbar_1.pvd, attrname: Dbar_proj, idx: 1}]
+  # - [solutionfield, {filename: trans_conc_0.pvd, attrname: solnlist, idx: 0}]
+  # - [solutionfield, {filename: trans_conc_1.pvd, attrname: solnlist, idx: 1}]
+  - [solutionfield, {filename: conc_0.pvd, attrname: clist, idx: 0}]
+  - [solutionfield, {filename: conc_1.pvd, attrname: clist, idx: 1}]
+  - [fluxfield, {filename: flux_0.pvd, solnattr: clist, idx: 0, fluxattr: flux_0, D_bulk: 1.0}]
+  - [fluxfield, {filename: flux_1.pvd, solnattr: clist, idx: 1, fluxattr: flux_1, D_bulk: 1.0}]
+  - [fluxintegral, {fluxattr: flux_0, fluxsurf: 1, name: totflux_01_0, normalvar: n01}]
+  - [fluxintegral, {fluxattr: flux_0, fluxsurf: 4, name: totflux_04_0, normalvar: n04}]
+  - [fluxintegral, {fluxattr: flux_0, fluxsurf: 12, name: totflux_12_0, internal: True, fluxsign: '-', normalvar: n12}]
+  - [fluxintegral, {fluxattr: flux_1, fluxsurf: 1, name: totflux_01_1, normalvar: n01}]
+  - [fluxintegral, {fluxattr: flux_1, fluxsurf: 4, name: totflux_04_1, normalvar: n04}]
+  - [fluxintegral, {fluxattr: flux_1, fluxsurf: 12, name: totflux_12_1, internal: True, fluxsign: '-', normalvar: n12}]
+  # - [fluxfield, {filename: flux.pvd}]
+  # - [fluxintegral, {fluxsurf: 1, name: totflux_01, normalvar: n01}]
+  # - [fluxintegral, {fluxsurf: 4, name: totflux_04, normalvar: n04}]
+  # - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-', normalvar: n12}]
+  # - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  # - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c_0, label: 'concentration along centerline', attrname: clist, idx: 0}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c_1, label: 'concentration along centerline', attrname: clist, idx: 1}]
+  # - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_cbar, label: 'cbar along centerline', attrname: sb_soln}]
+  # - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_Dbar, label: 'Dbar along centerline', attrname: Dbar_proj}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: '0, concentration along theta=0 deg', theta: 0, zval: Z5, attrname: clist, idx: 0}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: '0, concentration along theta=45 deg', theta: 45, zval: Z5, attrname: clist, idx: 0}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: '0, concentration along theta=90 deg', theta: 90, zval: Z5, attrname: clist, idx: 0}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: '1, concentration along theta=0 deg', theta: 0, zval: Z5, attrname: clist, idx: 1}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: '1, concentration along theta=45 deg', theta: 45, zval: Z5, attrname: clist, idx: 1}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: '1, concentration along theta=90 deg', theta: 90, zval: Z5, attrname: clist, idx: 1}]
+  # - [profile_radial, {num: 1000, plotname: radial_cbar, label: 'cbar along theta=0 deg', theta: 0, attrname: sb_soln, zval: Z5}]
+  # - [profile_radial, {num: 1000, plotname: radial_cbar, label: 'cbar along theta=45 deg', theta: 45, attrname: sb_soln, zval: Z5}]
+  # - [profile_radial, {num: 1000, plotname: radial_cbar, label: 'cbar along theta=90 deg', theta: 90, attrname: sb_soln, zval: Z5}]
+  # - [profile_radial, {num: 1000, plotname: radial_Dbar, label: 'Dbar along theta=0 deg', theta: 0, attrname: Dbar_proj, zval: Z5}]
+  # - [profile_radial, {num: 1000, plotname: radial_Dbar, label: 'Dbar along theta=45 deg', theta: 45, attrname: Dbar_proj, zval: Z5}]
+  # - [profile_radial, {num: 1000, plotname: radial_Dbar, label: 'Dbar along theta=90 deg', theta: 90, attrname: Dbar_proj, zval: Z5}]
+
+# ---
+# modelname: debug04
+# meshname: debug2d
+# equation: tdfick_unhomog
+# customizations:
+#   modules: [output_td, rxnrates_CaM]
+#   initializations:
+#     rxnrates_CaM: {BT: 5.0e-6}
+# conditions:
+#   elementorder: 3
+#   dirichlet:
+#     1222: [1, null]
+#     1121: [0, null]
+#   species_info:
+#     symbol:   [Ca2+, CaCaM]
+#     initconc: [0.25,  0.25]
+#     D:        [1.9,  null]
+#   reaction_info:
+#     constants: [0.0016605390404271642, 1.0e-09]
+#     functions: [rate_forward, rate_backward]
+#     stoichio: [[-1,1],[1,-1]]
+#   timedomain:
+#     stepsize: 1.0
+#     stopping:
+#       t_end: 10.0
+# datasteps:
+#   - [splitfield, {namewhole: soln, namesplit: ulist}]
+#   - [calc_netcharge, {solnname: ulist}]
+#   - [td_solutionfield, {filename: Ca2+.pvd,  attrname: ulist, idx: 0}]
+#   - [td_solutionfield, {filename: CaCaM.pvd, attrname: ulist, idx: 1}]
+#   - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+#   - [td_pointhistory, {location: [Xmid, Ymid], plotname: midpoint_conc_1, label: 'CaCaM', attrname: ulist, idx: 1}]
+# dataextraction:
+#   - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+#   - [line_profile, {startloc: [Xmid,Y1], endloc: [Xmid,Y2], num: 250, indep: 1, plotname: midline_conc_1, label: 'CaCaM', attrname: ulist, idx: 1}]
+# 
+#---
+# modelname: debug05
+# meshparamsfile: debug.yaml
+# meshname: debug
+# equation: pnp_unhomog
+# conditions:
+#   elementorder: 2
+#   dirichlet: {}
+#   beta: 38.94135
+#   species_info: {'Na+':1}
+# dataextraction:
+#   - []

@@ -1,0 +1,187 @@
+//2D slot with random circular inclusions
+
+//Mesh density control
+mcar1={{mcar1}};
+mcar2={{mcar2}};
+mcar3={{mcar3}};
+mcar4={{mcar4}};
+
+//Geometric inputs
+S={{S}};
+d={{d}};
+H={{H}};
+slot_length={{slot_length}};
+inclusion_count={{actual_number_inclusions}};
+
+//Point ordinates
+X0=0;
+X1=slot_length/2;
+X2=H+slot_length/2;
+Y0=0;
+Y1=d/2;
+Y2=S/2;
+
+//Points
+//naming convention:
+//- p=point
+//- r=reservoir, s=slot
+//- for reservoir: u=upper, l=lower
+//- for reservoir: l=left, r=right
+//- for reservoir: #
+//- for slot: 0=middle, u=upper, l=lower
+//left reservoir, top (reservoir, upper left)
+prul1=newp; Point(prul1)={-X2,Y0,0,mcar1};
+prul2=newp; Point(prul2)={-X2,Y2,0,mcar1};
+prul3=newp; Point(prul3)={-X1,Y2,0,mcar2};
+prul4=newp; Point(prul4)={-X1,Y1,0,mcar3};
+prul5=newp; Point(prul5)={-X1,Y0,0,mcar3};
+//left reservoir, bottom (reservoir, lower left)
+prll1=prul1;
+prll2=newp; Point(prll2)={-X2,-Y2,0,mcar1};
+prll3=newp; Point(prll3)={-X1,-Y2,0,mcar2};
+prll4=newp; Point(prll4)={-X1,-Y1,0,mcar3};
+prll5=prul5;
+//right reservoir, top (reservoir, upper right)
+prur1=newp; Point(prur1)={X2,Y0,0,mcar1};
+prur2=newp; Point(prur2)={X2,Y2,0,mcar1};
+prur3=newp; Point(prur3)={X1,Y2,0,mcar2};
+prur4=newp; Point(prur4)={X1,Y1,0,mcar3};
+prur5=newp; Point(prur5)={X1,Y0,0,mcar3};
+//right reservoir, bottom (reservoir, lower right)
+prlr1=prur1;
+prlr2=newp; Point(prlr2)={X2,-Y2,0,mcar1};
+prlr3=newp; Point(prlr3)={X1,-Y2,0,mcar2};
+prlr4=newp; Point(prlr4)={X1,-Y1,0,mcar3};
+prlr5=prur5;
+//middle of slot
+ps0=newp; Point(ps0)={X0,Y0,0,mcar3};
+psu=newp; Point(psu)={X0,Y1,0,mcar3};
+psl=newp; Point(psl)={X0,-Y1,0,mcar3};
+
+//Lines
+//naming convention:
+//- l=line
+//- r=reservoir, s=slot
+//- for reservoir: u=upper, l=lower
+//- l=left, r=right
+//- #
+//reservoir, upper left
+lrul1=newl; Line(lrul1)={prul1, prul2};
+lrul2=newl; Line(lrul2)={prul2, prul3};
+lrul3=newl; Line(lrul3)={prul3, prul4};
+lrul4=newl; Line(lrul4)={prul4, prul5};
+////lrul5=newl; Line(lrul5)={prul5, prul1};
+//reservoir, lower left
+lrll1=newl; Line(lrll1)={prll2, prll1};
+lrll2=newl; Line(lrll2)={prll3, prll2};
+lrll3=newl; Line(lrll3)={prll4, prll3};
+lrll4=newl; Line(lrll4)={prll5, prll4};
+////lrll5=-lrul5;
+//reservoir, upper right
+lrur1=newl; Line(lrur1)={prur2, prur1};
+lrur2=newl; Line(lrur2)={prur3, prur2};
+lrur3=newl; Line(lrur3)={prur4, prur3};
+lrur4=newl; Line(lrur4)={prur5, prur4};
+////lrur5=newl; Line(lrur5)={prur1, prur5};
+//reservoir, lower right
+lrlr1=newl; Line(lrlr1)={prlr1, prlr2};
+lrlr2=newl; Line(lrlr2)={prlr2, prlr3};
+lrlr3=newl; Line(lrlr3)={prlr3, prlr4};
+lrlr4=newl; Line(lrlr4)={prlr4, prlr5};
+////lrlr5=-lrur5;
+//slot, left
+lsl1=-lrul4;
+lsl2=newl; Line(lsl2)={prul4, psu};
+lsl3=newl; Line(lsl3)={psu, ps0};
+lsl4=newl; Line(lsl4)={ps0, psl};
+lsl5=newl; Line(lsl5)={psl, prll4};
+lsl6=-lrll4;
+//slot, right
+lsr1=lrur4;
+lsr2=newl; Line(lsr2)={prur4, psu};
+lsr3=lsl3;
+lsr4=lsl4;
+lsr5=newl; Line(lsr5)={psl, prlr4};
+lsr6=lrlr4;
+
+//Circles for inclusions
+{% for inclusionlist in [left_inclusions, right_inclusions] %}
+{%- for inc_id, xcen, ycen, rad in inclusionlist -%}
+//Inclusion {{inc_id}}
+Point({{inc_id}})={ {{- xcen -}},{{- ycen -}},0,mcar4};
+Point({{inc_id+1}})={ {{- xcen+rad -}},{{- ycen -}},0,mcar4};
+Point({{inc_id+2}})={ {{- xcen -}},{{- ycen+rad -}},0,mcar4};
+Point({{inc_id+3}})={ {{- xcen-rad -}},{{- ycen -}},0,mcar4};
+Point({{inc_id+4}})={ {{- xcen -}},{{- ycen-rad -}},0,mcar4};
+Circle({{inc_id+5}})={ {{- inc_id+1}},{{inc_id}},{{inc_id+2 -}} };
+Circle({{inc_id+6}})={ {{- inc_id+2}},{{inc_id}},{{inc_id+3 -}} };
+Circle({{inc_id+7}})={ {{- inc_id+3}},{{inc_id}},{{inc_id+4 -}} };
+Circle({{inc_id+8}})={ {{- inc_id+4}},{{inc_id}},{{inc_id+1 -}} };
+Line Loop({{inc_id}})={ {{- inc_id+5}},{{inc_id+6}},{{inc_id+7}},{{inc_id+8 -}} };
+{% endfor %}{% endfor %}
+
+//Line Loops
+Lrl=newll; Line Loop(Lrl)={lrul1, lrul2, lrul3, lrul4, lrll4, lrll3, lrll2, lrll1};
+Lrr=newll; Line Loop(Lrr)={lrlr1, lrlr2, lrlr3, lrlr4, lrur4, lrur3, lrur2, lrur1};
+Lsl=newll; Line Loop(Lsl)={lsl1, lsl2, lsl3, lsl4, lsl5, lsl6};
+Lsr=newll; Line Loop(Lsr)={lsr1, lsr2, lsr3, lsr4, lsr5, lsr6};
+
+//Surfaces (each is a physical surface)
+Plane Surface(1)={Lrl};
+Physical Surface(1)={1};
+Plane Surface(2)={Lrr};
+Physical Surface(2)={2};
+Plane Surface(3)={Lsl {{- left_ids -}} };
+Physical Surface(3)={3};
+Plane Surface(4)={Lsr {{- right_ids -}}};
+Physical Surface(4)={4};
+
+//Physical Lines
+Physical Line(1)={lrll1, lrul1};
+Physical Line(2)={lsl6, lsl1};
+Physical Line(3)={lsl3, lsl4};
+Physical Line(4)={lsr6, lsr1};
+Physical Line(5)={lrlr1, lrur1};
+Physical Line(6)={lsl2, -lsr2};
+Physical Line(7)={-lsl5, lsr5};
+Physical Line(8)={lrul3};
+Physical Line(9)={lrll3};
+Physical Line(10)={lrur3};
+Physical Line(11)={lrlr3};
+Physical Line(12)={lrul2};
+Physical Line(13)={lrll2};
+Physical Line(14)={lrur2};
+Physical Line(15)={lrlr2};
+{% for inclusionlist in [left_inclusions, right_inclusions] %}
+{%- for inc_id, xcen, ycen, rad in inclusionlist -%}
+Physical Line({{inc_id}})={ {{- inc_id+5}},{{inc_id+6}},{{inc_id+7}},{{inc_id+8 -}} };
+{% endfor %}{% endfor %}
+
+
+//Mesh metadata output
+Printf("# Mesh metadata output") > meshmetafile;
+Printf("mcar1: %f", mcar1) >> meshmetafile;
+Printf("mcar2: %f", mcar2) >> meshmetafile;
+Printf("mcar3: %f", mcar3) >> meshmetafile;
+Printf("mcar4: %f", mcar4) >> meshmetafile;
+Printf("S: %f", S) >> meshmetafile;
+Printf("d: %f", d) >> meshmetafile;
+Printf("H: %f", H) >> meshmetafile;
+Printf("slot_length: %f", slot_length) >> meshmetafile;
+Printf("X0: %f", X0) >> meshmetafile;
+Printf("X1: %f", X1) >> meshmetafile;
+Printf("nX1: %f", -X1) >> meshmetafile;
+Printf("X2: %f", X2) >> meshmetafile;
+Printf("Y0: %f", Y0) >> meshmetafile;
+Printf("Y1: %f", Y1) >> meshmetafile;
+Printf("Y2: %f", Y2) >> meshmetafile;
+Printf("inclusion_count: %f", inclusion_count) >> meshmetafile;
+
+//Define mesh
+Mesh 2;
+
+//Blank lines
+//because gmsh gets confused without them
+
+
+

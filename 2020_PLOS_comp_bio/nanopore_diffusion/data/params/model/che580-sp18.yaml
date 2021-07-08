@@ -1,0 +1,55 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+---
+modelname: che580-sp18
+meshname: che580-sp18
+equation: smol_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {4: 5.0, 1: 3.0, 11: 0.0, 15: 0.0}
+  D_bulk: 1.0
+  q: 1.0
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet:
+        4: 0.0
+        1: 0.0
+        2: 0.025
+        3: 0.025
+        11: 0.025
+        15: 0.025
+      debye_length: 1
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+      - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_phi, label: 'electric potential along centerline'}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=0 deg', theta: 0, zval: Z5}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=45 deg', theta: 45, zval: Z5}]
+      - [profile_radial, {num: 1000, plotname: radial_phi, label: 'electric potential along theta=90 deg', theta: 90, zval: Z5}]
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1, name: totflux_01}]
+  - [fluxintegral, {fluxsurf: 4, name: totflux_04}]
+  - [fluxintegral, {fluxsurf: 11, name: totflux_11}]
+  - [fluxintegral, {fluxsurf: 15, name: totflux_15}]
+  - [fluxintegral, {fluxsurf: 12, name: totflux_12, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 11, name: area_11}]
+  - [facet_area, {pfacet: 15, name: area_15}]
+  - [effective_diffusion, {name: Deff, totflux_name: totflux_12}]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: 'concentration along theta=0 deg', theta: 0, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: 'concentration along theta=45 deg', theta: 45, zval: Z5}]
+  - [profile_radial, {num: 1000, plotname: radial_c, label: 'concentration along theta=90 deg', theta: 90, zval: Z5}]

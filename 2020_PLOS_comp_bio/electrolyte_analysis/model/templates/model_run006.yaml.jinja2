@@ -1,0 +1,59 @@
+---
+basename: {{basename}}
+modelname: {{modelname}}
+meshname: {{meshname}}
+equation: smol_reactive_surface
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet:
+    1: [{{left_conc_A}}, {{left_conc_B}}]
+    5: [{{right_conc_A}}, {{right_conc_B}}]
+{% for inc_id in reactive_inc_ids %}
+    {{inc_id}}: [{{r_inc_conc_A}}, {{r_inc_conc_B}}]
+{% endfor %}
+{% for inc_id in nonreactive_inc_ids %}
+    {{inc_id}}: [{{nr_inc_conc_A}}, {{nr_inc_conc_B}}]
+{% endfor %}
+  reactive:
+{% for inc_id in reactive_inc_ids %}
+    {{inc_id}}: [A, B]
+{% endfor %}
+  species:
+    - {symbol: A, z: +1, D: 1.0}
+    - {symbol: B, z: +1, D: 1.0}
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet:
+        1: {{left_potential}}
+        5: {{right_potential}}
+{% for inc_id in reactive_inc_ids %}        {{inc_id}}: {{r_inc_potential}}
+{% endfor %}
+{% for inc_id in nonreactive_inc_ids %}        {{inc_id}}: {{nr_inc_potential}}
+{% endfor %}
+      debye_length: {{debye_length}}
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+dataextraction:
+  - [solutionfield, {filename: conc_A.pvd, attrname: clist, idx: 0}]
+  - [solutionfield, {filename: conc_B.pvd, attrname: clist, idx: 1}]
+#  - [solutionfield, {filename: conc_A.hdf5, attrname: clist, idx: 0}]
+#  - [solutionfield, {filename: conc_B.hdf5, attrname: clist, idx: 1}]
+  - [fluxfield, {filename: flux_A.pvd, solnattr: solnlist, idx: 0, fluxattr: flux_A, D_bulk: 1.0}]
+  - [fluxfield, {filename: flux_B.pvd, solnattr: solnlist, idx: 1, fluxattr: flux_B, D_bulk: 1.0}]
+  - [fluxintegral, {fluxattr: flux_A, fluxsurf: 3, name: totflux_A_pore, internal: True, fluxsign: '-'}]
+  - [fluxintegral, {fluxattr: flux_B, fluxsurf: 3, name: totflux_B_pore, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 3, name: pore_area, internal: True}]
+  - [effective_D, {name: Deff_A, totflux_name: totflux_A_pore, area_name: pore_area, startloc: [nX1, Y0], endloc: [X1, Y0], attrname: clist, idx: 0}]
+  - [effective_D, {name: Deff_B, totflux_name: totflux_B_pore, area_name: pore_area, startloc: [nX1, Y0], endloc: [X1, Y0], attrname: clist, idx: 1}]
+{% for inc_id in all_inc_ids %}
+  - [fluxintegral, {fluxattr: flux_A, fluxsurf: {{inc_id}}, name: totflux_A_{{inc_id}}}]
+  - [fluxintegral, {fluxattr: flux_B, fluxsurf: {{inc_id}}, name: totflux_B_{{inc_id}}}]
+{% endfor %}
+

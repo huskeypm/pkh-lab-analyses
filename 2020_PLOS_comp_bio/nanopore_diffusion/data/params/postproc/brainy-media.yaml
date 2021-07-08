@@ -1,0 +1,44 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Post-processing specification
+#Each document defines an instance of postproc.PostProcParameters
+---
+modelparamsfile: brainy-media.yaml
+do_collection: True
+collection_exclusions: [dirichlet]
+collection_plots:
+  - &basicplotdef
+    figsize: [11, 8.5]
+    filename: ratio_vs_phi.pdf
+    calcfunctions:
+      - [calc_Dratio,{}]
+    prepfunctions:
+      - [prep_series_equality,{}]
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+    xlabel: '$\phi$'
+    ylabel: '$D_{eff}/D_{bulk}$'
+    fmts: ['k.','r-']
+    seriesdefs: [[free_volume_frac, ratio_D, 'model results']]
+  - #reuse basic definition
+    <<: *basicplotdef
+    figsize: [9, 7]
+    filename: ratio_vs_phi.png
+---
+modelparamsfile: brainy-media.yaml
+modelnames: [brainy-media_model_001, brainy-media_model_023]
+model_plots:
+  - figsize: [11, 8.5]
+    filename: profile_CL_c.pdf
+    plotname: CL_c
+    plotfunctions:
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, Z2],kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, Z3],kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'concentration (count/nm^3)'
+    title: 'Concentration Profile along Pore Centerline'
+    fmts: ['k-']

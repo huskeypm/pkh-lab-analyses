@@ -1,0 +1,21 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Mesh definition
+#Each document defines an instance of buildgeom.MeshParameters
+{% for fields in allfields %}
+---
+meshname: {{ '%s_mesh_%03d'|format(fields.hrhash, fields.counter) }}
+geomdefname: {{ fields.geomdefname }}
+tmplvalues:
+  mscale: {{ fields.mscale }}
+  mcarh: {{ fields.mcarh }}
+  mcarl: {{ fields.mcarl }}
+  Lx: {{ fields.Lx }}
+  Ly: {{ fields.Ly }}
+  R: {{ fields.R }}
+  H: {{ fields.H }}
+  tm: {{ fields.tm }}
+{% endfor %}

@@ -1,0 +1,16 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+---
+meshname: ill-sleep_mesh
+geomdefname: slot2d
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  L: 100
+  R: 3.5
+  H: 100
+  tm: 100

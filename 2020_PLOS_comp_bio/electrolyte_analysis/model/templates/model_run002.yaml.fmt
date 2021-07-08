@@ -1,0 +1,31 @@
+---
+basename: {basename}
+modelname: {modelname}
+meshname: {meshname}
+equation: smol_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {{6: {sphere_conc}, 9: {top_conc}, 10: {bot_conc}}}
+  D_bulk: 1
+  q: 2
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet: {{5: {central_pore_pot}, 6: {sphere_pot}, 9: 0.0, 10: 0.0}}
+      debye_length: {debye_length}
+    dataextraction:
+      - [solutionfield, {{filename: potentialfield.pvd}}]
+dataextraction:
+  - [solutionfield, {{filename: conc.pvd}}]
+  - [fluxfield, {{filename: flux.pvd}}]
+  - [fluxintegral, {{fluxsurf: 6, name: totflux_incl}}]
+  - [fluxintegral, {{fluxsurf: 9, name: totflux_revTop}}]
+  - [fluxintegral, {{fluxsurf: 10, name: totflux_revBot}}]
+  - [fluxintegral, {{fluxsurf: 11, name: totflux_top, internal: True, fluxsign: '+'}}]
+  - [fluxintegral, {{fluxsurf: 12, name: totflux_bot, internal: True, fluxsign: '+'}}]

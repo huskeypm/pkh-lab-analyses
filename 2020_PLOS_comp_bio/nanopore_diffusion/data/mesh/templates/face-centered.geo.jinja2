@@ -1,0 +1,55 @@
+{% extends "common.geo.jinja2" %}
+{# parameter definitions section for body-centered geometry #}
+
+{# Required input variables:
+    mcar = characteristic length for mesh refinement
+    Lx = unit cell x-length
+    Ly = unit cell y-length
+    R = pore radius
+    H = bulk distance above and below pore included in model
+    tm = pore length
+  No optional input variables.
+  Use trim_blocks=True.
+  #}
+
+{% block paramdefs %}
+//Mesh density control
+mcarh={{ mscale }}*{{ mcarh }};
+mcarl={{ mscale }}*{{ mcarl }};
+
+//Geometric inputs
+Lx={{ Lx }};
+Ly={{ Ly }};
+R={{ R }};
+H={{ H }};
+tm={{ tm }};
+
+//Check input validity
+If (R<=0 || H<=0 || tm <= 0)
+  Error("Geometric inputs must be positive: R=%f, H=%f, tm=%f",R,H,tm)
+EndIf
+If (Lx <= R || Ly <= R)
+  Error("Cell half-sides must be larger than radius: Lx=%f, Ly=%f, R=%f",Lx,Ly,R)
+EndIf
+If (Lx^2 + Ly^2 <= 4*R^2)
+  Error("Pores would overlap: Lx=%f, Ly=%f, R=%f",Lx,Ly,R)
+EndIf
+
+//Point ordinates
+X1=0;
+X2=R;
+X3=Lx-R;
+X4=Lx;
+Y1=0;
+Y2=R;
+Y3=Ly-R;
+Y4=Ly;
+Z1=0;
+Z2=H;
+Z3=H+tm;
+Z4=2*H+tm;
+
+//Properties for post-processing
+pore_area=2*Pi*R^2;  //This is the total pore area: cell includes 2 pores; only one quarter of total pore area is modeled
+cell_area=4*Lx*Ly; //This is the full cell area; only one quarter is modeled
+{% endblock %}

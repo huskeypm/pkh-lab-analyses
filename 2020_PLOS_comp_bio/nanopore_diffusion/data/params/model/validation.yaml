@@ -1,0 +1,20 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+
+---
+modelname: hom_vary
+meshname: square50
+equation: fickian_homog
+loaddata:
+   - [D, solutions/validation/hom_vary/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {}]
+  - [solutionfield, {filename: chi.pvd}]

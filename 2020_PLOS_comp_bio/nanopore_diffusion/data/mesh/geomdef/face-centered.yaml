@@ -1,0 +1,36 @@
+#Define properties specific to the face-centered geometry template
+dimensions: 3
+
+tmplfile: face-centered.geo.jinja2
+tmplvars: ['mscale','mcarh','mcarl','Lx','Ly','R','H','tm']
+outvars:  [mcarh, mcarl, Lx, Ly, R, H, tm, X1, X2, X3, X4, Y1, Y2, Y3, Y4, Z1, Z2, Z3, Z4, pore_area, cell_area]
+
+#Dictionary of points and their corresponding mesh density variable
+#(mcarh for high-density regions, mcarl for low-density regions)
+ptdict: {111: mcarl,             411: mcarl,             441: mcarl,             141: mcarl, 
+         112: mcarh, 312: mcarh, 412: mcarh, 422: mcarh, 442: mcarh, 242: mcarh, 142: mcarh, 132: mcarh, 
+         113: mcarh, 313: mcarh, 413: mcarh, 423: mcarh, 443: mcarh, 243: mcarh, 143: mcarh, 133: mcarh, 
+         114: mcarl,             414: mcarl,             444: mcarl,             144: mcarl}
+
+#Mapping of surfaces to points
+#In the following table of values, each tuple is a line loop that will be turned into a surface.
+#Circles can be included by including 'center' followed by the center point.
+#The preceeding and next points are the circle start and end points, respectively.
+geomtable: {1:  [111, 411, 441, 141, 111],
+            2:  [112, 312, 'center', 412, 422, 442, 242, 'center', 142, 132, 112],
+            3:  [113, 313, 'center', 413, 423, 443, 243, 'center', 143, 133, 113],
+            4:  [114, 414, 444, 144, 114],
+            5:  [111, 411, 414, 114, 113, 313, 312, 112, 111],
+            6:  [141, 111, 112, 132, 133, 113, 114, 144, 141],
+            7:  [441, 141, 144, 444, 443, 243, 242, 442, 441],
+            8:  [411, 441, 442, 422, 423, 443, 444, 414, 411],
+            9:  [132, 'center', 142, 242, 243, 'center', 143, 133, 132],
+            10: [422, 'center', 412, 312, 313, 'center', 413, 423, 422]}
+
+#Mapping of surface loops to surfaces
+#Each tuple is a surface loop that will be turned into a volume.
+#Use a negative sign to reverse the order of a loop, where needed.
+surfloops: {1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+
+#Nonplanar surfaces ('Ruled Surface' in gmsh 2, 'Surface' in gmsh)
+nonplanar: [9, 10]

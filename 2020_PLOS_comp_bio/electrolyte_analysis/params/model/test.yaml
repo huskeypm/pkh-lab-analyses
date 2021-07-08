@@ -1,0 +1,54 @@
+%YAML 1.2
+---
+basename: run010
+modelname: run010_model_000
+meshname: run010_mesh_000
+equation: smol_reactive_surface_firstorder
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 1
+  solver_parameters:
+    linear_solver: gmres
+    preconditioner: icc
+  concentrationBC:
+    9: [0.0]
+    10: [0.0006]
+    1000: [0.0]
+    1100: [0.0]
+    # 5: [0.0]
+    # 1: [0.0]
+    # 2: [0.0]
+  fluxBC:
+    5: [[0.0, 0.0, 0.0]]
+    1: [[0.0,0.0,0.0]]
+    2: [[0.0,0.0,0.0]]
+  species:
+    - {symbol: A, z: 1, D: 1.0}
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet:
+        9: 0.0
+        10: 0.0
+        5: 0.0
+        # 1: 0.0
+        # 2: 0.0
+        1000: -0.025
+        1100: -0.025
+      kappa: 1.0
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+dataextraction:
+  - [solutionfield, {filename: conc_A.pvd, attrname: clist, idx: 0}]
+#  - [solutionfield, {filename: conc_A.hdf5, attrname: clist, idx: 0}]
+  - [solutionfield, {filename: flux_A.pvd, attrname: fluxlist, idx: 0}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 0, fluxsurf: 30, name: totflux_A_pore, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 30, name: pore_area, internal: True}]
+  - [effective_D, {name: Deff_A, totflux_name: totflux_A_pore, area_name: pore_area, startloc: [X0, Y0, nZ4], endloc: [X0, Y0, Z4], attrname: clist, idx: 0}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 0, fluxsurf: 1000, name: totflux_A_1000}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 0, fluxsurf: 1100, name: totflux_A_1100}]
