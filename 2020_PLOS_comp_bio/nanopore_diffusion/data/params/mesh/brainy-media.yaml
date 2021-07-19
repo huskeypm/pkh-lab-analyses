@@ -1,0 +1,1423 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Mesh definition
+#Each document defines an instance of buildgeom.MeshParameters
+---
+meshname: brainy-media_mesh_001
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 0.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_002
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 1.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_003
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 1.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_004
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 2.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_005
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 2.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_006
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 3.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_007
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 3.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_008
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 4.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_009
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 4.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_010
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 5.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_011
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 5.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_012
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 6.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_013
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 6.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_014
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 7.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_015
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 7.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_016
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 8.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_017
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 8.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_018
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 9.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_019
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 9.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_020
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 10.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_021
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 10.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_022
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 11.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_023
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 11.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_024
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 0.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_025
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 1.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_026
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 1.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_027
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 2.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_028
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 2.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_029
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 3.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_030
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 3.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_031
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 4.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_032
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 4.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_033
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 5.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_034
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 5.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_035
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 6.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_036
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 6.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_037
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 7.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_038
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 7.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_039
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 8.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_040
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 8.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_041
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 9.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_042
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 9.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_043
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 10.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_044
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 10.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_045
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 11.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_046
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 12
+  Ly: 12
+  R: 11.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_047
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 0.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_048
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 1.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_049
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 1.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_050
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 2.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_051
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 2.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_052
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 3.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_053
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 3.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_054
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 4.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_055
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 4.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_056
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 5.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_057
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 5.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_058
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 0.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_059
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 1.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_060
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 1.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_061
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 2.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_062
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 2.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_063
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 3.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_064
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 3.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_065
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 4.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_066
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 4.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_067
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 5.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_068
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 24
+  Ly: 6
+  R: 5.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_069
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 0.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_070
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 1.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_071
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 1.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_072
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 2.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_073
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 2.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_074
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 3.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_075
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 3.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_076
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 0.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_077
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 1.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_078
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 1.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_079
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 2.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_080
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 2.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_081
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 3.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_082
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 36
+  Ly: 4
+  R: 3.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_083
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 0.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_084
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 1.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_085
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 1.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_086
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 2.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_087
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 2.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_088
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 3.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_089
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 3.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_090
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 4.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_091
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 4.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_092
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 0.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_093
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 1.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_094
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 1.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_095
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 2.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_096
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 2.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_097
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 3.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_098
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 3.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_099
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 4.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_100
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 5
+  Ly: 5
+  R: 4.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_101
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 0.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_102
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 1.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_103
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 1.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_104
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 2.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_105
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 2.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_106
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 3.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_107
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 3.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_108
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 4.0
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_109
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 4.5
+  H: 50
+  tm: 75
+---
+meshname: brainy-media_mesh_110
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 0.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_111
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 1.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_112
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 1.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_113
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 2.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_114
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 2.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_115
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 3.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_116
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 3.5
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_117
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 4.0
+  H: 25
+  tm: 25
+---
+meshname: brainy-media_mesh_118
+geomdefname: body-cen2
+tmplvalues:
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  Lx: 10
+  Ly: 5
+  R: 4.5
+  H: 25
+  tm: 25

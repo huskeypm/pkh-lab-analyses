@@ -1,0 +1,16 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+---
+meshname: test_mesh #Change this to your liking
+geomdefname: slot2d #This should stay the same
+tmplvalues: #Change these values as needed
+  mscale: 1.0
+  mcarh: 1.0
+  mcarl: 5.0
+  L: 100
+  R: 3.5
+  H: 100
+  tm: 100

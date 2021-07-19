@@ -1,0 +1,11 @@
+%YAML 1.2
+# List of parameter files to run
+
+# Commenting out lines will suppress running those analyses
+---
+# - debug.yaml
+# - brainy-media.yaml
+# - thin-shot.yaml
+# - ill-sleep.yaml
+# - exotic-earth.yaml
+# - che580-sp18.yaml

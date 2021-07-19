@@ -1,0 +1,147 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+---
+modelname: ill-sleep_model
+meshname: ill-sleep_mesh
+equation: tdpnp_unhomog
+customizations:
+  modules: [output_td, rxnrates_ill-sleep]
+  initializations:
+    rxnrates_ill-sleep: {BT: 5.0e-6}
+conditions:
+  elementorder: 3
+  dirichlet:
+    1113: [null, null, null, 0.0]
+    5153: [0.1, 0.200005, 2.5e-06, 0.0]
+  neumann: ##TODO: these are test values only
+    1113:
+      - ['exp(-0.2*t)', {t: 0}]
+      - ['2*exp(-0.2*t)', {t: 0}]
+      - null
+      - null
+    2232:
+      - null
+      - null
+      - null
+      - -0.02
+    3242:
+      - null
+      - null
+      - null
+      - -0.02
+  temperature: 298 #Kelvin
+  eps_r: 78.5
+  species_info:
+    symbol:   [Ca2+, Cl-,  CaCaM]
+    z:        [2,    -1,   2]
+    initconc: [0.1, 0.200005, 2.5e-06] ##TODO: these are test values only
+    D:        [1.9,  2.03, null] ##TODO: these are test values only
+  reaction_info:
+    constants: [0.0016605390404271642, 1.0e-09]
+    functions: [rate_forward, rate_backward]
+    stoichio: [[-1,0,1],[1,0,-1]]
+  initial_potential: 0.0
+  timedomain:
+    stepsize: 1.0
+    stopping:
+      numsteps: 2000
+datasteps:
+  - [splitfield, {namewhole: u, namesplit: ulist}]
+  - [calc_netcharge, {solnname: ulist}]
+  - [td_solutionfield, {filename: Ca2+.pvd,  attrname: ulist, idx: 0}]
+  - [td_solutionfield, {filename: Cl-.pvd,   attrname: ulist, idx: 1}]
+  - [td_solutionfield, {filename: CaCaM.pvd, attrname: ulist, idx: 2}]
+  - [td_solutionfield, {filename: Phi.pvd,   attrname: ulist, idx: 3}]
+  - [td_solutionfield, {filename: rho.pvd,   attrname: netcharge}]
+  - [td_pointhistory, {location: [X2, Y1], plotname: front_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [td_pointhistory, {location: [X2, Y1], plotname: front_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+  - [td_pointhistory, {location: [X2, Y1], plotname: front_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+  - [td_pointhistory, {location: [X2, Y1], plotname: front_phi, label: 'Potential', attrname: ulist, idx: 3}]
+  - [td_pointhistory, {location: [X3, Y1], plotname: mid_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [td_pointhistory, {location: [X3, Y1], plotname: mid_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+  - [td_pointhistory, {location: [X3, Y1], plotname: mid_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+  - [td_pointhistory, {location: [X3, Y1], plotname: mid_phi, label: 'Potential', attrname: ulist, idx: 3}]
+  - [td_pointhistory, {location: [X4, Y1], plotname: back_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [td_pointhistory, {location: [X4, Y1], plotname: back_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+  - [td_pointhistory, {location: [X4, Y1], plotname: back_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+  - [td_pointhistory, {location: [X4, Y1], plotname: back_phi, label: 'Potential', attrname: ulist, idx: 3}]
+dataextraction:
+  - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+  - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+  - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+  - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_phi, label: 'Potential', attrname: ulist, idx: 3}]
+# ---
+# modelname: ill-sleep_test01
+# meshname: ill-sleep_mesh
+# equation: tdpnp_unhomog
+# customizations:
+#   modules: [output_td, rxnrates_ill-sleep]
+#   initializations:
+#     rxnrates_ill-sleep: {BT: 5.0e-6}
+# conditions:
+#   elementorder: 3
+#   dirichlet:
+#     1113: [null, null, null, 0.0]
+#     5153: [0.1, 0.200005, 2.5e-06, 0.0]
+#   neumann: ##TODO: these are test values only
+#     1113:
+#       - ['exp(-0.2*t)', {t: 0}]
+#       - ['2*exp(-0.2*t)', {t: 0}]
+#       - null
+#       - null
+#     2232:
+#       - null
+#       - null
+#       - null
+#       - -0.02
+#     3242:
+#       - null
+#       - null
+#       - null
+#       - -0.02
+#   temperature: 298 #Kelvin
+#   eps_r: 78.5
+#   species_info:
+#     symbol:   [Ca2+, Cl-,  CaCaM]
+#     z:        [2,    -1,   2]
+#     initconc: [0.1, 0.200005, 2.5e-06] ##TODO: these are test values only
+#     D:        [1.9,  2.03, null] ##TODO: these are test values only
+#   reaction_info:
+#     constants: [0.0016605390404271642, 1.0e-09]
+#     functions: [rate_forward, rate_backward]
+#     stoichio: [[-1,0,1],[1,0,-1]]
+#   initial_potential: 0.0
+#   timedomain:
+#     stepsize: 5.0
+#     stopping:
+#       t_end: 10000.0
+# datasteps:
+#   - [splitfield, {namewhole: u, namesplit: ulist}]
+#   - [calc_netcharge, {solnname: ulist}]
+#   - [td_solutionfield, {filename: Ca2+.pvd,  attrname: ulist, idx: 0}]
+#   - [td_solutionfield, {filename: Cl-.pvd,   attrname: ulist, idx: 1}]
+#   - [td_solutionfield, {filename: CaCaM.pvd, attrname: ulist, idx: 2}]
+#   - [td_solutionfield, {filename: Phi.pvd,   attrname: ulist, idx: 3}]
+#   - [td_solutionfield, {filename: rho.pvd,   attrname: netcharge}]
+#   - [td_pointhistory, {location: [X2, Y1], plotname: front_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+#   - [td_pointhistory, {location: [X2, Y1], plotname: front_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+#   - [td_pointhistory, {location: [X2, Y1], plotname: front_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+#   - [td_pointhistory, {location: [X2, Y1], plotname: front_phi, label: 'Potential', attrname: ulist, idx: 3}]
+#   - [td_pointhistory, {location: [X3, Y1], plotname: mid_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+#   - [td_pointhistory, {location: [X3, Y1], plotname: mid_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+#   - [td_pointhistory, {location: [X3, Y1], plotname: mid_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+#   - [td_pointhistory, {location: [X3, Y1], plotname: mid_phi, label: 'Potential', attrname: ulist, idx: 3}]
+#   - [td_pointhistory, {location: [X4, Y1], plotname: back_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+#   - [td_pointhistory, {location: [X4, Y1], plotname: back_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+#   - [td_pointhistory, {location: [X4, Y1], plotname: back_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+#   - [td_pointhistory, {location: [X4, Y1], plotname: back_phi, label: 'Potential', attrname: ulist, idx: 3}]
+# dataextraction:
+#   - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_conc_0, label: 'Ca2+', attrname: ulist, idx: 0}]
+#   - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_conc_1, label: 'Cl-', attrname: ulist, idx: 1}]
+#   - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_conc_2, label: 'CaCaM', attrname: ulist, idx: 2}]
+#   - [line_profile, {startloc: [X3,Y1], endloc: [X3,Y2], num: 250, indep: 1, plotname: midline_phi, label: 'Potential', attrname: ulist, idx: 3}]

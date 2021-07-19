@@ -1,0 +1,93 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Post-processing specification
+#Each document defines an instance of postproc.PostProcParameters
+---
+modelparamsfile: ill-sleep.yaml
+model_plots:
+  - &plot1def
+    figsize: [11, 8.5]
+    filename: mid_conc_0_hist.pdf
+    plotname: mid_conc_0
+    xlabel: 'time (ns)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Ca2+ Concentration History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot1def #reuse definition
+    figsize: [9, 7]
+    filename: mid_conc_0_hist.png
+  - &plot2def
+    <<: *plot1def #reuse definition
+    filename: mid_conc_1_hist.pdf
+    plotname: mid_conc_1
+    title: 'Cl- Concentration History at Midpoint'
+  - <<: *plot2def #reuse definition
+    figsize: [9, 7]
+    filename: mid_conc_1_hist.png
+  - &plot3def
+    <<: *plot1def #reuse definition
+    filename: mid_conc_2_hist.pdf
+    plotname: mid_conc_2
+    title: 'CaCaM Concentration History at Midpoint'
+  - <<: *plot3def #reuse definition
+    figsize: [9, 7]
+    filename: mid_conc_2_hist.png
+  - &plot4def
+    figsize: [11, 8.5]
+    filename: mid_phi_hist.pdf
+    plotname: mid_phi
+    xlabel: 'time (ns)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Potential History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot4def #reuse definition
+    figsize: [9, 7]
+    filename: mid_phi_hist.png
+
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration at End of Simulation (Result Symmetric about Y=0)'
+    fmts: ['k-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Cl- Concentration at End of Simulation (Result Symmetric about Y=0)'
+    fmts: ['k-']
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+  - &plot7def
+    figsize: [11, 8.5]
+    filename: midline_conc_2.pdf
+    plotname: midline_conc_2
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline CaCaM Concentration at End of Simulation (Result Symmetric about Y=0)'
+    fmts: ['k-']
+  - <<: *plot7def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_2.png
+  - &plot8def
+    figsize: [11, 8.5]
+    filename: midline_phi.pdf
+    plotname: midline_phi
+    xlabel: 'Y (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Midline Electric Potential at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot8def #reuse definition
+    figsize: [9, 7]
+    filename: midline_phi.png

@@ -1,0 +1,16 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Mesh definition
+#Each document defines an instance of buildgeom.MeshParameters
+
+---
+meshname: square50
+geomdefname: rectangle
+tmplvalues:
+  mscale: 1.0
+  mcar: 1.0
+  Lx: 50
+  Ly: 50

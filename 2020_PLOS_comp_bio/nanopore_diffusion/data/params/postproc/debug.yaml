@@ -1,0 +1,491 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Post-processing specification
+#Each document defines an instance of postproc.PostProcParameters
+---
+modelparamsfile: debug.yaml
+modelnames: [debug01]
+model_plots:
+  - &modelplotdef
+    figsize: [11, 8.5]
+    filename: profile_CL_c.pdf
+    plotname: CL_c
+    plotfunctions:
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, Z2], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, Z3], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'concentration (count/nm^3)'
+    title: 'Concentration Profile along Pore Centerline'
+    fmts: ['k-']
+  - <<: *modelplotdef #reuse definition
+    figsize: [9, 7]
+    filename: fick_profile_CL_c.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug01_2D]
+model_plots:
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Cl- Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug01_2D_td]
+model_plots:
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration'
+    fmts: ['0.95','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1','k-']
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Cl- Concentration'
+    fmts: ['0.95','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1','k-']
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper right'}}]
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug_2D_SS_NP_FP]
+model_plots:
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Cl- Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug_2D_SS_PNP]
+model_plots:
+  - &plot1def
+    figsize: [11, 8.5]
+    filename: midpoint_conc_0_hist.pdf
+    plotname: midpoint_conc_0
+    xlabel: 'time (ns)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Ca2+ Concentration History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot1def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_0_hist.png
+  - &plot2def
+    <<: *plot1def #reuse definition
+    filename: midpoint_conc_1_hist.pdf
+    plotname: midpoint_conc_1
+    title: 'Cl- Concentration History at Midpoint'
+  - <<: *plot2def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_1_hist.png
+  - &plot4def
+    figsize: [11, 8.5]
+    filename: midpoint_phi_hist.pdf
+    plotname: midpoint_phi
+    xlabel: 'time (ns)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Potential History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot4def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_phi_hist.png
+
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration'
+    fmts: ['0.95','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1','k-']
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Cl- Concentration'
+    fmts: ['0.95','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1','k-']
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper right'}}]
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+  - &plot8def
+    figsize: [11, 8.5]
+    filename: midline_phi.pdf
+    plotname: midline_phi
+    xlabel: 'Y (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Midline Electric Potential'
+    fmts: ['k-']
+    fmts: ['0.95','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1','k-']
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+  - <<: *plot8def #reuse definition
+    figsize: [9, 7]
+    filename: midline_phi.png
+  - &plot9def
+    figsize: [11, 8.5]
+    filename: midline_rho.pdf
+    plotname: midline_rho
+    xlabel: 'Y (nm)'
+    ylabel: 'Charge Density (+charges per nm^3)'
+    title: 'Midline Charge Density'
+    fmts: ['k-']
+    fmts: ['0.95','0.9','0.8','0.7','0.6','0.5','0.4','0.3','0.2','0.1','k-']
+    plotfunctions:
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+  - <<: *plot9def #reuse definition
+    figsize: [9, 7]
+    filename: midline_rho.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug02]
+model_plots:
+  - &plot1def
+    figsize: [11, 8.5]
+    filename: profile_CL_phi.pdf
+    plotname: CL_phi
+    plotfunctions: &cl_plotfuncs
+      - [plot_axmethod, {method: invert_xaxis}]
+      - [plot_vline, {locspec: [mesh_metadata, Z2], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+      - [plot_vline, {locspec: [mesh_metadata, Z3], kwargs: {label: 'Pore Limits',color: 'k',linestyle: '--'}}]
+    xlabel: 'z (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Field Profile along Pore Centerline'
+    fmts: ['k-']
+  - <<: *plot1def #reuse definition
+    figsize: [9, 7]
+    filename: profile_CL_phi.png
+  - &plot2def
+    figsize: [11, 8.5]
+    filename: profile_CL_c.pdf
+    plotname: CL_c
+    plotfunctions: *cl_plotfuncs
+    xlabel: 'z (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Concentration Profile along Pore Centerline'
+    fmts: ['k-']
+  - <<: *plot2def #reuse definition
+    figsize: [9, 7]
+    filename: profile_CL_c.png
+  - &plot3def
+    figsize: [11, 8.5]
+    filename: profile_CL_cbar.pdf
+    plotname: CL_cbar
+    plotfunctions: *cl_plotfuncs
+    xlabel: 'z (nm)'
+    ylabel: 'cbar'
+    title: 'Transformed Concentration along Pore Centerline'
+    fmts: ['k-']
+  - <<: *plot3def #reuse definition
+    figsize: [9, 7]
+    filename: profile_CL_cbar.png
+  - &plot4def
+    figsize: [11, 8.5]
+    filename: profile_CL_Dbar.pdf
+    plotname: CL_Dbar
+    plotfunctions: *cl_plotfuncs
+    xlabel: 'z (nm)'
+    ylabel: 'Dbar'
+    title: 'Transformed Diffusion Constant along Pore Centerline'
+    fmts: ['k-']
+  - <<: *plot4def #reuse definition
+    figsize: [9, 7]
+    filename: profile_CL_Dbar.png
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: radial_phi.pdf
+    plotname: radial_phi
+    plotfunctions:
+      - &poreboundary [plot_vline, {locspec: [mesh_metadata, R],kwargs: {label: 'Pore Boundary',color: 'k',linestyle: '--'}}]
+      - [plot_hline, {locspec: [conditions, potential, conditions, dirichlet, 11],kwargs: {label: 'Potential at Pore Boundary',color: 'k',linestyle: ":"}}]
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper left'}}]
+    xlabel: 'Radial Distance (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Potential along Radial Lines'
+    fmts: ['r-','g-','b-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: radial_phi.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: radial_c.pdf
+    plotname: radial_c
+    plotfunctions:
+      - *poreboundary
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper right'}}]
+    xlabel: 'Radial Distance (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Concentration Profile along Radial Lines'
+    fmts: ['r-','g-','b-']
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: radial_c.png
+  - &plot7def
+    figsize: [11, 8.5]
+    filename: radial_cbar.pdf
+    plotname: radial_cbar
+    plotfunctions:
+      - *poreboundary
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'lower left'}}]
+    xlabel: 'Radial Distance (nm)'
+    ylabel: 'cbar'
+    title: 'Transformed Concentration along Radial Lines'
+    fmts: ['r-','g-','b-']
+  - <<: *plot7def #reuse definition
+    figsize: [9, 7]
+    filename: radial_cbar.png
+  - &plot8def
+    figsize: [11, 8.5]
+    filename: radial_Dbar.pdf
+    plotname: radial_Dbar
+    plotfunctions:
+      - *poreboundary
+      - [plot_axmethod, {method: legend, kwargs: {loc: 'upper right'}}]
+    xlabel: 'Radial Distance (nm)'
+    ylabel: 'Dbar'
+    title: 'Transformed Diffusion Constant along Radial Lines'
+    fmts: ['r-','g-','b-']
+  - <<: *plot8def #reuse definition
+    figsize: [9, 7]
+    filename: radial_Dbar.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug03]
+model_plots:
+  - &plot1def
+    figsize: [11, 8.5]
+    filename: midpoint_conc_0_hist.pdf
+    plotname: midpoint_conc_0
+    xlabel: 'time (ns)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Ca2+ Concentration History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot1def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_0_hist.png
+  - &plot2def
+    <<: *plot1def #reuse definition
+    filename: midpoint_conc_1_hist.pdf
+    plotname: midpoint_conc_1
+    title: 'Cl- Concentration History at Midpoint'
+  - <<: *plot2def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_1_hist.png
+  - &plot3def
+    <<: *plot1def #reuse definition
+    filename: midpoint_conc_2_hist.pdf
+    plotname: midpoint_conc_2
+    title: 'CaCaM Concentration History at Midpoint'
+  - <<: *plot3def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_2_hist.png
+  - &plot4def
+    figsize: [11, 8.5]
+    filename: midpoint_phi_hist.pdf
+    plotname: midpoint_phi
+    xlabel: 'time (ns)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Potential History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot4def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_phi_hist.png
+
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Cl- Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+  - &plot7def
+    figsize: [11, 8.5]
+    filename: midline_conc_2.pdf
+    plotname: midline_conc_2
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline CaCaM Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot7def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_2.png
+  - &plot8def
+    figsize: [11, 8.5]
+    filename: midline_phi.pdf
+    plotname: midline_phi
+    xlabel: 'Y (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Midline Electric Potential at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot8def #reuse definition
+    figsize: [9, 7]
+    filename: midline_phi.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug03_no_charge]
+model_plots:
+  - &plot1def
+    figsize: [11, 8.5]
+    filename: midpoint_conc_0_hist.pdf
+    plotname: midpoint_conc_0
+    xlabel: 'time (ns)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Ca2+ Concentration History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot1def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_0_hist.png
+  - &plot2def
+    <<: *plot1def #reuse definition
+    filename: midpoint_conc_1_hist.pdf
+    plotname: midpoint_conc_1
+    title: 'CaCaM Concentration History at Midpoint'
+  - <<: *plot2def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_1_hist.png
+
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot6def
+    figsize: [11, 8.5]
+    filename: midline_conc_1.pdf
+    plotname: midline_conc_1
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline CaCaM Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot6def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_1.png
+---
+modelparamsfile: debug.yaml
+modelnames: [debug03_lintest]
+model_plots:
+  - &plot1def
+    figsize: [11, 8.5]
+    filename: midpoint_conc_0_hist.pdf
+    plotname: midpoint_conc_0
+    xlabel: 'time (ns)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Ca2+ Concentration History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot1def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_conc_0_hist.png
+  - &plot4def
+    figsize: [11, 8.5]
+    filename: midpoint_phi_hist.pdf
+    plotname: midpoint_phi
+    xlabel: 'time (ns)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Electric Potential History at Midpoint'
+    fmts: ['k-']
+  - <<: *plot4def #reuse definition
+    figsize: [9, 7]
+    filename: midpoint_phi_hist.png
+
+  - &plot5def
+    figsize: [11, 8.5]
+    filename: midline_conc_0.pdf
+    plotname: midline_conc_0
+    xlabel: 'Y (nm)'
+    ylabel: 'Concentration (count/nm^3)'
+    title: 'Midline Ca2+ Concentration at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot5def #reuse definition
+    figsize: [9, 7]
+    filename: midline_conc_0.png
+  - &plot8def
+    figsize: [11, 8.5]
+    filename: midline_phi.pdf
+    plotname: midline_phi
+    xlabel: 'Y (nm)'
+    ylabel: 'Electric Potential (V)'
+    title: 'Midline Electric Potential at End of Simulation'
+    fmts: ['k-']
+  - <<: *plot8def #reuse definition
+    figsize: [9, 7]
+    filename: midline_phi.png

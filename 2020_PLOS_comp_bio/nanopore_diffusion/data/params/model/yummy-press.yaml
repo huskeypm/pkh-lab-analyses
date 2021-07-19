@@ -1,0 +1,464 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+
+# ---
+# modelname: yummy-press_nonhomog_05
+# meshname: yummy-press_nonhomog_05
+# equation: fickian_unhomog
+# customizations:
+#   modules: [output_eff]
+# conditions:
+#   elementorder: 2
+#   dirichlet: {1113: 5.0, 5153: 1.0}
+#   D_bulk: 1
+# dataextraction:
+#   - [solutionfield, {filename: conc.pvd}]
+#   - [fluxfield, {filename: flux.pvd}]
+#   - [fluxintegral, {fluxsurf: 1113, name: totflux_left}]
+#   - [fluxintegral, {fluxsurf: 5153, name: totflux_right}]
+#   - [fluxintegral, {fluxsurf: 3132, name: totflux_inner, internal: True, fluxsign: '-'}]
+#   - [facet_area, {pfacet: 5153, name: area_right}]
+#   - [effective_D, {name: D_eff, totflux_name: totflux_inner, area_name: area_right, startloc: [X2,Y1], endloc: [X4,Y1]}]
+#   - [line_profile, {startloc: [X1,Y1], endloc: [X5,Y1], num: 1000, indep: 0, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: yummy-press_nonhomog_07
+meshname: yummy-press_nonhomog_07
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {1113: 5.0, 5153: 1.0}
+  D_bulk: 1
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1113, name: totflux_left}]
+  - [fluxintegral, {fluxsurf: 5153, name: totflux_right}]
+  - [fluxintegral, {fluxsurf: 3132, name: totflux_inner, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 5153, name: area_right}]
+  - [effective_D, {name: D_eff, totflux_name: totflux_inner, area_name: area_right, startloc: [X2,Y1], endloc: [X4,Y1]}]
+  - [line_profile, {startloc: [X1,Y1], endloc: [X5,Y1], num: 1000, indep: 0, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: yummy-press_nonhomog_10
+meshname: yummy-press_nonhomog_10
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {1113: 5.0, 5153: 1.0}
+  D_bulk: 1
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1113, name: totflux_left}]
+  - [fluxintegral, {fluxsurf: 5153, name: totflux_right}]
+  - [fluxintegral, {fluxsurf: 3132, name: totflux_inner, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 5153, name: area_right}]
+  - [effective_D, {name: D_eff, totflux_name: totflux_inner, area_name: area_right, startloc: [X2,Y1], endloc: [X4,Y1]}]
+  - [line_profile, {startloc: [X1,Y1], endloc: [X5,Y1], num: 1000, indep: 0, plotname: CL_c, label: 'concentration along centerline'}]
+---
+modelname: yummy-press_nonhomog_15
+meshname: yummy-press_nonhomog_15
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet: {1113: 5.0, 5153: 1.0}
+  D_bulk: 1
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: 1113, name: totflux_left}]
+  - [fluxintegral, {fluxsurf: 5153, name: totflux_right}]
+  - [fluxintegral, {fluxsurf: 3132, name: totflux_inner, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 5153, name: area_right}]
+  - [effective_D, {name: D_eff, totflux_name: totflux_inner, area_name: area_right, startloc: [X2,Y1], endloc: [X4,Y1]}]
+  - [line_profile, {startloc: [X1,Y1], endloc: [X5,Y1], num: 1000, indep: 0, plotname: CL_c, label: 'concentration along centerline'}]
+# ---
+# modelname: yummy-press_nonhomog_20
+# meshname: yummy-press_nonhomog_20
+# equation: fickian_unhomog
+# customizations:
+#   modules: [output_eff]
+# conditions:
+#   elementorder: 2
+#   dirichlet: {1113: 5.0, 5153: 1.0}
+#   D_bulk: 1
+# dataextraction:
+#   - [solutionfield, {filename: conc.pvd}]
+#   - [fluxfield, {filename: flux.pvd}]
+#   - [fluxintegral, {fluxsurf: 1113, name: totflux_left}]
+#   - [fluxintegral, {fluxsurf: 5153, name: totflux_right}]
+#   - [fluxintegral, {fluxsurf: 3132, name: totflux_inner, internal: True, fluxsign: '-'}]
+#   - [facet_area, {pfacet: 5153, name: area_right}]
+#   - [effective_D, {name: D_eff, totflux_name: totflux_inner, area_name: area_right, startloc: [X2,Y1], endloc: [X4,Y1]}]
+#   - [line_profile, {startloc: [X1,Y1], endloc: [X5,Y1], num: 1000, indep: 0, plotname: CL_c, label: 'concentration along centerline'}]
+# ---
+# modelname: yummy-press_homog_05_const_D
+# meshname: yummy-press_homog_05
+# equation: projector
+# conditions:
+#   elementorder: 3
+#   expression: '1.0'
+# dataextraction:
+#   - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+---
+modelname: yummy-press_homog_07_const_D
+meshname: yummy-press_homog_07
+equation: projector
+conditions:
+  elementorder: 3
+  expression: '1.0'
+dataextraction:
+  - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+# ---
+# modelname: yummy-press_homog_05_const
+# meshname: yummy-press_homog_05
+# equation: fickian_homog
+# metadata:
+#   full_volume: 18.55
+#   D_bulk: 1
+# loaddata:
+#    - [D, solutions/yummy-press/yummy-press_homog_05_const_D/spatial_D.hdf5, spatial_D]
+# conditions:
+#   elementorder: 3
+#   boundaries: [1121, 2122, 1222, 1112]
+# dataextraction:
+#   - [macroscale_diffusion, {usevolume: full_volume}]
+#   - [solutionfield, {filename: chi.pvd}]
+---
+modelname: yummy-press_homog_07_const
+meshname: yummy-press_homog_07
+equation: fickian_homog
+metadata:
+  full_volume: 19.25
+  D_bulk: 1
+loaddata:
+   - [D, solutions/yummy-press/yummy-press_homog_07_const_D/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {usevolume: full_volume}]
+  - [solutionfield, {filename: chi.pvd}]
+---
+modelname: yummy-press_homog_10_const_D
+meshname: yummy-press_homog_10
+equation: projector
+conditions:
+  elementorder: 3
+  expression: '1.0'
+dataextraction:
+  - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+---
+modelname: yummy-press_homog_10_const
+meshname: yummy-press_homog_10
+equation: fickian_homog
+metadata:
+  full_volume: 20.3
+  D_bulk: 1
+loaddata:
+   - [D, solutions/yummy-press/yummy-press_homog_10_const_D/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {usevolume: full_volume}]
+  - [solutionfield, {filename: chi.pvd}]
+---
+modelname: yummy-press_homog_15_const_D
+meshname: yummy-press_homog_15
+equation: projector
+conditions:
+  elementorder: 3
+  expression: '1.0'
+dataextraction:
+  - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+---
+modelname: yummy-press_homog_15_const
+meshname: yummy-press_homog_15
+equation: fickian_homog
+metadata:
+  full_volume: 22.05
+  D_bulk: 1
+loaddata:
+   - [D, solutions/yummy-press/yummy-press_homog_15_const_D/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {usevolume: full_volume}]
+  - [solutionfield, {filename: chi.pvd}]
+# ---
+# modelname: yummy-press_homog_20_const_D
+# meshname: yummy-press_homog_20
+# equation: projector
+# conditions:
+#   elementorder: 3
+#   expression: '1.0'
+# dataextraction:
+#   - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+# ---
+# modelname: yummy-press_homog_20_const
+# meshname: yummy-press_homog_20
+# equation: fickian_homog
+# metadata:
+#   full_volume: 23.8
+#   D_bulk: 1
+# loaddata:
+#    - [D, solutions/yummy-press/yummy-press_homog_20_const_D/spatial_D.hdf5, spatial_D]
+# conditions:
+#   elementorder: 3
+#   boundaries: [1121, 2122, 1222, 1112]
+# dataextraction:
+#   - [macroscale_diffusion, {usevolume: full_volume}]
+#   - [solutionfield, {filename: chi.pvd}]
+# ---
+# modelname: yummy-press_homog_05_vary_D
+# meshname: yummy-press_homog_05
+# equation: projector
+# conditions:
+#   elementorder: 3
+#   # expression: '4.0*x[1]/{Ly}*(1.0-x[1]/{Ly})' #placeholder data for testing purposes only
+#   #From MD results, 19-Jul-2018
+#   expression: >-
+#     (x[1]>0.0)*(x[1]<=0.1)*(1.546*(x[1]-0.0)+0.000*(0.1-x[1]))/0.100 +
+#     (x[1]>0.1)*(x[1]<=0.2)*(1.508*(x[1]-0.1)+1.546*(0.2-x[1]))/0.100 +
+#     (x[1]>0.2)*(x[1]<=0.25)*(1.238*(x[1]-0.2)+1.508*(0.25-x[1]))/0.050 +
+#     (x[1]>0.25)*(x[1]<=0.3)*(1.508*(x[1]-0.25)+1.238*(0.3-x[1]))/0.050 +
+#     (x[1]>0.3)*(x[1]<=0.4)*(1.546*(x[1]-0.3)+1.508*(0.4-x[1]))/0.100 +
+#     (x[1]>0.4)*(x[1]<=0.5)*(0.000*(x[1]-0.4)+1.546*(0.5-x[1]))/0.100
+# dataextraction:
+#   - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+#   - [solutionfield, {filename: spatial_D.pvd}]
+---
+modelname: yummy-press_homog_07_vary_D
+meshname: yummy-press_homog_07
+equation: projector
+conditions:
+  elementorder: 3
+  # expression: '4.0*x[1]/{Ly}*(1.0-x[1]/{Ly})' #placeholder data for testing purposes only
+  #From MD results, 04-Dec-2018
+  expression: >-
+    (x[1]>0.00)*(x[1]<=0.10)*(2.660*(x[1]-0.00)+0.000*(0.10-x[1]))/0.100 +
+    (x[1]>0.10)*(x[1]<=0.15)*(2.462*(x[1]-0.10)+2.660*(0.15-x[1]))/0.050 +
+    (x[1]>0.15)*(x[1]<=0.20)*(2.073*(x[1]-0.15)+2.462*(0.20-x[1]))/0.050 +
+    (x[1]>0.20)*(x[1]<=0.25)*(0.694*(x[1]-0.20)+2.073*(0.25-x[1]))/0.050 +
+    (x[1]>0.25)*(x[1]<=0.30)*(0.831*(x[1]-0.25)+0.694*(0.30-x[1]))/0.050 +
+    (x[1]>0.30)*(x[1]<=0.35)*(0.145*(x[1]-0.30)+0.831*(0.35-x[1]))/0.050 +
+    (x[1]>0.35)*(x[1]<=0.40)*(0.831*(x[1]-0.35)+0.145*(0.40-x[1]))/0.050 +
+    (x[1]>0.40)*(x[1]<=0.45)*(0.694*(x[1]-0.40)+0.831*(0.45-x[1]))/0.050 +
+    (x[1]>0.45)*(x[1]<=0.50)*(2.073*(x[1]-0.45)+0.694*(0.50-x[1]))/0.050 +
+    (x[1]>0.50)*(x[1]<=0.55)*(2.462*(x[1]-0.50)+2.073*(0.55-x[1]))/0.050 +
+    (x[1]>0.55)*(x[1]<=0.60)*(2.660*(x[1]-0.55)+2.462*(0.60-x[1]))/0.050 +
+    (x[1]>0.60)*(x[1]<=0.70)*(0.000*(x[1]-0.60)+2.660*(0.70-x[1]))/0.100
+dataextraction:
+  - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+  - [solutionfield, {filename: spatial_D.pvd}]
+# ---
+# modelname: yummy-press_homog_05_vary
+# meshname: yummy-press_homog_05
+# equation: fickian_homog
+# metadata:
+#   full_volume: 18.55
+#   D_bulk: 1
+# loaddata:
+#    - [D, solutions/yummy-press/yummy-press_homog_05_vary_D/spatial_D.hdf5, spatial_D]
+# conditions:
+#   elementorder: 3
+#   boundaries: [1121, 2122, 1222, 1112]
+# dataextraction:
+#   - [macroscale_diffusion, {usevolume: full_volume}]
+#   - [solutionfield, {filename: chi.pvd}]
+---
+modelname: yummy-press_homog_07_vary
+meshname: yummy-press_homog_07
+equation: fickian_homog
+metadata:
+  full_volume: 19.25
+  D_bulk: 1
+loaddata:
+   - [D, solutions/yummy-press/yummy-press_homog_07_vary_D/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {usevolume: full_volume}]
+  - [solutionfield, {filename: chi.pvd}]
+---
+modelname: yummy-press_homog_10_vary_D
+meshname: yummy-press_homog_10
+equation: projector
+conditions:
+  elementorder: 3
+  # expression: '4.0*x[1]/{Ly}*(1.0-x[1]/{Ly})' #placeholder data for testing purposes only
+  #From MD results, 19-Jul-2018
+  # expression: >-
+  #   (x[1]>0.0)*(x[1]<=0.1)*(1.546*(x[1]-0.0)+0.000*(0.1-x[1]))/0.100 +
+  #   (x[1]>0.1)*(x[1]<=0.2)*(1.508*(x[1]-0.1)+1.546*(0.2-x[1]))/0.100 +
+  #   (x[1]>0.2)*(x[1]<=0.3)*(0.967*(x[1]-0.2)+1.508*(0.3-x[1]))/0.100 +
+  #   (x[1]>0.3)*(x[1]<=0.4)*(1.118*(x[1]-0.3)+0.967*(0.4-x[1]))/0.100 +
+  #   (x[1]>0.4)*(x[1]<=0.5)*(1.266*(x[1]-0.4)+1.118*(0.5-x[1]))/0.100 +
+  #   (x[1]>0.5)*(x[1]<=0.6)*(1.118*(x[1]-0.5)+1.266*(0.6-x[1]))/0.100 +
+  #   (x[1]>0.6)*(x[1]<=0.7)*(0.967*(x[1]-0.6)+1.118*(0.7-x[1]))/0.100 +
+  #   (x[1]>0.7)*(x[1]<=0.8)*(1.508*(x[1]-0.7)+0.967*(0.8-x[1]))/0.100 +
+  #   (x[1]>0.8)*(x[1]<=0.9)*(1.546*(x[1]-0.8)+1.508*(0.9-x[1]))/0.100 +
+  #   (x[1]>0.9)*(x[1]<=1.0)*(0.000*(x[1]-0.9)+1.546*(1.0-x[1]))/0.100
+  #From MD results, 04-Dec-2018
+  expression: >-
+    (x[1]>0.00)*(x[1]<=0.10)*(3.113*(x[1]-0.00)+0.000*(0.10-x[1]))/0.100 +
+    (x[1]>0.10)*(x[1]<=0.15)*(3.324*(x[1]-0.10)+3.113*(0.15-x[1]))/0.050 +
+    (x[1]>0.15)*(x[1]<=0.20)*(1.511*(x[1]-0.15)+3.324*(0.20-x[1]))/0.050 +
+    (x[1]>0.20)*(x[1]<=0.25)*(1.902*(x[1]-0.20)+1.511*(0.25-x[1]))/0.050 +
+    (x[1]>0.25)*(x[1]<=0.30)*(1.016*(x[1]-0.25)+1.902*(0.30-x[1]))/0.050 +
+    (x[1]>0.30)*(x[1]<=0.35)*(0.255*(x[1]-0.30)+1.016*(0.35-x[1]))/0.050 +
+    (x[1]>0.35)*(x[1]<=0.40)*(0.530*(x[1]-0.35)+0.255*(0.40-x[1]))/0.050 +
+    (x[1]>0.40)*(x[1]<=0.45)*(0.669*(x[1]-0.40)+0.530*(0.45-x[1]))/0.050 +
+    (x[1]>0.45)*(x[1]<=0.50)*(0.693*(x[1]-0.45)+0.669*(0.50-x[1]))/0.050 +
+    (x[1]>0.50)*(x[1]<=0.55)*(0.669*(x[1]-0.50)+0.693*(0.55-x[1]))/0.050 +
+    (x[1]>0.55)*(x[1]<=0.60)*(0.530*(x[1]-0.55)+0.669*(0.60-x[1]))/0.050 +
+    (x[1]>0.60)*(x[1]<=0.65)*(0.255*(x[1]-0.60)+0.530*(0.65-x[1]))/0.050 +
+    (x[1]>0.65)*(x[1]<=0.70)*(1.016*(x[1]-0.65)+0.255*(0.70-x[1]))/0.050 +
+    (x[1]>0.70)*(x[1]<=0.75)*(1.902*(x[1]-0.70)+1.016*(0.75-x[1]))/0.050 +
+    (x[1]>0.75)*(x[1]<=0.80)*(1.511*(x[1]-0.75)+1.902*(0.80-x[1]))/0.050 +
+    (x[1]>0.80)*(x[1]<=0.85)*(3.324*(x[1]-0.80)+1.511*(0.85-x[1]))/0.050 +
+    (x[1]>0.85)*(x[1]<=0.90)*(3.113*(x[1]-0.85)+3.324*(0.90-x[1]))/0.050 +
+    (x[1]>0.90)*(x[1]<=1.00)*(0.000*(x[1]-0.90)+3.113*(1.00-x[1]))/0.100
+dataextraction:
+  - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+  - [solutionfield, {filename: spatial_D.pvd}]
+---
+modelname: yummy-press_homog_10_vary
+meshname: yummy-press_homog_10
+equation: fickian_homog
+metadata:
+  full_volume: 20.3
+  D_bulk: 1
+loaddata:
+   - [D, solutions/yummy-press/yummy-press_homog_10_vary_D/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {usevolume: full_volume}]
+  - [solutionfield, {filename: chi.pvd}]
+---
+modelname: yummy-press_homog_15_vary_D
+meshname: yummy-press_homog_15
+equation: projector
+conditions:
+  elementorder: 3
+  # expression: '4.0*x[1]/{Ly}*(1.0-x[1]/{Ly})' #placeholder data for testing purposes only
+  #From MD results, 19-Jul-2018
+  # expression: >-
+  #   (x[1]>0.0)*(x[1]<=0.1)*(1.546*(x[1]-0.0)+0.000*(0.1-x[1]))/0.100 +
+  #   (x[1]>0.1)*(x[1]<=0.2)*(1.508*(x[1]-0.1)+1.546*(0.2-x[1]))/0.100 +
+  #   (x[1]>0.2)*(x[1]<=0.3)*(0.967*(x[1]-0.2)+1.508*(0.3-x[1]))/0.100 +
+  #   (x[1]>0.3)*(x[1]<=0.4)*(1.118*(x[1]-0.3)+0.967*(0.4-x[1]))/0.100 +
+  #   (x[1]>0.4)*(x[1]<=0.6)*(1.414*(x[1]-0.4)+1.118*(0.6-x[1]))/0.200 +
+  #   (x[1]>0.6)*(x[1]<=0.7)*(1.311*(x[1]-0.6)+1.414*(0.7-x[1]))/0.100 +
+  #   (x[1]>0.7)*(x[1]<=0.75)*(1.260*(x[1]-0.7)+1.311*(0.75-x[1]))/0.050 +
+  #   (x[1]>0.75)*(x[1]<=0.8)*(1.311*(x[1]-0.75)+1.260*(0.8-x[1]))/0.050 +
+  #   (x[1]>0.8)*(x[1]<=0.9)*(1.414*(x[1]-0.8)+1.311*(0.9-x[1]))/0.100 +
+  #   (x[1]>0.9)*(x[1]<=1.1)*(1.118*(x[1]-0.9)+1.414*(1.1-x[1]))/0.200 +
+  #   (x[1]>1.1)*(x[1]<=1.2)*(0.967*(x[1]-1.1)+1.118*(1.2-x[1]))/0.100 +
+  #   (x[1]>1.2)*(x[1]<=1.3)*(1.508*(x[1]-1.2)+0.967*(1.3-x[1]))/0.100 +
+  #   (x[1]>1.3)*(x[1]<=1.4)*(1.546*(x[1]-1.3)+1.508*(1.4-x[1]))/0.100 +
+  #   (x[1]>1.4)*(x[1]<=1.5)*(0.000*(x[1]-1.4)+1.546*(1.5-x[1]))/0.100
+  #From MD results, 04-Dec-2018
+  expression: >-
+    (x[1]>0.00)*(x[1]<=0.10)*(3.571*(x[1]-0.00)+0.000*(0.10-x[1]))/0.100 +
+    (x[1]>0.10)*(x[1]<=0.15)*(2.913*(x[1]-0.10)+3.571*(0.15-x[1]))/0.050 +
+    (x[1]>0.15)*(x[1]<=0.20)*(1.704*(x[1]-0.15)+2.913*(0.20-x[1]))/0.050 +
+    (x[1]>0.20)*(x[1]<=0.25)*(1.724*(x[1]-0.20)+1.704*(0.25-x[1]))/0.050 +
+    (x[1]>0.25)*(x[1]<=0.30)*(0.232*(x[1]-0.25)+1.724*(0.30-x[1]))/0.050 +
+    (x[1]>0.30)*(x[1]<=0.35)*(0.673*(x[1]-0.30)+0.232*(0.35-x[1]))/0.050 +
+    (x[1]>0.35)*(x[1]<=0.40)*(0.711*(x[1]-0.35)+0.673*(0.40-x[1]))/0.050 +
+    (x[1]>0.40)*(x[1]<=0.45)*(0.686*(x[1]-0.40)+0.711*(0.45-x[1]))/0.050 +
+    (x[1]>0.45)*(x[1]<=0.50)*(0.690*(x[1]-0.45)+0.686*(0.50-x[1]))/0.050 +
+    (x[1]>0.50)*(x[1]<=0.55)*(0.223*(x[1]-0.50)+0.690*(0.55-x[1]))/0.050 +
+    (x[1]>0.55)*(x[1]<=0.60)*(0.217*(x[1]-0.55)+0.223*(0.60-x[1]))/0.050 +
+    (x[1]>0.60)*(x[1]<=0.65)*(0.508*(x[1]-0.60)+0.217*(0.65-x[1]))/0.050 +
+    (x[1]>0.65)*(x[1]<=0.70)*(0.449*(x[1]-0.65)+0.508*(0.70-x[1]))/0.050 +
+    (x[1]>0.70)*(x[1]<=0.75)*(0.403*(x[1]-0.70)+0.449*(0.75-x[1]))/0.050 +
+    (x[1]>0.75)*(x[1]<=0.80)*(0.449*(x[1]-0.75)+0.403*(0.80-x[1]))/0.050 +
+    (x[1]>0.80)*(x[1]<=0.85)*(0.508*(x[1]-0.80)+0.449*(0.85-x[1]))/0.050 +
+    (x[1]>0.85)*(x[1]<=0.90)*(0.217*(x[1]-0.85)+0.508*(0.90-x[1]))/0.050 +
+    (x[1]>0.90)*(x[1]<=0.95)*(0.223*(x[1]-0.90)+0.217*(0.95-x[1]))/0.050 +
+    (x[1]>0.95)*(x[1]<=1.00)*(0.690*(x[1]-0.95)+0.223*(1.00-x[1]))/0.050 +
+    (x[1]>1.00)*(x[1]<=1.05)*(0.686*(x[1]-1.00)+0.690*(1.05-x[1]))/0.050 +
+    (x[1]>1.05)*(x[1]<=1.10)*(0.711*(x[1]-1.05)+0.686*(1.10-x[1]))/0.050 +
+    (x[1]>1.10)*(x[1]<=1.15)*(0.673*(x[1]-1.10)+0.711*(1.15-x[1]))/0.050 +
+    (x[1]>1.15)*(x[1]<=1.20)*(0.232*(x[1]-1.15)+0.673*(1.20-x[1]))/0.050 +
+    (x[1]>1.20)*(x[1]<=1.25)*(1.724*(x[1]-1.20)+0.232*(1.25-x[1]))/0.050 +
+    (x[1]>1.25)*(x[1]<=1.30)*(1.704*(x[1]-1.25)+1.724*(1.30-x[1]))/0.050 +
+    (x[1]>1.30)*(x[1]<=1.35)*(2.913*(x[1]-1.30)+1.704*(1.35-x[1]))/0.050 +
+    (x[1]>1.35)*(x[1]<=1.40)*(3.571*(x[1]-1.35)+2.913*(1.40-x[1]))/0.050 +
+    (x[1]>1.40)*(x[1]<=1.50)*(0.000*(x[1]-1.40)+3.571*(1.50-x[1]))/0.100
+dataextraction:
+  - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+  - [solutionfield, {filename: spatial_D.pvd}]
+---
+modelname: yummy-press_homog_15_vary
+meshname: yummy-press_homog_15
+equation: fickian_homog
+metadata:
+  full_volume: 22.05
+  D_bulk: 1
+loaddata:
+   - [D, solutions/yummy-press/yummy-press_homog_15_vary_D/spatial_D.hdf5, spatial_D]
+conditions:
+  elementorder: 3
+  boundaries: [1121, 2122, 1222, 1112]
+dataextraction:
+  - [macroscale_diffusion, {usevolume: full_volume}]
+  - [solutionfield, {filename: chi.pvd}]
+# ---
+# modelname: yummy-press_homog_20_vary_D
+# meshname: yummy-press_homog_20
+# equation: projector
+# conditions:
+#   elementorder: 3
+#   # expression: '4.0*x[1]/{Ly}*(1.0-x[1]/{Ly})' #placeholder data for testing purposes only
+#   #From MD results, 19-Jul-2018
+#   expression: >-
+#     (x[1]>0.0)*(x[1]<=0.1)*(1.546*(x[1]-0.0)+0.000*(0.1-x[1]))/0.100 +
+#     (x[1]>0.1)*(x[1]<=0.2)*(1.508*(x[1]-0.1)+1.546*(0.2-x[1]))/0.100 +
+#     (x[1]>0.2)*(x[1]<=0.3)*(0.967*(x[1]-0.2)+1.508*(0.3-x[1]))/0.100 +
+#     (x[1]>0.3)*(x[1]<=0.4)*(1.118*(x[1]-0.3)+0.967*(0.4-x[1]))/0.100 +
+#     (x[1]>0.4)*(x[1]<=0.6)*(1.414*(x[1]-0.4)+1.118*(0.6-x[1]))/0.200 +
+#     (x[1]>0.6)*(x[1]<=0.7)*(1.311*(x[1]-0.6)+1.414*(0.7-x[1]))/0.100 +
+#     (x[1]>0.7)*(x[1]<=1.0)*(1.000*(x[1]-0.7)+1.311*(1.0-x[1]))/0.300 +
+#     (x[1]>1.0)*(x[1]<=1.3)*(1.311*(x[1]-1.0)+1.000*(1.3-x[1]))/0.300 +
+#     (x[1]>1.3)*(x[1]<=1.4)*(1.414*(x[1]-1.3)+1.311*(1.4-x[1]))/0.100 +
+#     (x[1]>1.4)*(x[1]<=1.6)*(1.118*(x[1]-1.4)+1.414*(1.6-x[1]))/0.200 +
+#     (x[1]>1.6)*(x[1]<=1.7)*(0.967*(x[1]-1.6)+1.118*(1.7-x[1]))/0.100 +
+#     (x[1]>1.7)*(x[1]<=1.8)*(1.508*(x[1]-1.7)+0.967*(1.8-x[1]))/0.100 +
+#     (x[1]>1.8)*(x[1]<=1.9)*(1.546*(x[1]-1.8)+1.508*(1.9-x[1]))/0.100 +
+#     (x[1]>1.9)*(x[1]<=2.0)*(0.000*(x[1]-1.9)+1.546*(2.0-x[1]))/0.100
+# dataextraction:
+#   - [solutionfield, {filename: spatial_D.hdf5, outname: spatial_D}]
+#   - [solutionfield, {filename: spatial_D.pvd}]
+# ---
+# modelname: yummy-press_homog_20_vary
+# meshname: yummy-press_homog_20
+# equation: fickian_homog
+# metadata:
+#   full_volume: 23.8
+#   D_bulk: 1
+# loaddata:
+#    - [D, solutions/yummy-press/yummy-press_homog_20_vary_D/spatial_D.hdf5, spatial_D]
+# conditions:
+#   elementorder: 3
+#   boundaries: [1121, 2122, 1222, 1112]
+# dataextraction:
+#   - [macroscale_diffusion, {usevolume: full_volume}]
+#   - [solutionfield, {filename: chi.pvd}]

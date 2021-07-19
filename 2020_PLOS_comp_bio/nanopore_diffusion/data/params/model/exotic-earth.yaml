@@ -1,0 +1,86 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+
+---
+modelname: exotic-earth_test
+meshname: exotic-earth_mesh_005
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_001
+meshname: exotic-earth_mesh_001
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_002
+meshname: exotic-earth_mesh_002
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_003
+meshname: exotic-earth_mesh_003
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_004
+meshname: exotic-earth_mesh_004
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_005
+meshname: exotic-earth_mesh_005
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_006
+meshname: exotic-earth_mesh_006
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_007
+meshname: exotic-earth_mesh_007
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_008
+meshname: exotic-earth_mesh_008
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+---
+modelname: exotic-earth_model_009
+meshname: exotic-earth_mesh_009
+equation: exotic-earth
+conditions:
+  elementorder: 3
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]

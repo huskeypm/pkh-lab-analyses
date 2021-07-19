@@ -1,0 +1,31 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+#Each document defines an instance of simulator_general.ModelParameters
+
+##TODO: put in the fields
+
+{% for fields in allfields %}
+---
+modelname: {{ '%s_model_%03d'|format(fields.hrhash, fields.counter) }}
+meshname: {{ fields.meshname }}
+equation: fickian_unhomog
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: {{ fields.elementorder }}
+  dirichlet: { {{- fields.psurf_top }}: {{ fields.dval_top }}, {{ fields.psurf_base }}: {{ fields.dval_base -}} }
+  D_bulk: {{ fields.D_bulk }}
+dataextraction:
+  - [solutionfield, {filename: conc.pvd}]
+  - [fluxfield, {filename: flux.pvd}]
+  - [fluxintegral, {fluxsurf: {{ fields.psurf_base }}, name: {{ 'totflux_%02d'|format(fields.psurf_base) }}, normalvar: {{ 'n%02d'|format(fields.psurf_base) -}} }]
+  - [fluxintegral, {fluxsurf: {{ fields.psurf_top }}, name: {{ 'totflux_%02d'|format(fields.psurf_top) }}, normalvar: {{ 'n%02d'|format(fields.psurf_top) -}} }]
+  - [fluxintegral, {fluxsurf: {{ fields.psurf_mid }}, name: {{ 'totflux_%02d'|format(fields.psurf_mid) }}, internal: True, fluxsign: '-', normalvar: {{ 'n%02d'|format(fields.psurf_mid) -}} }]
+  - [effective_diffusion, {name: Deff, totflux_name: {{ 'totflux_%02d'|format(fields.psurf_mid) -}} }]
+  - [volfrac, {name: free_volume_frac}]
+  - [line_profile, {startloc: [0,0,Z1], endloc: [0,0,Z4], num: 1000, indep: 2, plotname: CL_c, label: 'concentration along centerline'}]
+{% endfor %}

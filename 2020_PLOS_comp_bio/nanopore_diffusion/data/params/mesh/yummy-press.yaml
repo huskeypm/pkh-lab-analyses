@@ -1,0 +1,142 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Mesh definition
+#Each document defines an instance of buildgeom.MeshParameters
+
+# Old slot widths
+# ---
+# meshname: yummy-press_nonhomog_05
+# geomdefname: slot2d
+# tmplvalues:
+#   mscale: 1.0
+#   mcarh: 0.1
+#   mcarl: 2.0
+#   R: 0.25
+#   L: 2.65
+#   H: 90
+#   tm: 90
+# ---
+# meshname: yummy-press_nonhomog_10
+# geomdefname: slot2d
+# tmplvalues:
+#   mscale: 1.0
+#   mcarh: 0.1
+#   mcarl: 2.0
+#   R: 0.5
+#   L: 2.90
+#   H: 90
+#   tm: 90
+# ---
+# meshname: yummy-press_nonhomog_15
+# geomdefname: slot2d
+# tmplvalues:
+#   mscale: 1.0
+#   mcarh: 0.1
+#   mcarl: 2.0
+#   R: 0.75
+#   L: 3.15
+#   H: 90
+#   tm: 90
+# ---
+# meshname: yummy-press_nonhomog_20
+# geomdefname: slot2d
+# tmplvalues:
+#   mscale: 1.0
+#   mcarh: 0.1
+#   mcarl: 2.0
+#   R: 1.0
+#   L: 3.40
+#   H: 90
+#   tm: 90
+---
+meshname: yummy-press_nonhomog_07
+geomdefname: slot2d
+tmplvalues:
+  mscale: 1.0
+  mcarh: 0.1
+  mcarl: 2.0
+  R: 0.35
+  L: 2.75
+  H: 90
+  tm: 90
+---
+meshname: yummy-press_nonhomog_10
+geomdefname: slot2d
+tmplvalues:
+  mscale: 1.0
+  mcarh: 0.1
+  mcarl: 2.0
+  R: 0.5
+  L: 2.90
+  H: 90
+  tm: 90
+---
+meshname: yummy-press_nonhomog_15
+geomdefname: slot2d
+tmplvalues:
+  mscale: 1.0
+  mcarh: 0.1
+  mcarl: 2.0
+  R: 0.75
+  L: 3.15
+  H: 90
+  tm: 90
+# ---
+# meshname: yummy-press_homog_05
+# geomdefname: rectangle
+# tmplvalues:
+#   mscale: 1.0
+#   mcar: 0.05 
+#   Lx: 3.5
+#   Ly: 0.5
+# ---
+# meshname: yummy-press_homog_10
+# geomdefname: rectangle
+# tmplvalues:
+#   mscale: 1.0
+#   mcar: 0.05 
+#   Lx: 3.5
+#   Ly: 1.0
+# ---
+# meshname: yummy-press_homog_15
+# geomdefname: rectangle
+# tmplvalues:
+#   mscale: 1.0
+#   mcar: 0.05 
+#   Lx: 3.5
+#   Ly: 1.5
+# ---
+# meshname: yummy-press_homog_20
+# geomdefname: rectangle
+# tmplvalues:
+#   mscale: 1.0
+#   mcar: 0.05 
+#   Lx: 3.5
+#   Ly: 2.0
+---
+meshname: yummy-press_homog_07
+geomdefname: rectangle
+tmplvalues:
+  mscale: 1.0
+  mcar: 0.05 
+  Lx: 3.5
+  Ly: 0.7
+---
+meshname: yummy-press_homog_10
+geomdefname: rectangle
+tmplvalues:
+  mscale: 1.0
+  mcar: 0.05 
+  Lx: 3.5
+  Ly: 1.0
+---
+meshname: yummy-press_homog_15
+geomdefname: rectangle
+tmplvalues:
+  mscale: 1.0
+  mcar: 0.05 
+  Lx: 3.5
+  Ly: 1.5

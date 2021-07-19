@@ -1,0 +1,102 @@
+---
+basename: {{basename}}
+modelname: {{modelname}}
+meshname: {{meshname}}
+equation: smol_reactive_surface_firstorder
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  solver_parameters:
+    linear_solver: bicgstab
+    preconditioner: icc
+  concentrationBC:
+    9: [{{bot_conc_A}}, {{bot_conc_B}}, {{bot_conc_C}}]
+    10: [{{top_conc_A}}, {{top_conc_B}}, {{top_conc_C}}]
+    5: [{{pore_conc_A}}, {{pore_conc_B}}, {{pore_conc_C}}]
+{% for inc_id in reactiveAB_inc_ids %}
+    {{inc_id}}: [{{r_inc_conc_A}}, null, null]
+{% endfor %}
+{% for inc_id in reactiveBC_inc_ids %}
+    {{inc_id}}: [null, {{r_inc_conc_B}}, null]
+{% endfor %}
+{% for inc_id in nonreactive_inc_ids %}
+    {{inc_id}}: [{{nr_inc_conc_A}}, {{nr_inc_conc_B}}, {{nr_inc_conc_C}}]
+{% endfor %}
+  fluxBC:
+    9: [{{bot_flux_A}}, {{bot_flux_B}}, {{bot_flux_C}}]
+    10: [{{top_flux_A}}, {{top_flux_B}}, {{top_flux_C}}]
+    5: [{{pore_flux_A}}, {{pore_flux_B}}, {{pore_flux_C}}]
+    1: [[0.0,0.0,0.0], [0.0,0.0,0.0], [0.0,0.0,0.0]]
+    2: [[0.0,0.0,0.0], [0.0,0.0,0.0], [0.0,0.0,0.0]]
+{% for inc_id in reactiveAB_inc_ids %}
+    {{inc_id}}: [null, null, [0.0,0.0,0.0]]
+{% endfor %}
+{% for inc_id in reactiveBC_inc_ids %}
+    {{inc_id}}: [[0.0,0.0,0.0], null, null]
+{% endfor %}
+{% for inc_id in nonreactive_inc_ids %}
+    {{inc_id}}: [{{nr_inc_flux_A}}, {{nr_inc_flux_B}}, {{nr_inc_flux_C}}]
+{% endfor %}
+  reactiveBC:
+{% for inc_id in reactiveAB_inc_ids %}
+    {{inc_id}}: [A, B]
+{% endfor %}
+{% for inc_id in reactiveBC_inc_ids %}
+    {{inc_id}}: [B, C]
+{% endfor %}
+  species:
+    - {symbol: A, z: {{z_A}}, D: 1.0}
+    - {symbol: B, z: {{z_B}}, D: 1.0}
+    - {symbol: C, z: {{z_C}}, D: 1.0}
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet:
+        9: {{bot_potential}}
+        10: {{top_potential}}
+        5: {{central_pore_potential}}
+{% for inc_id in reactiveAB_inc_ids %}        {{inc_id}}: {{rAB_inc_potential}}
+{% endfor %}
+{% for inc_id in reactiveBC_inc_ids %}        {{inc_id}}: {{rBC_inc_potential}}
+{% endfor %}
+{% for inc_id in nonreactive_inc_ids %}        {{inc_id}}: {{nr_inc_potential}}
+{% endfor %}
+      kappa: {{kappa}}
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+dataextraction:
+  - [solutionfield, {filename: conc_A.pvd, attrname: clist, idx: 0}]
+  - [solutionfield, {filename: conc_B.pvd, attrname: clist, idx: 1}]
+  - [solutionfield, {filename: conc_C.pvd, attrname: clist, idx: 2}]
+#  - [solutionfield, {filename: conc_A.hdf5, attrname: clist, idx: 0}]
+#  - [solutionfield, {filename: conc_B.hdf5, attrname: clist, idx: 1}]
+#  - [solutionfield, {filename: conc_C.hdf5, attrname: clist, idx: 2}]
+  - [solutionfield, {filename: flux_A.pvd, attrname: fluxlist, idx: 0}]
+  - [solutionfield, {filename: flux_B.pvd, attrname: fluxlist, idx: 1}]
+  - [solutionfield, {filename: flux_C.pvd, attrname: fluxlist, idx: 2}]
+  - [solutionfield, {filename: Dbar_A.pvd, attrname: Dbar_proj, idx: 0}]
+  - [solutionfield, {filename: Dbar_B.pvd, attrname: Dbar_proj, idx: 1}]
+  - [solutionfield, {filename: Dbar_C.pvd, attrname: Dbar_proj, idx: 2}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 0, fluxsurf: 30, name: totflux_A_pore, internal: True, fluxsign: '-'}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 1, fluxsurf: 30, name: totflux_B_pore, internal: True, fluxsign: '-'}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 2, fluxsurf: 30, name: totflux_C_pore, internal: True, fluxsign: '-'}]
+  - [facet_area, {pfacet: 30, name: pore_area, internal: True}]
+  - [effective_D, {name: Deff_A, totflux_name: totflux_A_pore, area_name: pore_area, startloc: [X0, Y0, nZ4], endloc: [X0, Y0, Z4], attrname: clist, idx: 0}]
+  - [effective_D, {name: Deff_B, totflux_name: totflux_B_pore, area_name: pore_area, startloc: [X0, Y0, nZ4], endloc: [X0, Y0, Z4], attrname: clist, idx: 1}]
+  - [effective_D, {name: Deff_C, totflux_name: totflux_C_pore, area_name: pore_area, startloc: [X0, Y0, nZ4], endloc: [X0, Y0, Z4], attrname: clist, idx: 2}]
+{% for inc_id in all_inc_ids %}
+  - [fluxintegral, {fluxattr: fluxlist, idx: 0, fluxsurf: {{inc_id}}, name: totflux_A_{{inc_id}}}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 1, fluxsurf: {{inc_id}}, name: totflux_B_{{inc_id}}}]
+  - [fluxintegral, {fluxattr: fluxlist, idx: 2, fluxsurf: {{inc_id}}, name: totflux_C_{{inc_id}}}]
+{% endfor %}
+  - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotname: CL_cA, label: 'concentration of A along centerline', attrname: clist, idx: 0}]
+  - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotname: CL_cB, label: 'concentration of B along centerline', attrname: clist, idx: 1}]
+  - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotname: CL_cC, label: 'concentration of C along centerline', attrname: clist, idx: 2}]
+  - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotname: CL_jA, label: 'flux of A along centerline', attrname: fluxlist, idx: 0}]
+  - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotname: CL_jB, label: 'flux of B along centerline', attrname: fluxlist, idx: 1}]
+  - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotname: CL_jC, label: 'flux of C along centerline', attrname: fluxlist, idx: 2}]

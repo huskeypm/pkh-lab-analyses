@@ -1,0 +1,97 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Mesh definition
+#Each document defines an instance of buildgeom.MeshParameters
+---
+meshname: exotic-earth_mesh_001
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.1
+---
+meshname: exotic-earth_mesh_002
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.2
+---
+meshname: exotic-earth_mesh_003
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.3
+---
+meshname: exotic-earth_mesh_004
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.4
+---
+meshname: exotic-earth_mesh_005
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.5
+---
+meshname: exotic-earth_mesh_006
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.6
+---
+meshname: exotic-earth_mesh_007
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.7
+---
+meshname: exotic-earth_mesh_008
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.8
+---
+meshname: exotic-earth_mesh_009
+geomdefname: two_rectangles
+tmplvalues:
+  mscale: 1.0
+  mcarl: 0.01
+  mcarh: 0.01
+  Lx: 1.0
+  Ly: 1.0
+  alpha1: 0.9

@@ -1,0 +1,17 @@
+%YAML 1.2
+#Parameter input file
+#Each document is a separate case run
+#Blank (bare) documents are skipped
+
+#Model definition
+
+{% for fields in allfields %}
+---
+modelname: {{ '%s_model_%03d'|format(fields.hrhash, fields.counter) }}
+meshname: {{ fields.meshname }}
+equation: exotic-earth
+conditions:
+  elementorder: {{ fields.elementorder }}
+  dirichlet: {1121: [0,0], 1323: [0,0]}
+  isotropic_D_values: [1.0, 2.0]
+{% endfor %}

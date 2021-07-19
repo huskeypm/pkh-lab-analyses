@@ -1,0 +1,45 @@
+---
+basename: {{basename}}
+modelname: {{modelname}}
+meshname: {{meshname}}
+equation: smol_reactive_surface
+customizations:
+  modules: [output_eff]
+conditions:
+  elementorder: 2
+  dirichlet:
+    6: [{{sphere_conc_A}}, {{sphere_conc_B}}]
+    9: [{{top_conc_A}}, {{top_conc_B}}]
+    10: [{{bot_conc_A}}, {{bot_conc_B}}]
+  reactive:
+    6: [A, B]
+  species:
+    - {symbol: A, z: +1, D: 1.0}
+    - {symbol: B, z: +1, D: 1.0}
+  beta: 38.94135
+  potential:
+    equation: linear_pb
+    customizations:
+      modules: [output_eff]
+    conditions:
+      elementorder: 2
+      dirichlet:
+        5: {{central_pore_pot}}
+        6: {{sphere_pot}}
+        9: 0.0
+        10: 0.0
+      debye_length: {{debye_length}}
+    dataextraction:
+      - [solutionfield, {filename: potentialfield.pvd}]
+dataextraction:
+  - [solutionfield, {filename: conc_A.pvd, attrname: clist, idx: 0}]
+  - [solutionfield, {filename: conc_B.pvd, attrname: clist, idx: 1}]
+  - [fluxfield, {filename: flux_A.pvd, solnattr: clist, idx: 0, fluxattr: flux_A, D_bulk: 1.0}]
+  - [fluxfield, {filename: flux_B.pvd, solnattr: clist, idx: 1, fluxattr: flux_B, D_bulk: 1.0}]
+  - [fluxintegral, {fluxattr: flux_A, fluxsurf: 6, name: totflux_incl_A, normalvar: n01}]
+  - [fluxintegral, {fluxattr: flux_A, fluxsurf: 9, name: totflux_revTop_A, normalvar: n04}]
+  - [fluxintegral, {fluxattr: flux_A, fluxsurf: 12, name: totflux_revBot_A, normalvar: n12}]
+  - [fluxintegral, {fluxattr: flux_B, fluxsurf: 6, name: totflux_incl_B, normalvar: n01}]
+  - [fluxintegral, {fluxattr: flux_B, fluxsurf: 9, name: totflux_revTop_B, normalvar: n04}]
+  - [fluxintegral, {fluxattr: flux_B, fluxsurf: 12, name: totflux_revBot_B, normalvar: n12}]
+
