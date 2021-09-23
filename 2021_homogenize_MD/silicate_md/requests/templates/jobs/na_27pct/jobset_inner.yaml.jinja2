@@ -1,0 +1,44 @@
+{%extends "job_inner.yaml.jinja2"%}
+{%block index_file%}
+#Generate the input file for gmx make_ndx
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.ndx
+  source: !SetTemplate make_ndx.txt
+  destination: !Produced 110_make_ndx.txt
+#Copy input files for trajectory extraction later on
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.convert-tpr
+  source: !SetTemplate in_convert-tpr.txt
+  destination: !Produced in_convert-tpr.txt
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.traj
+  source: !SetTemplate in_traj.txt
+  destination: !Produced in_traj.txt
+{%endblock%}
+{%block jobscript scoped%}
+#Generate the job script
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.jobscript
+  tmplfile: !SetTemplate job_script.sh.jinja2
+  outfile: !Produced runjob_{{stage}}.sh
+  searchpaths: [ !RequestTemplate "jobs/{{setname}}", !CommonFile postproc ]
+  data:
+    slurmname: {{setname}}.{{jobname}}
+    stage: {{stage}}
+    do_basic_production: {{do_basic_production}}
+    extension_A: {{extension_A}}
+    extension_B: {{extension_B}}
+{% if postproc_template_list is defined %}
+    postproc_template_list: {{postproc_template_list}}
+{% else %}
+    postproc_template: {{postproc_template}}
+{% endif %}
+    cluster: {{cluster}}
+- !CommonShellCommandRequest
+  name: {{setname}}.{{jobname}}.chmod
+  commandargs:
+    - chmod
+    - u+x
+    - !Produced runjob_{{stage}}.sh
+  input_args: [2]
+{%endblock%}

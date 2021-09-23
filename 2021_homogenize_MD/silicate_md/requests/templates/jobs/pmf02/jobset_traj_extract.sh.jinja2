@@ -1,0 +1,4 @@
+#Generate tpr file for the selection in the xtc file
+{{gmx_single}} convert-tpr -s 270_production.tpr -n 110_tracked_na.ndx -o 280_selected.tpr <in_convert-tpr.txt >281_selected.log 2>&1
+#Write sodium trajectory in xvg (plot) format
+{{gmx_single}} traj -f 270_production.xtc -s 280_selected.tpr -ox 710_traj.xvg <in_traj.txt >710_traj.log 2>&1

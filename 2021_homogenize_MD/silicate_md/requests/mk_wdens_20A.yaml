@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+#Folder Structure
+- !UpdateFolderStructure
+  CommonFile: [common]
+  CommonJobs: [common, jobs]
+  ProducedTop: [jobs, prepared, 0]
+  Produced: [jobs, prepared, 0, 1]
+  SetTemplate: [requests, templates, jobs, 0]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure.yaml
+#Create a request file that will set up all the jobs
+- !TemplateFileRequest
+  name: wdens_20A.requestfile
+  tmplfile: !RequestTemplate single_run_01.yaml.jinja2
+  # tmplfile: !SetTemplate jobset.yaml.jinja2
+  outfile: !GeneratedRequest wdens_20A.yaml
+  searchpaths: [!DataFile "requests/templates", !DataFile "common/postproc"]
+  data:
+    setname: wdens_20A
+    jobname: "0001"
+    stage: A
+    do_basic_production: True
+    extension_A: True
+    extension_B: False
+    max_duration: "23:59:59"
+    postproc_template_list:
+      - multitraj_water_density_A.sh.jinja2
+    cluster: faust
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 8000000
+    timestep: 0.002 #ps
+    temp: 298 #Kelvin
+    boxspace: 2.0 #nm
+    has_silicate: True
+    has_methane: False
+    silicate_id: 20A
+    xout_steps: 2000
+    xout_grps: System
+#Script to submit the job, for stage A
+- !TemplateFileRequest
+  name: wdens_20A.submit-jobs
+  tmplfile: !CommonJobs submit_jobs.sh.jinja2
+  outfile: !ProducedTop submit_jobs_A.sh
+  data:
+    stage: A
+    joblist:
+      - ["0001",0,0,0]
+- !CommonShellCommandRequest
+  name: wdens_20A.submission.chmod
+  commandargs:
+    - chmod
+    - u+x
+    - !ProducedTop submit_jobs_A.sh
+  input_args: [2]
+
+#Generate the job script for stage B
+- !TemplateFileRequest
+  name: wdens_20A.0001.jobscript_B
+  tmplfile: !CommonJobs job_script.sh.jinja2
+  outfile: !Produced runjob_B.sh
+  searchpaths: [!DataFile "requests/templates", !DataFile "common/postproc"]
+  data:
+    slurmname: wdens_20A.partB
+    stage: B
+    do_basic_production: False
+    extension_A: False
+    extension_B: True
+    max_duration: "23:59:59"
+    postproc_template_list:
+      - multitraj_water_density_B.sh.jinja2
+    cluster: faust
+- !CommonShellCommandRequest
+  name: wdens_20A.0001.chmod
+  commandargs:
+    - chmod
+    - u+x
+    - !Produced runjob_B.sh
+  input_args: [2]
+#Script to submit the job, for stage B
+- !TemplateFileRequest
+  name: wdens_20A.submit-jobs_B
+  tmplfile: !CommonJobs submit_jobs.sh.jinja2
+  outfile: !ProducedTop submit_jobs_B.sh
+  data:
+    stage: B
+    joblist:
+      - ["0001",0,0,0]
+- !CommonShellCommandRequest
+  name: wdens_20A.submission.chmod_B
+  commandargs:
+    - chmod
+    - u+x
+    - !ProducedTop submit_jobs_B.sh
+  input_args: [2]

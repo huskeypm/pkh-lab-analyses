@@ -1,0 +1,71 @@
+%YAML 1.2
+#Analysis for 12 Angstrom channel, fully protonated
+---
+#Folder Structure
+- !UpdateFolderStructure
+  ProducedTop: [jobs, prepared, 0]
+  ProducedWHAM: [jobs, prepared, 0, wham]
+  SetTemplate: [requests, templates, jobs, 0]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure.yaml
+#Create a request file that will set up all the jobs
+- !TemplateFileRequest
+  name: chan16A.requestfile
+  tmplfile: !RequestTemplate jobset_methane_loc.yaml.jinja2
+  outfile: !GeneratedRequest chan16A.yaml
+  modules:
+    - !modulefile multijob.py
+  methods:
+    get_template_input: get_template_input
+  searchpaths: [!DataFile "requests/templates"]
+  data:
+    #boxtup(5.75*10, 4.9*10, 5.5*10, 4.7*10, 6.4*10)
+    start: #nm
+      x: 5.750
+      y: 4.900
+      z: 4.700
+    stop: #nm. To include desired endpoint, extend 0.003 nm beyond it.
+      x: 5.750
+      y: 5.500
+      z: 6.400
+    step: #nm
+      y: 0.05
+      z: 0.05
+    planedata: #for the x-plane: x is Y, y is Z. Step 0.05 nm outward from the limits above.
+      hist_min_x: 4.850
+      hist_max_x: 5.550
+      num_bins_x: 14
+      hist_min_y: 4.650
+      hist_max_y: 6.450
+      num_bins_y: 36
+    setname: chan16A
+    stage: A
+    do_basic_production: True
+    extension_A: False
+    extension_B: False
+    postproc_template_list:
+      - traj_extract.sh.jinja2
+      - d_from_acf.sh.jinja2
+      - pmf_prep2D.sh.jinja2
+    cluster: faust
+    max_duration: "6:00:00"
+    node_exclusions: node04
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    spring: 300 #kJ/nm^2/mol (check gromacs input file for value)
+    temp: 298 #Kelvin (check gromacs input file for value)
+    boxspace: 2.0 #nm
+    has_silicate: True
+    has_methane: True
+    silicate_id: 16A
+  postcommands:
+    - [save_yaml, {attrpath: coordvals, outfpath: !ProducedTop coordvals.yaml}]
+    - [save_yaml, {attrpath: joblist, outfpath: !ProducedTop joblist.yaml}]
+    - [save_csv, {attrpath: joblist_df, outfpath: !ProducedTop joblist.csv, index: False}]
+    - [save_yaml, {attrpath: windows2d, outfpath: !ProducedWHAM windows2d.yaml}]
+    - [save_yaml, {attrpath: planelist, outfpath: !ProducedWHAM planelist.yaml}]

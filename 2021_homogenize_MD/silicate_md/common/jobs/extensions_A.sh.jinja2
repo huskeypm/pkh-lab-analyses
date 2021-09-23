@@ -1,0 +1,9 @@
+#Production MD, extension
+{{gmx_single}} grompp -f 270_production.mdp -c 270_production.gro -r 270_production.gro -t 270_production.cpt -p topol.top -o 280_extend01.tpr >281_extend01.log 2>&1
+{{gmx_multi}} mdrun -maxh 6 -v -deffnm 280_extend01 >282_extend01.log 2>&1
+#Production MD, extension
+{{gmx_single}} grompp -f 270_production.mdp -c 280_extend01.gro -r 280_extend01.gro -t 280_extend01.cpt -p topol.top -o 290_extend02.tpr >291_extend02.log 2>&1
+{{gmx_multi}} mdrun -maxh 6 -v -deffnm 290_extend02 >292_extend02.log 2>&1
+#Production MD, extension
+{{gmx_single}} grompp -f 270_production.mdp -c 290_extend02.gro -r 290_extend02.gro -t 290_extend02.cpt -p topol.top -o 300_extend03.tpr >301_extend03.log 2>&1
+{{gmx_multi}} mdrun -maxh 6 -v -deffnm 300_extend03 >302_extend03.log 2>&1

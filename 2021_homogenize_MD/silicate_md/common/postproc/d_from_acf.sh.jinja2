@@ -1,0 +1,5 @@
+{#Requires previous trajectory extraction to xvg format#}
+#Compute ACF of position
+{{gmx_single}} analyze -f 710_traj.xvg -ac 720_acf.xvg >720_acf.log 2>&1
+#Compute D local
+python3 ../../../../scripts/calc_D.py 720_acf.xvg 710_traj.xvg 810_results_D_local.yaml 810_plot_acf.pdf >810_plot_acf.log 2>&1

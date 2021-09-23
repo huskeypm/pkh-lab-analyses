@@ -1,0 +1,65 @@
+%YAML 1.2
+#Calculate PMF for sodium along a line
+---
+#Folder Structure
+- !UpdateFolderStructure
+  ProducedTop: [jobs, prepared, 0]
+  SetTemplate: [requests, templates, jobs, 0]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure.yaml
+#Create a request file that will set up all the jobs
+- !TemplateFileRequest
+  name: pmf02.requestfile
+  # tmplfile: !RequestTemplate jobset_methane_loc.yaml.jinja2
+  tmplfile: !SetTemplate jobset.yaml.jinja2
+  outfile: !GeneratedRequest pmf02.yaml
+  modules:
+    - !modulefile multijob.py
+  methods:
+    get_template_input: get_template_input
+  searchpaths: [!DataFile "requests/templates"]
+  data:
+    start:
+      x: 5.627
+      y: 4.790
+      z: 5.500
+    stop:
+      x: 5.627
+      y: 4.790
+      z: 6.680
+    step:
+      z: 0.05
+    linedata:
+      hist_min_y: 5.450
+      hist_max_y: 6.700
+      num_bins: 50
+    setname: pmf02
+    stage: A
+    do_basic_production: True
+    extension_A: False
+    extension_B: False
+    postproc_template_list:
+      - jobset_traj_extract.sh.jinja2
+      - d_from_acf.sh.jinja2
+      - pmf_prep1D.sh.jinja2
+    cluster: faust
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    spring: 300 #kJ/nm^2/mol (check gromacs input file for value)
+    temp: 298 #Kelvin (check gromacs input file for value)
+    boxspace: 2.0 #nm
+    has_silicate: True
+    has_methane: False
+    silicate_id: 27pctNa
+    xout_grps: tracked_na
+  postcommands:
+    - [save_yaml, {attrpath: coordvals, outfpath: !ProducedTop coordvals.yaml}]
+    - [save_yaml, {attrpath: joblist, outfpath: !ProducedTop joblist.yaml}]
+    - [save_csv, {attrpath: joblist_df, outfpath: !ProducedTop joblist.csv, index: False}]
+    - [save_yaml, {attrpath: linelist, outfpath: !ProducedTop linelist.yaml}]
+    - [save_yaml, {attrpath: windows, outfpath: !ProducedTop windows.yaml}]

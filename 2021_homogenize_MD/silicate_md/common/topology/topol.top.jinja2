@@ -1,0 +1,50 @@
+{# Template variables:
+Required:
+  - setname = name for this group of jobs
+  - jobname = name for slurm job
+  - has_silicate = boolean, True to include silicate
+  - has_methane = boolean, True to include methane
+if has_silicate, the following is also required:
+  - topology_id = string indicating which topology: "00pct", "27pct", "50pct"
+#}
+; Force field default parameters
+#include "010_forcefield.itp" 
+
+{% if has_silicate %}
+;Silicates
+#include "021_structure_sio2.itp"
+{% endif %}
+
+; Include water topology
+#include "oplsaa.ff/spc.itp"
+
+{% if has_methane %}
+;Methane, and its position restraint (if enabled)
+#include "020_structure_ch4.itp"
+{% endif %}
+
+[ system ]
+; Name
+{{setname}}, {{jobname}}
+
+
+[ molecules ]
+; Compound    #mols
+{% if has_silicate %}
+{% if topology_id == "00pct" %}
+silicate     2
+{% elif topology_id == "27pct" or topology_id == "27pctNa" %}
+silicate1    1
+sodium1     30
+silicate2    1
+sodium2     30
+{% elif topology_id == "50pct" or topology_id == "50pctNa" %}
+silicate1    1
+sodium1     56
+silicate2    1
+sodium2     56
+{%endif%}{#end of topolgy_id#}
+{% endif %}{#end of has_silicate#}
+{% if has_methane %}
+ME           1
+{% endif %}

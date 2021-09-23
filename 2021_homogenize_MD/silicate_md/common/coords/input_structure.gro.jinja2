@@ -1,0 +1,58 @@
+{# Template variables:
+Required:
+  - setname = name for this group of jobs
+  - jobname = name for slurm job
+  - has_silicate = boolean, True to include silicate
+  - has_methane = boolean, True to include methane
+if has_silicate, the following is also required:
+  - silicate_id = string indicating which silicate coordinate file:
+      fully protonated cases: "12A","16A","20A"
+      deprotonated cases (20A width): "00pct", "27pct", "50pct"
+If has_methane, or there's a variable position atom for another reason, the following are also required:
+  - atm_x, atm_y, atm_z = methane coordinates, as floats
+#}
+{% set num_mols = 0 %}
+{% if has_silicate %}
+{% set num_mols = num_mols + 4368 %}
+{% endif %}
+{% if has_methane %}
+{% set num_mols = num_mols + 1%}
+{% endif %}
+{{setname}}, {{jobname}}
+ {{num_mols}}
+{% if has_silicate %}
+{% if silicate_id == "12A" %}
+{% set box_size = "10.71818" %}
+{% include "silica_12A.coords" %}
+{% elif silicate_id == "16A" %}
+{% set box_size = "11.04342" %}
+{% include "silica_16A.coords" %}
+{% elif silicate_id == "20A" %}
+{% set box_size = "11.37746" %}
+{% include "silica_20A.coords" %}
+{% elif silicate_id == "00pct" %}
+{% set box_size = "11.27506" %}
+{% include "deprot00.coords" %}
+{% elif silicate_id == "27pct" %}
+{% set box_size = "11.21202" %}
+{% include "deprot27.coords" %}
+{% elif silicate_id == "50pct" %}
+{% set box_size = "11.16620" %}
+{% include "deprot50.coords" %}
+{% elif silicate_id == "00pctNa" %}
+{% set box_size = "11.27506" %}
+{% include "deprot00na.coords.jinja2" %}
+{% elif silicate_id == "27pctNa" %}
+{% set box_size = "11.21202" %}
+{% include "deprot27na.coords.jinja2" %}
+{% elif silicate_id == "50pctNa" %}
+{% set box_size = "11.16620" %}
+{% include "deprot50na.coords.jinja2" %}
+{% endif %}{# end of silicate_id #}
+{% else %}
+{% set box_size = "3.0" %}
+{% endif %}{# end of has_silicate #}
+{% if has_methane %}
+{{"{:>5d}".format(num_mols)}}ME      ME{{"{:>5d}".format(num_mols)}}{{"{:>8.3f}".format(atm_x)}}{{"{:>8.3f}".format(atm_y)}}{{"{:>8.3f}".format(atm_z)}}
+{% endif %}
+  {{box_size}}  {{box_size}}  {{box_size}}

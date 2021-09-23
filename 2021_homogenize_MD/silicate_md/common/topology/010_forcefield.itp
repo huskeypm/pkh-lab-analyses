@@ -1,0 +1,20 @@
+;TGP Note: the contents of this file were obtained from Hadi's simulations in portions of structure.itp
+
+[ defaults ]
+; nbfunc comb-rule gen-pairs fudgeLJ fudgeQQ
+1 2 yes 1.0 1.0
+
+[ atomtypes ]
+; type atnum mass charge ptype sigma epsilon
+    OSiH    8     15.9994  0.000  A  3.08251e-01  5.10448e-01
+    OSiE    8     15.9994  0.000  A  3.08251e-01  2.25936e-01
+    OSiN    8     15.9994  0.000  A  3.08251e-01  5.10448e-01
+    HSiO    1      1.0079  0.000  A  9.62172e-02  6.27600e-02
+      Si   14     28.0855  0.000  A  3.68833e-01  3.89112e-01
+     SiN   14     28.0855  0.000  A  3.68833e-01  3.89112e-01
+      Na   11     22.9898  0.000  A  2.81601e-01  3.93296e-01
+;;HRD added
+ opls_003   ME   6     16.04000     0.000       A    3.73000e-01  1.23010e+00 ; SIG
+;; PKH added
+opls_116    8     15.9994 -0.820  A  3.16557e-01     6.50194e-01
+opls_117   1      1.00800     0.410       A    0.00000e+00  0.00000e+00

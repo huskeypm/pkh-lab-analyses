@@ -1,0 +1,28 @@
+%YAML 1.2
+#Generate gromacs input files
+---
+# #Set up logging
+# - !ConfigLogging
+#   stem: wdens01_setup
+#   level: TIMING
+#12A
+- !TemplateFileRequest
+  name: restrained
+  tmplfile: !RequestTemplate single_run_01.yaml.jinja2
+  outfile: !GeneratedRequest wdens01.yaml
+  data:
+    setname: wdens01
+    jobname: 12A
+    jobtemplate: job_script.sh.jinja2
+    postproc_template: postproc_water_density.sh.jinja2
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    temp: 298 #Kelvin
+    has_silicate: True
+    has_methane: False
+    channel_width: 12A
+    xout_steps: 2000
+    xout_grps: System

@@ -1,0 +1,16 @@
+{#Submit all the jobs to slurm (or other scheduler) for this set
+Template variables:
+Required:
+  - stage = stage number
+  - joblist = list of data for each job:
+    - jobname = name of this job within the group
+    - me_x
+    - me_y
+    - me_z = methane coordinates, as floats
+
+#}
+#!/bin/bash
+{% for jobname, me_x, me_y, me_z in joblist %}
+sbatch {{node_exclusions}} --chdir {{jobname}} {{jobname}}/runjob_{{stage}}.sh >{{jobname}}/job_submission_{{stage}}.txt 2>&1
+touch {{jobname}}/__queued__
+{% endfor %}

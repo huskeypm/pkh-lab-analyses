@@ -1,0 +1,90 @@
+{# Template variables:
+  - slurmname = name for slurm job
+  - cluster = string identifying the cluster to run on: "Faust", "LCC", or "Direct" (grimm and hesse)
+Optional:
+  - max_duration = maximum job duration, passed to slurm
+#}
+{% set max_duration = max_duration|default("6:00:00") %}
+#!/bin/bash
+
+{% if cluster|lower == "faust" %}
+{# Slurm settings #}
+#SBATCH --exclusive
+#SBATCH -n 40
+#SBATCH --partition=defq
+#SBATCH --gres=gpu:1
+{% elif cluster|lower == "lcc" %}
+{# Slurm settings #}
+#SBATCH -n 32 
+#SBATCH --partition=P4V12_SKY32M192_M   
+#SBATCH --account=gol_pmke226_uksr              #Name of account to run under (first character: c=cpu, g=gpu)
+#SBATCH --gres=gpu:4                            #Number of GPU cards needed
+{% elif cluster|lower == "direct" %}
+{% endif %}
+#SBATCH -t {{max_duration}}
+#SBATCH -J {{slurmname}}
+#SBATCH -o D_correction.out.txt
+#SBATCH -e D_correction.out.txt
+
+#Set cleanup actions for end or error
+function finished {
+  echo "---===---"
+  echo "date: " `date`
+  echo "uptime:" `uptime`
+  touch __done__
+  rm -f __running__
+}
+function failed {
+  echo "***   ***"
+  echo "date: " `date`
+  echo "uptime:" `uptime`
+  touch __error__
+  rm -f __running__
+}
+function halted {
+  echo "x.x   x.x"
+  echo "date: " `date`
+  echo "uptime:" `uptime`
+  touch __halted__
+  rm -f __running__
+  exit
+}
+
+#Exit on failure, and cleanup actions
+set -e
+trap 'failed' ERR
+trap 'halted' SIGTERM
+
+#python setup
+{% if cluster|lower == "faust" %}
+module load python36
+{% endif %}
+
+#Job info
+echo slurm job name: {{slurmname}}
+echo nodelist: $SLURM_JOB_NODELIST
+echo "dir:" `pwd`
+echo "uname:" `uname -n`
+{# echo "stack size:" `ulimit -s` #}
+echo "w:"
+w
+echo "date:" `date`
+echo "---===---"
+
+#Status marker files
+touch __running__
+rm -f __queued__
+rm -f __done__
+rm -f __error__
+
+#Do the correction for each job
+{% for jobname, me_x, me_y, me_z in joblist %}
+cd {{jobname}}
+mkdir -p old
+mv 810_* old
+python3 ../../../../scripts/calc_D.py 720_acf.xvg 710_traj.xvg 810_results_D_local.yaml 810_plot_acf.pdf >810_plot_acf.log 2>&1
+cd ..
+{% endfor %}
+
+#Final info
+finished

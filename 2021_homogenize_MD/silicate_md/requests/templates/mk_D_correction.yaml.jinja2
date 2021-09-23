@@ -1,0 +1,24 @@
+%YAML 1.2
+#Create a script for each job set to re-run the D local calculations
+---
+#Folder Structure
+- !UpdateFolderStructure
+  JobSetFile: [jobs, run, 0]
+  ScriptTemplate: [scripts, templates]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure.yaml
+#Create the script from the template for each jobset
+{% for jobset in setlist %}
+- !TemplateFileRequest
+  name: {{jobset}}.make_correction_script
+  tmplfile: !ScriptTemplate jobset_D_correction.sh.jinja2
+  outfile: !JobSetFile correct_D_calc.sh
+  searchpaths: [!DataFile "scripts/templates"]
+  prepcommands:
+    - [load_yaml, {infpath: !JobSetFile joblist.yaml, attrpath: data.joblist}]
+  data:
+    slurmname: correction.{{jobset}}
+    cluster: {{cluster}}
+{% endfor %}

@@ -1,0 +1,71 @@
+{%extends "jobset_main.yaml.jinja2"%}
+{#For a set of simulations varying only the methane position
+Template variables (directly use, see parent for its own requirements):
+Required:
+  - setname = name for this group of jobs
+  - stage = stage number
+  - temp = temperature (Kelvin)
+  - joblist = list of data for each job:
+    - jobname = name of this job within the group
+    - me_x
+    - me_y
+    - me_z = methane coordinates, as floats
+#}
+{%block set_level_items%}
+{%block submission_script scoped%}
+#Script to submit all the jobs
+- !TemplateFileRequest
+  name: {{setname}}.submit-jobs
+  tmplfile: !CommonJobs submit_jobs.sh.jinja2
+  outfile: !ProducedTop submit_jobs_{{stage}}.sh
+  data:
+    stage: {{stage}}
+  prepcommands:
+    - [load_yaml, {infpath: !ProducedTop joblist.yaml, attrpath: data.joblist}]
+- !CommonShellCommandRequest
+  name: {{setname}}.submission.chmod
+  commandargs:
+    - chmod
+    - u+x
+    - !ProducedTop submit_jobs_{{stage}}.sh
+  input_args: [2]
+{%endblock%}
+{%block wham_metafiles scoped%}
+#Metafiles for wham
+{% for mfid, startval, stopval, numsteps in linelist %}
+- !TemplateFileRequest
+  name: {{setname}}.wham.metafile
+  tmplfile: !CommonWHAM metafile_1d.dat.jinja2
+  outfile: !ProducedTop metafile{{mfid}}.dat
+  data:
+    temp: {{temp}}
+    mfid: {{mfid}}
+  prepcommands:
+    - [load_yaml, {infpath: !ProducedTop windows.yaml, attrpath: data.windows}]
+{% endfor %}
+{%endblock%}
+{%block wham_runscript scoped%}
+#Script to run wham
+- !TemplateFileRequest
+  name: {{setname}}.wham.runfile
+  tmplfile: !CommonWHAM run_wham_1d.sh.jinja2
+  outfile: !ProducedTop run_wham_{{stage}}.sh
+  data:
+    temp: {{temp}}
+  prepcommands:
+    - [load_yaml, {infpath: !ProducedTop linelist.yaml, attrpath: data.linelist}]
+- !CommonShellCommandRequest
+  name: {{setname}}.wham.chmod
+  commandargs:
+    - chmod
+    - u+x
+    - !ProducedTop run_wham_{{stage}}.sh
+  input_args: [2]
+{%endblock%}
+{%endblock set_level_items%}
+{%block all_jobs%}
+{% for jobname, me_x, me_y, me_z in joblist %}
+#id={{jobname}}
+{{self.single_job_contents()}}
+{% endfor %}
+{%endblock all_jobs%}

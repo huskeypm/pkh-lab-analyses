@@ -1,0 +1,236 @@
+{# Template variables:
+Required:
+  - setname = name for this group of jobs
+  - jobname = name of this job within the group
+  - stage = stage number
+  - cluster = name of the cluster to be passed to the job script template
+  - restrain = boolean passed along to child mdp templates
+  - nsteps_min = number of steps for energy minimization
+  - nsteps_equil = number of steps for each equilibration
+  - nsteps_prod = number of steps for production
+  - timestep = number passed along to child mdp templates
+  - temp = temperature passed along to child mdp templates
+  - postproc_template = name of post-processing script template file
+  - has_silicate = boolean, True to include silicate
+  - has_methane = boolean, True to include methane
+if has_silicate, the following is also required:
+  - silicate_id = string indicating which silicate coordinate file:
+      fully protonated cases: "12A","16A","20A"
+      deprotonated cases (20A width): "00pct", "27pct", "50pct"
+If has_methane, or a sodium atom has variable postion, the following are also required:
+  - atm_x, atm_y, atm_z = methane coordinates, as floats
+
+AND either:
+  - postproc_template = name of post-processing script template file
+or:
+  - postproc_template_list = list of post-processing script template files
+
+Optional:
+  - xout_steps = steps between writes to compressed trajectory file
+  - xout_grps = groups to write to compressed trajectory file
+#}
+%YAML 1.2
+#Generate gromacs input files
+---
+{%set silicate_suffix_dict = {
+  "12A": "00pct",
+  "16A": "00pct",
+  "20A": "00pct",
+  "00pct": "00pct",
+  "27pct": "27pct",
+  "50pct": "50pct",
+  "00pctNa": "00pct",
+  "27pctNa": "27pct",
+  "50pctNa": "50pct",
+  }%}
+{%set silicate_suffix = silicate_suffix_dict[silicate_id]%}
+# #Set up logging
+# - !ConfigLogging
+#   stem: {{setname}}
+#   level: TIMING
+#Folder Structure
+- !UpdateFolderStructure
+  CommonFile: [common]
+  CommonCoords: [common, coords]
+  CommonTopology: [common, topology]
+  CommonJobs: [common, jobs]
+  CommonMethane: [common, methane]
+  CommonMDP: [common, mdp]
+  Produced: [jobs, prepared, 0, 1]
+  ProducedTop: [jobs, prepared, 0]
+  SetTemplate: [requests, templates, jobs, 0]
+  ScriptFile: [scripts]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure_{{setname}}.yaml
+{%block jobscript scoped%}
+#Generate the job script
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.jobscript
+  tmplfile: !CommonJobs job_script.sh.jinja2
+  outfile: !Produced runjob_{{stage}}.sh
+  searchpaths: [!CommonFile postproc, !DataFile "requests/templates/jobs/{{setname}}"]
+  data:
+    slurmname: {{setname}}.{{jobname}}
+    stage: {{stage}}
+    do_basic_production: {{do_basic_production}}
+    extension_A: {{extension_A}}
+    extension_B: {{extension_B}}
+    max_duration: {{max_duration}}
+{% if postproc_template_list is defined %}
+    postproc_template_list: {{postproc_template_list}}
+{% else %}
+    postproc_template: {{postproc_template}}
+{% endif %}
+    cluster: {{cluster}}
+- !CommonShellCommandRequest
+  name: {{setname}}.{{jobname}}.chmod
+  commandargs:
+    - chmod
+    - u+x
+    - !Produced runjob_{{stage}}.sh
+  input_args: [2]
+{%endblock%}
+{%block topology scoped%}
+#Generate topol.top
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.topol
+  tmplfile: !CommonTopology topol.top.jinja2
+  outfile: !Produced topol.top
+  data:
+    setname: {{setname}}
+    jobname: "{{jobname}}"
+    has_silicate: {{has_silicate}}
+    has_methane: {{has_methane}}
+    topology_id: {{silicate_suffix}}
+#Generate itp files
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.forcefield
+  source: !CommonTopology 010_forcefield.itp
+  destination: !Produced 010_forcefield.itp
+{% if has_methane %}
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.structure_ch4
+  source: !CommonTopology 020_structure_ch4.itp
+  destination: !Produced 020_structure_ch4.itp
+{% endif %}
+{% if has_silicate %}
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.structure_sio2
+  tmplfile: !CommonTopology 021_struc_{{silicate_suffix}}.itp.jinja2
+  outfile: !Produced 021_structure_sio2.itp
+  data:
+    restrain_na: {%if silicate_id[-2:] == "Na"%}True{%else%}False{%endif%}
+{#Extra line break needed due to endif#}
+
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.posre_sio2
+  source: !CommonTopology 022_posre_{{silicate_suffix}}.itp
+  destination: !Produced 022_posre_sio2.itp
+{% endif %}
+{%endblock%}
+{%block input_structure scoped%}
+#Generate input structure file
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.structure_file
+  tmplfile: !CommonCoords input_structure.gro.jinja2
+  outfile: !Produced 100_input.gro
+  data:
+    setname: {{setname}}
+    jobname: {{jobname}}
+    has_silicate: {{has_silicate}}
+    has_methane: {{has_methane}}
+{% if has_silicate %}
+    silicate_id: {{silicate_id}}
+{% endif %}
+{% if has_methane or silicate_id[-2:] == "Na"%}
+    atm_x: {{atm_x}}
+    atm_y: {{atm_y}}
+    atm_z: {{atm_z}}
+{% endif %}
+{%endblock%}
+{%block index_file scoped%}
+#Generate the index file
+- !CopyFileRequest
+  name: {{setname}}.{{jobname}}.ndx
+  source: !CommonMethane methane.ndx
+  destination: !Produced 110_methane.ndx
+{%endblock%}
+{%block gromacs_mdp scoped%}
+#Generate the mdp files
+{%block energy_minimization scoped%}
+#Energy minimization
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.minimization.mdp
+  tmplfile: !CommonMDP common.mdp.jinja2
+  outfile: !Produced 240_minimization.mdp
+  data:
+    energy_minimization: True
+    restrain: {{restrain}}
+    nsteps: {{nsteps_min}}
+{%endblock%}
+{%block nvt_equil scoped%}
+#NVT equilibration
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.equilibration_nvt.mdp
+  tmplfile: !CommonMDP common.mdp.jinja2
+  outfile: !Produced 250_equil_nvt.mdp
+  data:
+    energy_minimization: False
+    restrain: {{restrain}}
+    nsteps: {{nsteps_equil}}
+    timestep: {{timestep}}
+    temp: {{temp}}
+    initialize: True
+    ensemble: NVT
+{% if xout_steps is defined %}
+    xout_steps: {{xout_steps}}
+{% endif %}
+{% if xout_grps is defined %}
+    xout_grps: {{xout_grps}}
+{% endif %}
+{%endblock%}
+{%block npt_equil scoped%}
+#NPT equilibration
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.equilibration_npt.mdp
+  tmplfile: !CommonMDP common.mdp.jinja2
+  outfile: !Produced 260_equil_npt.mdp
+  data:
+    energy_minimization: False
+    restrain: {{restrain}}
+    nsteps: {{nsteps_equil}}
+    timestep: {{timestep}}
+    temp: {{temp}}
+    initialize: False
+    ensemble: NPT
+{% if xout_steps is defined %}
+    xout_steps: {{xout_steps}}
+{% endif %}
+{% if xout_grps is defined %}
+    xout_grps: {{xout_grps}}
+{% endif %}
+{%endblock%}
+{%block production_run scoped%}
+#Production
+- !TemplateFileRequest
+  name: {{setname}}.{{jobname}}.production.mdp
+  tmplfile: !CommonMDP common.mdp.jinja2
+  outfile: !Produced 270_production.mdp
+  data:
+    energy_minimization: False
+    restrain: {{restrain}}
+    nsteps: {{nsteps_prod}}
+    timestep: {{timestep}}
+    temp: {{temp}}
+    initialize: False
+    ensemble: NVT
+{% if xout_steps is defined %}
+    xout_steps: {{xout_steps}}
+{% endif %}
+{% if xout_grps is defined %}
+    xout_grps: {{xout_grps}}
+{% endif %}
+{%endblock%}
+{%endblock%}

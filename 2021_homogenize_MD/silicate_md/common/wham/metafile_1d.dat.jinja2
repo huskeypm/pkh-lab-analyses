@@ -1,0 +1,12 @@
+{#Metafile required by WHAM
+Template variables:
+Required:
+  - spring = spring constant
+  - windows = dictionary of data for each window: windows[mfid]:
+    - jobname = name of the job within the set
+    - targ_d = PMF target atom coordinate (distance), as float
+#}
+#/path/to/timeseries/file loc_win_min spring [correl time] [temperature]
+{% for jobname, targ_d in windows[mfid] %}
+../{{jobname}}/820_dis1d.dat {{"{:0.3f}".format(targ_d)}} {{spring}}
+{% endfor %}

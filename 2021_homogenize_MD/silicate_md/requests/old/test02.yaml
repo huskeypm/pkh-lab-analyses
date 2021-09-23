@@ -1,0 +1,60 @@
+%YAML 1.2
+#Generate gromacs input files
+---
+# #Set up logging
+# - !ConfigLogging
+#   stem: test02_setup
+#   level: TIMING
+#Restrained simulations
+- !TemplateFileRequest
+  name: restrained
+  tmplfile: !RequestTemplate single_run_01.yaml.jinja2
+  outfile: !GeneratedRequest test02_restrained.yaml
+  data:
+    series: bulk
+    setname: test02
+    jobname: restrained
+    trial: A
+    jobtemplate: job_script.sh.jinja2
+    calcscript: calc_D.py
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    temp: 298 #Kelvin
+    boxspace: 2.0 #nm
+# - !TemplateFileRequest
+#   name: restrained
+#   tmplfile: !RequestTemplate single_run_01.yaml.jinja2
+#   outfile: !GeneratedRequest test02_restrained.yaml
+#   data:
+#     series: bulk
+#     setname: test02
+#     jobname: restrained
+#     trial: E
+#     restrain: True
+#     nsteps_min: 50000
+#     nsteps_equil: 1000000
+#     nsteps_prod:  1000000
+#     timestep: 0.002 #ps
+#     temp: 298 #Kelvin
+#Free simulations
+- !TemplateFileRequest
+  name: free
+  tmplfile: !RequestTemplate single_run_01.yaml.jinja2
+  outfile: !GeneratedRequest test02_free.yaml
+  data:
+    series: bulk
+    setname: test02
+    jobname: free
+    trial: A
+    jobtemplate: job_script_free.sh.jinja2
+    calcscript: calc_sqdev.py
+    restrain: False
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    temp: 298 #Kelvin
+    boxspace: 5.0 #nm

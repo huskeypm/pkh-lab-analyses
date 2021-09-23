@@ -1,0 +1,70 @@
+%YAML 1.2
+#Analysis for 12 Angstrom channel, fully protonated
+---
+#Folder Structure
+- !UpdateFolderStructure
+  ProducedTop: [jobs, prepared, 0]
+  ProducedWHAM: [jobs, prepared, 0, wham]
+  SetTemplate: [requests, templates, jobs, 0]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure.yaml
+#Create a request file that will set up all the jobs
+- !TemplateFileRequest
+  name: chan27pct.requestfile
+  tmplfile: !RequestTemplate jobset_methane_loc.yaml.jinja2
+  outfile: !GeneratedRequest chan27pct.yaml
+  modules:
+    - !modulefile multijob.py
+  methods:
+    get_template_input: get_template_input
+  searchpaths: [!DataFile "requests/templates"]
+  data:
+    #boxtup(5.627*10,4.6*10, 5.2*10, 4.55*10,6.65*10)
+    start: #nm
+      x: 5.627
+      y: 4.600
+      z: 4.550
+    stop: #nm. To include desired endpoint, extend 0.003 nm beyond it.
+      x: 5.627
+      y: 5.200
+      z: 6.650
+    step: #nm
+      y: 0.05
+      z: 0.05
+    linedata:
+      hist_min_y: 4.500
+      hist_max_y: 6.700
+      num_bins: 44
+    planedata: #for the x-plane: x is Y, y is Z. Step 0.05 nm outward from the limits above.
+      hist_min_x: 4.550
+      hist_max_x: 5.250
+      num_bins_x: 14
+      hist_min_y: 4.500
+      hist_max_y: 6.700
+      num_bins_y: 44
+    setname: chan27pct
+    stage: B
+    do_basic_production: False
+    extension_A: False
+    extension_B: False
+    postproc_template_list:
+      - pmf_prep1D.sh.jinja2
+    cluster: faust
+    max_duration: "6:00:00"
+    node_exclusions: node04
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    spring: 300 #kJ/nm^2/mol (check gromacs input file for value)
+    temp: 298 #Kelvin (check gromacs input file for value)
+    boxspace: 2.0 #nm
+    has_silicate: True
+    has_methane: True
+    silicate_id: 27pct
+  postcommands:
+    - [save_yaml, {attrpath: windows, outfpath: !ProducedWHAM windows.yaml}]
+    - [save_yaml, {attrpath: linelist, outfpath: !ProducedWHAM linelist.yaml}]

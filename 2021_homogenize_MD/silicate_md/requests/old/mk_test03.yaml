@@ -1,0 +1,44 @@
+%YAML 1.2
+#Jobs with methane at multiple positions
+---
+#Folder Structure
+- !UpdateFolderStructure
+  Produced: [jobs, prepared, 0]
+#Create a request file that will set up all the jobs
+- !TemplateFileRequest
+  name: test03.requestfile
+  tmplfile: !RequestTemplate jobset_methane_loc.yaml.jinja2
+  outfile: !GeneratedRequest test03.yaml
+  modules:
+    - !modulefile multijob.py
+  methods:
+    get_template_input: get_template_input
+  data:
+    start:
+      x: 5.741
+      y: 5.740
+      z: 4.742
+    stop:
+      x: 5.741
+      y: 5.740
+      z: 4.792
+    step:
+      z: 0.05
+    setname: test03
+    jobtemplate: job_script.sh.jinja2
+    postproc_template: postproc_d_from_acf.sh.jinja2
+    cluster: faust
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    temp: 298 #Kelvin
+    boxspace: 2.0 #nm
+    has_silicate: True
+    has_methane: True
+    silicate_id: 27pct
+  postcommands:
+    - [save_yaml, {attrpath: coordvals, outfpath: !Produced coordvals.yaml}]
+    - [save_yaml, {attrpath: joblist, outfpath: !Produced joblist.yaml}]
+    - [save_csv, {attrpath: joblist_df, outfpath: !Produced joblist.csv, index: False}]

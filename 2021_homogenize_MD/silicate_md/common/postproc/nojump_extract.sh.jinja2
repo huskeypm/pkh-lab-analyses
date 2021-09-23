@@ -1,0 +1,4 @@
+#Remove jumps across periodic boundary (for unrestrained trajectories)
+{{gmx_single}} trjconv -f 270_production.xtc -o 600_nojump.xtc -pbc nojump
+#Write methane trajectory in xvg (plot) format
+{{gmx_single}} traj -f 600_nojump.xtc -s 100_input.gro -n 110_methane.ndx -ox 710_traj.xvg >710_traj.log 2>&1

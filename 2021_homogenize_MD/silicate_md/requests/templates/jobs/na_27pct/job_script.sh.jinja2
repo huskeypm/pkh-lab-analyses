@@ -1,0 +1,139 @@
+{# Template variables:
+  - slurmname = name for slurm job
+  - stage = stage number
+  - cluster = string identifying the cluster to run on: "Faust", "LCC", or "Direct" (grimm and hesse)
+  - do_basic_production = boolean, True to do solvation, equilibration, and an initial production run
+  - extension_A = boolean, True to do first extension of production (3 more production runs)
+  - extension_B = boolean, True to do second extension of production (4 more production runs)
+
+AND either:
+  - postproc_template = name of post-processing script template file
+or:
+  - postproc_template_list = list of post-processing script template files
+#}
+#!/bin/bash
+
+{% if cluster|lower == "faust" %}
+{# Specify gromacs commands#}
+{% set gmx_single = "gmx_mpi"%}
+{% set gmx_multi  = "gmx_mpi"%}
+{# Slurm settings #}
+#SBATCH --exclusive
+#SBATCH -n 40
+#SBATCH --partition=defq
+#SBATCH --gres=gpu:1
+{% elif cluster|lower == "lcc" %}
+{# Specify gromacs commands #}
+{% set gmx_single = "mpirun -np 1 gmx_mpi"%}
+{% set gmx_multi  = "mpirun -np 8 gmx_mpi"%}
+{# Slurm settings #}
+#SBATCH -n 32 
+#SBATCH --partition=P4V12_SKY32M192_M   
+#SBATCH --account=gol_pmke226_uksr              #Name of account to run under (first character: c=cpu, g=gpu)
+#SBATCH --gres=gpu:4                            #Number of GPU cards needed
+{% elif cluster|lower == "direct" %}
+{# Specify gromacs commands #}
+{% set gmx_single = "gmx"%}
+{% set gmx_multi  = "gmx"%}
+{% endif %}
+#SBATCH -t 6:00:00
+#SBATCH -J {{slurmname}}
+#SBATCH -o job_{{stage}}.out.txt
+#SBATCH -e job_{{stage}}.out.txt
+
+#Set cleanup actions for end or error
+function finished {
+  echo "---===---"
+  echo "date: " `date`
+  echo "uptime:" `uptime`
+  touch __done__
+  rm -f __running__
+}
+function failed {
+  echo "***   ***"
+  echo "date: " `date`
+  echo "uptime:" `uptime`
+  touch __error__
+  rm -f __running__
+}
+function halted {
+  echo "x.x   x.x"
+  echo "date: " `date`
+  echo "uptime:" `uptime`
+  touch __halted__
+  rm -f __running__
+  exit
+}
+
+#Exit on failure, and cleanup actions
+set -e
+trap 'failed' ERR
+trap 'halted' SIGTERM
+
+#Gromacs setup
+{% if cluster|lower == "faust" %}
+module load gromacs
+source /cm/shared/apps/gromacs2019/bin/GMXRC
+module load python36
+{% elif cluster|lower == "lcc" %}
+module load ccs/gromacs-plumed2-gpu/2019.2
+{% elif cluster|lower == "direct" %}
+source /usr/local/gromacs/bin/GMXRC
+{% endif %}
+
+#Job info
+echo slurm job name: {{slurmname}}
+echo nodelist: $SLURM_JOB_NODELIST
+echo "dir:" `pwd`
+echo "uname:" `uname -n`
+{# echo "stack size:" `ulimit -s` #}
+echo "w:"
+w
+echo "date:" `date`
+echo "---===---"
+
+#Status marker files
+touch __running__
+rm -f __queued__
+rm -f __done__
+rm -f __error__
+
+{#Solvation, equilibration, and initial production#}
+{%if do_basic_production%}
+#Solvate
+{{gmx_single}} solvate -cp 100_input.gro -cs spc216.gro -o 230_wet.gro -p topol.top >231_wet.log 2>&1
+#Create index file
+{{gmx_single}} make_ndx -f 230_wet.gro -o 110_tracked_na.ndx <110_make_ndx.txt >110_index.log 2>&1
+#Energy minimization
+{{gmx_single}} grompp -f 240_minimization.mdp -n 110_tracked_na.ndx -c 230_wet.gro  -r 230_wet.gro -p topol.top -o 240_minimization.tpr >241_minimization.log 2>&1
+{{gmx_single}} mdrun -maxh 1 -v -deffnm 240_minimization >242_minimization.log 2>&1
+rm -f step???_n?.pdb
+rm -f step????_n?.pdb
+#NVT equilibration
+{{gmx_single}} grompp -f 250_equil_nvt.mdp -n 110_tracked_na.ndx -c 240_minimization.gro -r 240_minimization.gro -p topol.top -o 250_equil_nvt.tpr >251_equil_nvt.log 2>&1
+{{gmx_multi}} mdrun -maxh 1 -v -deffnm 250_equil_nvt >252_equil_nvt.log 2>&1
+#NPT equilibration
+{{gmx_single}} grompp -f 260_equil_npt.mdp -n 110_tracked_na.ndx -c 250_equil_nvt.gro -r 250_equil_nvt.gro -t 250_equil_nvt.cpt -p topol.top -o 260_equil_npt.tpr >261_equil_npt.log 2>&1
+{{gmx_multi}} mdrun -maxh 1 -v -deffnm 260_equil_npt >262_equil_npt.log 2>&1
+#Production MD
+{{gmx_single}} grompp -f 270_production.mdp -n 110_tracked_na.ndx -c 260_equil_npt.gro -r 260_equil_npt.gro -t 260_equil_npt.cpt -p topol.top -o 270_production.tpr >271_production.log 2>&1
+{{gmx_multi}} mdrun -maxh 6 -v -deffnm 270_production >272_production.log 2>&1
+{%endif%}
+{#Production run extensions#}
+{%if extension_A%}
+{%include "extensions_A_jobset.sh.jinja2"%}
+{%endif%}
+{%if extension_B%}
+{%include "extensions_B_jobset.sh.jinja2"%}
+{%endif%}
+{# Post-processing #}
+{% if postproc_template_list is defined %}
+{% for postproc_template in postproc_template_list %}
+{%include postproc_template %}
+{% endfor %}
+{% else %}
+{% include postproc_template %}
+{% endif %}
+
+#Final info
+finished

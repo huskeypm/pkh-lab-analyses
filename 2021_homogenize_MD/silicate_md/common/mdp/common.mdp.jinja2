@@ -1,0 +1,115 @@
+{# Template variables:
+Required:
+  - energy_minimization = boolean, True to perform energy minimization
+  - restrain = boolean, True to apply position restraints
+  - nsteps = number of simulation steps, integer
+
+If not energy_minimization, the following are also required:
+  - timestep = simulation timestep, in picoseconds (usually 0.001 or 0.002)
+  - temp = temperature, Kelvin
+  - initialize = boolean, True to generate velocities
+  - ensemble = string, "NPT" or "NVT"
+
+Optional (with default values if not provided):
+  - xout_steps = steps between writes to compressed trajectory file
+  - xout_grps = groups to write to compressed trajectory file
+#}{# Default values#}
+{% set xout_steps = xout_steps|default(10) %}
+{% set xout_grps = xout_grps|default("ME")%}
+;Definitions
+{% if restrain %}
+define                  = -DPOSRES     ;position restraints
+{% endif %}
+
+;Run parameters
+{% if energy_minimization %}
+integrator              = steep        ;steepest descent minimization
+emtol                   = 30.0         ;[kJ/mol/nm] stop minimization when the maximum force < this value
+emstep                  = 0.01         ;[nm] initial step size
+nsteps                  = {{"{:<12d}".format(nsteps)}} ;[steps] maximum number of (minimization) steps to perform
+{% else %}
+{% set duration = (nsteps * timestep) %}
+integrator              = md           ;leap-frog integrator
+nsteps                  = {{"{:<12d}".format(nsteps)}} ;[steps] number of steps, duration = {{duration}} ps
+dt                      = {{"{:<12.3f}".format(timestep)}} ;step size in ps
+{% endif %}
+
+;Output control
+{% if energy_minimization %}
+nstxout                 = 100          ;[steps] number of steps between coordinate writes to output trajectory trr
+{% else %}
+nstxout                 = 10000        ;[steps] number of steps between coordinate writes to output trajectory trr, interval = {{10000 * timestep}} ps
+nstvout                 = 10000        ;[steps] number of steps between velocity writes to output trajectory trr, interval = {{10000 * timestep}} ps
+nstfout                 = 10000        ;[steps] number of steps between force writes to output trajectory trr, interval = {{10000 * timestep}} ps
+nstlog                  = 10000        ;[steps] number of steps between writing energies to the log file, interval = {{10000 * timestep}} ps
+nstenergy               = 10000        ;[steps] number of steps between writing energies to energy file, should be a multiple of nstcalcenergy, interval = {{10000 * timestep}} ps
+nstxout-compressed      = {{"{:<12d}".format(xout_steps)}} ;[steps] number of steps between coordinate writes using lossy compression (xtc file), interval = {{xout_steps * timestep}} ps
+compressed-x-grps       = {{"{:<12s}".format(xout_grps)}} ;groups to write to the compressed coordinate file
+{% endif %}
+
+;Bond parameters
+{% if initialize %}
+continuation            = no           ;apply constraints to the start configuration
+{% else %}
+continuation            = yes          ;do not (re-)apply constraints to the start configuration
+{% endif %}
+constraint_algorithm    = lincs        ;LINear Constraint Solver
+constraints             = h-bonds      ;Convert the bonds with H-atoms to constraints.
+lincs_iter              = 1            ;Number of iterations to correct for rotational lengthening in LINCS.
+lincs_order             = 4            ;Highest order in the expansion of the constraint coupling matrix.
+
+;Neighbor searching
+cutoff-scheme           = Verlet       ;Generate a pair list with buffering.
+ns-type                 = grid         ;only check atoms in neighboring grid cells
+{% if energy_minimization %}
+nstlist                 = 1            ;[steps] Frequency to update the neighbor list.
+{% else %}
+nstlist                 = 10           ;[steps] Frequency to update the neighbor list.
+{% endif %}
+pbc                     = xyz          ;Use periodic boundary conditions in all directions.
+
+;Electrostatics
+coulombtype             = PME          ;Fast smooth Particle-Mesh Ewald (SPME) electrostatics.
+pme-order               = 4            ;Interpolation order for PME. 4 equals cubic interpolation.
+fourierspacing          = 0.16         ;[nm] For PME and P3M, the ratio of the box dimensions and the spacing determines a lower bound for the number of Fourier-space grid points
+rcoulomb                = 1.0          ;[nm] The distance for the Coulomb cut-off
+
+;Van der Waals
+rvdw                    = 1.0          ;[nm] distance for the LJ or Buckingham cut-off
+DispCorr                = EnerPres     ;apply long range dispersion corrections for Energy and Pressure
+
+{# Stop here for energy minimization #}
+{% if not energy_minimization %}
+;Temperature coupling
+{% if ensemble == "NVT" %}
+tcoupl                  = Nose-Hoover  ;Nose-Hoover extended ensemble
+{% endif %}
+{% if ensemble == "NPT" %}
+tcoupl                  = V-rescale    ; modified Berendsen thermostat
+{% endif %}
+tc-grps                 = System       ;groups to couple to separate temperature baths
+tau_t                   = 2.0          ;[ps] time constant for coupling
+ref_t                   = {{"{:<12.3f}".format(temp)}} ;[K] reference temperature for coupling
+
+;Pressure coupling
+{% if ensemble == "NVT" %}
+pcoupl                  = no           ;No pressure coupling. This means a fixed box size.
+{% endif %}
+{% if ensemble == "NPT" %}
+pcoupl                  = Berendsen    ; Pressure coupling on in NPT
+pcoupltype              = isotropic    ; uniform scaling of box vectors
+tau_p                   = 2.0          ; time constant, in ps
+ref_p                   = 1.0          ; reference pressure, in bar
+compressibility         = 4.5e-5       ; isothermal compressibility of water, bar^-1
+refcoord_scaling        = com
+{% endif %}
+
+;Velocity generation
+{% if initialize %}
+gen-vel                 = yes          ;generate velocities from Maxwell distribution
+gen-temp                = {{"{:<12.3f}".format(temp)}} ;[K] temperature for Maxwell distribution
+gen-seed                = -1           ;[integer] seed for velocity generation, -1 for pseudorandom
+{% else %}
+gen-vel                 = no           ;Do not generate velocities.
+{% endif %}
+{% endif %}

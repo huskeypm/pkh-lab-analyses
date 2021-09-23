@@ -1,0 +1,7 @@
+; position restraints for sodium ions
+
+[ position_restraints ]
+; atom   type    fx     fy     fz
+{%for atom in range(atom_range[0],atom_range[1]+1)%}
+{{"{:>6d}".format(atom)}}      1{{"{:>6d}".format(fx)}} {{"{:>6d}".format(fy)}} {{"{:>6d}".format(fz)}}
+{%endfor%}

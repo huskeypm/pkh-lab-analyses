@@ -1,0 +1,22 @@
+{#Run a set of 1D WHAM analyses
+Template variables:
+Required:
+  - temp = temperature  
+  - linelist = list of data for each line:
+    - mfid = metafile id suffix
+    - startval
+    - stopval = starting and ending coordinates (distances) for the line
+    - numpts = number of points on the line
+
+Optional:
+  - numtrials = number of MC trials
+  - seed = random seed
+#}
+#!/bin/bash
+#wham [P|Ppi|Pval] hist_min hist_max num_bins tol \
+#  temperature numpad metadatafile freefile [num_MC_trials randSeed]
+{% for mfid, startval, stopval, numpts in linelist %}
+~/wham/wham/wham {{"{:0.3f}".format(startval)}} {{"{:0.3f}".format(stopval)}} {{numpts}} 0.000001 \
+  {{temp}} 0 metafile{{mfid}}.dat wham_output{{mfid}}.dat {{numtrials}} {{seed}}\
+  >wham_stdout{{mfid}}.txt 2>&1
+{% endfor %}

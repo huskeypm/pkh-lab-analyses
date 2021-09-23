@@ -1,0 +1,23 @@
+{#Run a set of 1D WHAM analyses
+Template variables:
+Required:
+  - temp = temperature  
+  - planelist = list of data for each plane:
+    - mfid = metafile id suffix
+    - xstart
+    - xstop = starting and ending coordinates (distances) for the x direction
+    - xpts = number of points in the x direction
+    - ystart
+    - ystop = starting and ending coordinates (distances) for the y direction
+    - ypts = number of points in the y direction
+#}
+#!/bin/bash
+#wham-2d Px[=0|pi|val] hist_min_x hist_max_x num_bins_x \
+#  Py[=0|pi|val] hist_min_y hist_max_y num_bins_y \
+#  tol temperature numpad metadatafile freefile use_mask
+{% for mfid, xstart, xstop, xpts, ystart, ystop, ypts in planelist %}
+~/wham/wham-2d/wham-2d Px=0 {{"{:0.3f}".format(xstart)}} {{"{:0.3f}".format(xstop)}} {{xpts}} \
+  Py=0 {{"{:0.3f}".format(ystart)}} {{"{:0.3f}".format(ystop)}} {{ypts}} \
+  0.000001 {{temp}} 0 metafile_2d_{{mfid}}.dat wham2d_output{{mfid}}.dat 0 \
+  >wham2d_stdout{{mfid}}.txt 2>&1
+{% endfor %}

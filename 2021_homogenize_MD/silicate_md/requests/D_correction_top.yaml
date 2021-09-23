@@ -1,0 +1,19 @@
+%YAML 1.2
+#Start here for re-calculation of the D local values
+#- first, run this `python -m simproc requests/D_correction_top.yaml`
+#- then, `python -m simproc requests/generated/mk_D_correction.yaml`
+---
+- !TemplateFileRequest
+  name: D_correction_top
+  tmplfile: !RequestTemplate mk_D_correction.yaml.jinja2
+  outfile: !GeneratedRequest mk_D_correction.yaml
+  data:
+    cluster: faust
+    setlist:
+      - chan12A
+      - chan16A
+      - chan20A
+      - chan27pct
+      - chan50pct
+      - na_27pct
+      - chan20A_alt

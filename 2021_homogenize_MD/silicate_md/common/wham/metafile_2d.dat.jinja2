@@ -1,0 +1,14 @@
+{#Metafile required by WHAM
+Template variables:
+Required:
+  - xspring = spring constant for x
+  - yspring = spring constant for y
+  - windows = dictionary of data for each window: windows[mfid]:
+    - jobname = name of the job within the set
+    - targ_x = x coordinate of biasing potential minimum, as float
+    - targ_x = y coordinate of biasing potential minimum, as float
+#}
+#/path/to/timeseries/file loc_win_x loc_win_y spring_x spring_y [correl time] [temp]
+{% for jobname, targ_x, targ_y in windows[mfid] %}
+../{{jobname}}/825_dis2d.dat {{"{:0.3f}".format(targ_x)}} {{"{:0.3f}".format(targ_y)}} {{xspring}} {{yspring}}
+{% endfor %}

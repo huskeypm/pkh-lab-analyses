@@ -1,0 +1,59 @@
+%YAML 1.2
+---
+#Folder Structure
+- !UpdateFolderStructure
+  CommonFile: [common]
+  CommonJobs: [common, jobs]
+  ProducedTop: [jobs, prepared, 0]
+  Produced: [jobs, prepared, 0, 1]
+  SetTemplate: [requests, templates, jobs, 0]
+# #Folder Structure
+# - !DumpFolderStructure
+#   name: dump_folder_structure
+#   outfile: !DataFile folder_structure.yaml
+#Create a request file that will set up all the jobs
+- !TemplateFileRequest
+  name: bulk02.requestfile
+  tmplfile: !RequestTemplate single_run_01.yaml.jinja2
+  # tmplfile: !SetTemplate jobset.yaml.jinja2
+  outfile: !GeneratedRequest bulk02.yaml
+  searchpaths: [!DataFile "requests/templates", !DataFile "common/postproc"]
+  data:
+    setname: bulk02
+    jobname: "0001"
+    stage: A
+    do_basic_production: True
+    extension_A: False
+    extension_B: False
+    postproc_template_list:
+      - traj_extract.sh.jinja2
+      - d_from_acf.sh.jinja2
+    cluster: direct
+    restrain: True
+    nsteps_min: 50000
+    nsteps_equil: 50000
+    nsteps_prod: 1000000
+    timestep: 0.002 #ps
+    temp: 298 #Kelvin
+    boxspace: 2.0 #nm
+    has_silicate: False
+    has_methane: True
+    atm_x: 2.0 #nm
+    atm_y: 2.0 #nm
+    atm_z: 2.0 #nm
+# #Script to submit the job, for stage A
+# - !TemplateFileRequest
+#   name: bulk02.submit-jobs
+#   tmplfile: !CommonJobs submit_jobs.sh.jinja2
+#   outfile: !ProducedTop submit_jobs_A.sh
+#   data:
+#     stage: A
+#     joblist:
+#       - ["0001",0,0,0]
+# - !CommonShellCommandRequest
+#   name: bulk02.submission.chmod
+#   commandargs:
+#     - chmod
+#     - u+x
+#     - !ProducedTop submit_jobs_A.sh
+#   input_args: [2]

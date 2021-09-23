@@ -1,0 +1,17 @@
+
+;TGP Note: the following lines are as obtained from Hadi's simulations in Me.itp
+[ moleculetype ]
+; molname       nrexcl
+ME              2
+
+;TGP Note: the following lines are as obtained from Hadi's simulations in Me.itp
+[ atoms ]
+;   nr   type  resnr residue  atom   cgnr     charge       mass
+     1  opls_003     1      ME     ME      1       0.00
+
+;TGP Note: the following lines are as obtained from Hadi's simulations in Me.itp and posreMe.itp
+#ifdef POSRES
+[ position_restraints ]
+; atom   type    fx     fy     fz
+     1      1   300    300    300
+#endif
