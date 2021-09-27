@@ -1,0 +1,681 @@
+####  12/06/2019 Update ########################################################
+# Original Python code was written by Ben Chun                                 #
+################################################################################
+## Working model 
+###################################################################################
+## Model Specification
+###1. Cell type: Microglia
+###2. rP2X4 13-state model (Lumped = ) Toulme and Khakh
+###3. rP2X7 8 state model (Lumped = ) Yan et al.
+###4. IP3-mediated Ca (P2Y): Cuthbertson et al. 
+###5. P2Y12 model was "created"
+###6. NTPDase of ectonucleotidases: ATP degradation taken from the work done by Robson et al. 
+#################################################################################
+### 
+###  NOTE 
+###
+#################################################################################
+## A. ER is compartmentized for Ca handling of 1. P2X-mediated and 2. P2Y(IP3)-mediated
+## B. Migration is a function of P2Y12 at this point. This may need to be improved.
+## C. Unlike the previous model submitted to Journal of Physiology, this model doesn't
+## induce artifical periodic stimulation 
+###################################################################################
+
+parameters("stimulation",###########################################################
+        stim_period     = ScalarParam(3,           unit="s"), # stim_duration = stim_period/2
+        stim_amplitude  = ScalarParam(100,         unit="uM"), ## 1 mM
+        stim_duration   = ScalarParam(60,          unit="s"),
+        stim_low        = ScalarParam(1,   unit="s"),
+        stim_high       = ScalarParam(2, unit="s"),
+        stim_gap1       = ScalarParam(4, unit="s"),
+        stim_gap2       = ScalarParam(4, unit="s"),
+        IC1             = ScalarParam(1.5, unit="s"),
+        IC2             = ScalarParam(1.5, unit="s"),
+        ## Basic Constants
+        T               = ScalarParam(310,          unit="K"),
+        Vpot            = ScalarParam(-5.0e-2,      unit="V"),
+        F               = ScalarParam(96485.33289,  unit="C*mol**-1"), # Faraday Constant
+        R               = ScalarParam(8.314,        unit="J*(mol*K)**-1"),          # [J/mol-k]
+        Cm              = ScalarParam(1.2e-11,      unit="F"),
+        ## Cell Dimensions: Microglia
+        rMiG            = ScalarParam(3.68e-6,      unit="m"), # activated: 3.68 uM -> Davis et al (2017)
+        pi              = ScalarParam(3.141592654),
+        MtoL            = ScalarParam(1e3), # this is volume scale convert from cubic meter to liter
+        ## P2 density 
+        rhop2x4         = ScalarParam(1),                      
+        rhop2x7         = ScalarParam(1), 
+        rhop2yc         = ScalarParam(1),
+        rhop2y12        = ScalarParam(1),
+        ## Fixted substance concentrations
+        Nae             = ScalarParam(145e6,        unit="nM"),       # [M] Exocytosolic Na free concentration
+        Nai             = ScalarParam(8e6,          unit="nM"),         # [M] Cytosolic Na free concentration -> Neuroglia p.190 Fig 16.4 the range from 8-20 mM
+        Cae             = ScalarParam(2e6,          unit="nM"),         # [M] Exocytosolic Ca free concentration
+        ## ATP degradation 
+        DegSwitch       = ScalarParam(1),
+        k1degATP        = ScalarParam(0.002,        unit="1/s"),
+        k2degATP        = ScalarParam(0.008,        unit="1/s"),
+        EleSwitch       = ScalarParam(0),
+        PulSwitch       = ScalarParam(0)
+        )
+##########################################################################
+## Don't remove "V" since this must be appeared to incorperate with Pete's code (daisychain)
+##########################################################################
+states("Cell",
+    V = 0,
+    ATP = ScalarParam(1),  # Scale 
+    ADP = ScalarParam(0),  # Scale 
+    AMP = ScalarParam(0)   # Scale
+    )
+
+expressions("Cell")
+dV_dt = 0
+
+##########################################################################
+## ATP decomposition equation 
+## Fitted to the article reported by Robson et al. 
+## link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2254478/
+#newta = time - floor(time/stim_period)*stim_period
+#newtb = (time + stim_gap1) - floor((time + stim_gap2)/stim_period)*stim_period
+#head = 1/(1+(IC1/newta)**80)
+#tail = 1/(1+(newtb/IC2)**80)
+
+#scale1 = Conditional(And(Ge(time-floor(time/stim_period)*stim_period,stim_low),Le(time-floor(time/stim_period)*stim_period,stim_high),),head,tail)
+#scale2 = Conditional(Le(time,0.15),0,scale1) # -> truncate the noise in the beginning
+#scale3 = Conditional(Eq(PulSwitch,1),scale2,ATP)
+
+dATP_dt = -k1degATP*ATP
+dADP_dt = k1degATP*ATP - k2degATP*ADP
+dAMP_dt = k2degATP*ADP
+
+##########################################################################
+ATP1a = Conditional(Eq(DegSwitch,1),stim_amplitude*ATP,stim_amplitude)        ### This goes to P2Y: in the unit of uM
+ATP2a = Conditional(Eq(DegSwitch,1),stim_amplitude*ATP*10**-6,stim_amplitude*10**-6) ### This goes to P2X: in the unit of M
+ATP3a = Conditional(Eq(DegSwitch,1),stim_amplitude*ADP,stim_amplitude*0.2)        ### This goes to P2Y12: in the unti of uM
+
+ATP1b = Conditional(Ge(time,stim_duration),0,ATP1a)
+ATP2b = Conditional(Ge(time,stim_duration),0,ATP2a)
+ATP3b = Conditional(Ge(time,stim_duration),0,ATP3a)
+
+ATP1 = Conditional(Eq(PulSwitch,1),ATP1b,ATP1a)
+ATP2 = Conditional(Eq(PulSwitch,1),ATP2b,ATP2a)
+ATP3 = Conditional(Eq(PulSwitch,1),ATP3b,ATP3a)
+################################################################################
+states("Ca_cyto",
+    Cai = ScalarParam(100.03826, unit="nM")
+    )
+################################################################################
+states("Ca_ER",
+    CaER = ScalarParam(734157.54, unit="nM")       # M
+    )
+################################################################################
+## Markov state model for P2X4 receptor/channel
+## Original model was established by Zemkova et al.
+## Lumped from 9 state to 6 states
+## Last update: 9/7/2018
+
+parameters("MSMp2x4", # Lumped -> 9 state -> 6 state: updated 9/7/2018
+        k1_ptxf = ScalarParam(1.0,      unit="1/s"),
+        k2_ptxf = ScalarParam(2.61e5,   unit="1/(M*s)"),
+        k3_ptxf = ScalarParam(0.1,      unit="1/s"),
+        k4_ptxf = ScalarParam(1.654e5,  unit="1/(M*s)"),
+        k5_ptxf = ScalarParam(2.5e-1,   unit="1/s"), #3.0e1
+        k6_ptxf = ScalarParam(8e6,      unit="1/(M*s)"),
+        h1_ptxf = ScalarParam(2.0e-2,   unit="1/s"),
+        h2_ptxf = ScalarParam(0,        unit="1/s"),
+        h6_ptxf = ScalarParam(0.1,      unit="1/s")
+        )
+
+states("MSMp2x4",
+    D2_ptxf = 0.0,
+    C1_ptxf = 1.0,
+    C2_ptxf = 0.0,
+    Q12_ptxf = 0.0, # PKH
+    D34_ptxf = 0.0,
+    )
+
+expressions("MSMp2x4")
+# PKH lumping
+## alphas for lumping Q1 and Q2
+k1p = 2*k4_ptxf*ATP2
+k1m = 2*k3_ptxf
+k2p = k6_ptxf*ATP2
+k2m = 3*k5_ptxf
+k3p = h6_ptxf
+k3m = 0
+K2 = k2p/k2m
+a1p = k1p
+a1m = k1m/(1+K2)
+a3p = k3p/(1+1/K2)
+a3m = k3m
+## betas for lumping D3 and D4
+l1p = 2*k4_ptxf*ATP2
+l1m = 2*k3_ptxf
+l2p = k6_ptxf*ATP2
+l2m = 3*k5_ptxf
+l3p = a3m
+l3m = a3p
+L2 = l2p/l2m
+b1p = l1p
+b1m = l1m/(1+L2)
+b3p = l3p/(1+1/L2)
+b3m = l3m
+## This equation ensures the sum of all probabilities is equal one
+D1_ptxf = 1 - D2_ptxf - C1_ptxf - C2_ptxf - Q12_ptxf - D34_ptxf
+## ODE
+dD2_ptxf_dt     = 3*k2_ptxf*ATP2*D1_ptxf + h2_ptxf*C2_ptxf + b1m*D34_ptxf - (k1_ptxf + b1p)*D2_ptxf
+dC1_ptxf_dt     = k1_ptxf*C2_ptxf + h1_ptxf*D1_ptxf - 3*k2_ptxf*ATP2*C1_ptxf
+dC2_ptxf_dt     = 3*k2_ptxf*ATP2*C1_ptxf + a1m*Q12_ptxf - (k1_ptxf + h2_ptxf + a1p)*C2_ptxf
+dD34_ptxf_dt    = b1p*D2_ptxf + b3m*Q12_ptxf - (b1m + b3p)*D34_ptxf
+dQ12_ptxf_dt    = a1p*C2_ptxf + b3p*D34_ptxf - (b3m + a1m)*Q12_ptxf
+
+################################################################################
+## Convert open probability to current via P2X channel
+parameters("Ip2x4",
+        ## Conductance
+        G12_ptxf = ScalarParam(6.15e-10, unit="C*/(s*V)"),
+        # Reversal potential
+        E12_ptxf = ScalarParam(0,        unit="V"),
+        # Fraction of Calcium among other substances
+        CaA_ptxf = ScalarParam(0.0824) # Garcia-Guzman et. al.
+        )
+
+expressions("Ip2x4")
+V_ptxf = Vpot
+I_ptxf = ((G12_ptxf*(Q12_ptxf)*(V_ptxf - E12_ptxf))*10**9) # in [nC/s]
+
+################################################################################
+## Markov state model for P2X7 receptor/channel
+## Original model was established by Yan et al for Markov Model.
+## Parameters are fitted to P2X7 data obtained by Chessel et al.
+## No lumping has been applied.
+## Last update; 9/23/2018
+
+parameters("MSMp2x7_Lumped2",
+        k1_ptxs = ScalarParam(190,  unit="1/s"),
+        k2_ptxs = ScalarParam(8130,      unit="1/(M-s)"),
+        k3_ptxs = ScalarParam(0.04,     unit="1/s"),
+        k5_ptxs = ScalarParam(0.07,     unit="1/s"),
+        h1_ptxs = ScalarParam(5e-3,     unit="1/s"),
+        h2_ptxs = ScalarParam(0.3,     unit="1/s"),
+        h5_ptxs = ScalarParam(0,        unit="1/s"),
+        h6_ptxs = ScalarParam(0,        unit="1/s"),
+        ## Transition rates altered based on ATP concentration
+        kd_ptxs = ScalarParam(420,      unit="uM"),
+        n_ptxs  = ScalarParam(15),
+        # Reference Values
+        k4_ptxsh = ScalarParam(100,     unit="1/(M-s)"),
+        k4_ptxsl = ScalarParam(500,     unit="1/(M-s)"),
+        k6_ptxsh = ScalarParam(1000,     unit="1/(M-s)"),
+        k6_ptxsl = ScalarParam(7000,     unit="1/(M-s)"),
+        h7_ptxsh = ScalarParam(0.1,  unit="1/s"),
+        h7_ptxsl = ScalarParam(0.008,    unit="1/s")
+        ######################################################
+        )
+
+states("MSMp2x7_Lumped2",
+    D2_ptxs = 0.0,
+    D34_ptxs = 0.0,
+    C1_ptxs = 1.0,
+    C2_ptxs = 0.0,
+    Q12_ptxs = 0.0
+    )
+
+expressions("MSMp2x7_Lumped2")
+### reaction constant change with respect to ATP concentration
+Scale_ptxs  = 1/(1 + (kd_ptxs/stim_amplitude)**n_ptxs)
+k4_ptxs     = k4_ptxsl - (k4_ptxsl-k4_ptxsh)*Scale_ptxs 
+k6_ptxs     = k6_ptxsl - (k6_ptxsl-k6_ptxsh)*Scale_ptxs 
+h7_ptxs     = h7_ptxsl + (h7_ptxsh-h7_ptxsl)*Scale_ptxs  
+### Lumping between D3 and D4
+h1p = 2*k4_ptxs*ATP2
+h1m = 2*k3_ptxs
+h2p = k6_ptxs*ATP2
+h2m = 3*k5_ptxs
+H2 = h2p/h2m
+
+y1p = h1p
+y1m = h1m/(1+H2)
+### ODEs 
+D1_ptxs         = 1 - (D2_ptxs + D34_ptxs + C1_ptxs + C2_ptxs + Q12_ptxs)
+dD2_ptxs_dt     = 3*k2_ptxs*ATP2*D1_ptxs + h2_ptxs*C2_ptxs + y1m*D34_ptxs - (k1_ptxs + y1p + h7_ptxs)*D2_ptxs #
+dD34_ptxs_dt    = y1p*D2_ptxs - y1m*D34_ptxs
+dC1_ptxs_dt     = h1_ptxs*D1_ptxs + k1_ptxs*C2_ptxs - 3*k2_ptxs*ATP2*C1_ptxs #
+dC2_ptxs_dt     = h7_ptxs*D2_ptxs + 3*k2_ptxs*ATP2*C1_ptxs + y1m*Q12_ptxs - (k1_ptxs + y1p + h2_ptxs)*C2_ptxs #
+dQ12_ptxs_dt    = y1p*C2_ptxs - y1m*Q12_ptxs#
+
+################################################################################
+## Convert open probability to current via P2X channel
+parameters("Ip2x7",
+        # Conductance
+        G12_ptxs = ScalarParam(1e-8, unit="C/(s*V)"), 
+        # Reversal potential
+        E12_ptxs = ScalarParam(0,    unit="V"),
+        # Fraction of Calcium among other substances -> It may be larger
+        CaA_ptxs = ScalarParam(0.10)
+        )
+
+expressions("Ip2x7")
+V_ptxs = Vpot
+I_ptxs = (G12_ptxs*(Q12_ptxs)*(V_ptxs - E12_ptxs))*10**9 # in [nC/s] < this is fitted to Hide (lumped)
+
+################################################################################
+## Converting the ATP-mediated current to the rate of Ca influx
+## Watch out the unit.
+## The current via P2X4 receptor was originally measured from microglia (Toulme et al.)
+## The current via P2X7 receptor was obtained from HEK cells -> converted to microglia scale
+## This rescaling was done by the membrane surface area between HEK and microglia
+
+parameters("Jp2x",
+        # This calculation factor may or may not be true
+        expF_ptxf = ScalarParam(11),    # Conv from Current to Conc. factor
+        expF_ptxs = ScalarParam(1)     # calculation factor
+        )
+
+expressions("Jp2x")
+# Cell Dimensions
+AMiG    = 4*pi*(rMiG)**2           # surface area of microglia in [sq. meter]
+VMiG    = MtoL*(4/3)*pi*(rMiG)**3  # volume of microglia in [L]
+VcytMiG = VMiG*0.2              # [L] The volume of cytoplasm in microglia -> This fraction was estimated from the figure (Liaury).
+VERMiG  = VMiG*0.0175            # [L] The volume of ER lumen in microglia -> This fraction was taken from Shannon-Bers paper
+rV_ER   = VERMiG/VcytMiG
+
+# Flux Calculation
+J_ptxf = -(I_ptxf*CaA_ptxf*rhop2x4/VcytMiG)/(2*F)*expF_ptxf  # [nmol/(L*s) = nM/s] This can be straight from the calculation
+J_ptxs = -(I_ptxs*CaA_ptxs*rhop2x7/VcytMiG)/(2*F)*expF_ptxs  # [nmol/(L*s) = nM/s] 12 pF from Microglia and it wad divided by 12*10**9 pF/m^2 * A_HEK
+
+################################################################################
+## Buffer in cytoplasm
+
+parameters("Buffer_cyto",
+        # Fura constants
+        BmFura      = ScalarParam(2.5e4,             unit="nM"),                 # [nM] -> Shannon-Bers: Fluo-3 (Cytoplasm)
+        konFura     = ScalarParam(1.5e-1,            unit="1/(nM*s)"),         # [1/(nM*s)] -> Chemical Calcium Indicators: Fura-2 (Cytoplasm)
+        koffFura    = ScalarParam(2.3e1,             unit="1/s"),              # [1/s] -> Chemical Calcium Indicators: Fura-2 (Cytoplasm)
+        # Constants for CaM-CN calculation: taken from the work of Bazzazi et al. by Rachel
+        kba         = ScalarParam(10,                unit="1/s"),                    # Ca2CaM -> 2Ca + CaM
+        kab         = ScalarParam(1e-5,              unit="1/(nM**2*s)"),            # Ca2 + CaM -> Ca2CaM
+        kcb         = ScalarParam(1000,              unit="1/s"),                     # Ca4CaM -> 2Ca + Ca2CaM
+        kbc         = ScalarParam(1e-4,              unit="1/(nM**2*s)"),            # 2Ca + Ca2CaM -> Ca4CaM
+        koffA       = ScalarParam(1,                 unit="1/s"),                # CaMCN -> Ca4CN + Ca4CaM
+        konA        = ScalarParam(1e-2,              unit="1/(nM*s)"),                # Ca4CN + Ca4CaM -> CaMCN
+        konB        = ScalarParam(2e-6,              unit="1/(nM**2*s)"),         # 2Ca + Ca2CN -> Ca4CN
+        koffB       = ScalarParam(1,                 unit="1/s"),                     # Ca4CN -> 2Ca + Ca2CN
+        CNt         = ScalarParam(67,                unit="nM"),
+        CaMt        = ScalarParam(100,               unit="nM"),
+        Ca4i_CN     = ScalarParam(1.314710949696407, unit="nM"),
+        ## Extra Buffers : This part needs to be adjusted along with NCX and SERCA
+        Bmaxex      = ScalarParam(1e4,               unit="nM"),                  # p2y 4910
+        konBex      = ScalarParam(1,                 unit="1/(nM*s)"),              # p2y 0.1
+        koffBex     = ScalarParam(1e3,               unit="1/s")                 # p2y 1
+        )
+
+states("Buffer_cyto",
+    CaF         = ScalarParam(9870.69319474,         unit="nM"),         # Ca-Fura2
+    Ca2_CaM     = ScalarParam(0.9908393054911447,    unit="nM"),     
+    Ca4_CaM     = ScalarParam(0.000991597630309401,  unit="nM"),     
+    Ca4_CN      = ScalarParam(1.314710949696407,     unit="nM"),      
+    CaMCN       = ScalarParam(1.303664188416016e-05, unit="nM"),
+    CaBex       = ScalarParam(909.40532782,          unit="nM")         # Ca-Buffer complex
+    )
+
+expressions("Buffer_cyto")
+CaM         = CaMt - (Ca2_CaM + Ca4_CaM + CaMCN)
+Ca2_CN      = CNt - (Ca4_CN + CaMCN)
+## CaM-CN 
+dCa2_CaM    = (kab*CaM*(Cai**2) - kba*Ca2_CaM + kcb*Ca4_CaM - kbc*Ca2_CaM*(Cai**2))
+dCa2_CaM_dt = dCa2_CaM
+dCa4_CaM    = (kbc*(Cai**2)*Ca2_CaM - kcb*Ca4_CaM + koffA*CaMCN - konA*Ca4_CaM*Ca4_CN)
+dCa4_CaM_dt = dCa4_CaM
+dCa4_CN     = (konB*(Cai**2)*Ca2_CN - koffB*Ca4_CN + koffA*CaMCN - konA*Ca4_CaM*Ca4_CN)
+dCa4_CN_dt  = dCa4_CN
+dCaMCN      = (konA*Ca4_CaM*Ca4_CN - koffA*CaMCN)
+## Fura
+dCaF        = (konFura*Cai*(BmFura - CaF) - koffFura*CaF)
+dCaF_dt     = dCaF
+dCaMCN_dt   = dCaMCN
+## Extra Buffer
+dCaBex      = (konBex*Cai*(Bmaxex-CaBex) - koffBex*CaBex)
+dCaBex_dt   = dCaBex
+
+################################################################################
+## Buffer in endoplasm reticulum
+## These parameters are taken from Shannon-Bers model
+
+parameters("Buffer_ER",
+        BmCals      = ScalarParam(1.4e5,    unit="nM"),         # p2y 1.4e5
+        KonCals     = ScalarParam(0.1,      unit="1/(nM*s)"),    # p2y 1.4
+        KoffCals    = ScalarParam(6.5e4,    unit="1/s")       # p2y 30
+        )
+
+states("Buffer_ER",
+    CaS = ScalarParam(74256.0386378, unit="nM")        # M
+    )
+
+expressions("Buffer_ER")
+# PKH - if rV_ER is used here, this implies BmCals was a 'whole cell'
+# rather than ER-compartment only measurement, thus the conc. needs to be rescaled
+dCaS = KonCals*CaER*(BmCals - CaS) - KoffCals*CaS
+dCaS_dt = dCaS
+
+################################################################################
+## Na/Ca Exchanger: The original equation is taken from Shannon-Bers
+## Parameters are fitted to microglia based on Boscia et al.
+
+parameters("NCX",
+        VmaxNCX     = ScalarParam(35,       unit="A/F"),            # [A/F] modifeid from 38
+        KmCai_NCX   = ScalarParam(3.63e3,   unit="nM"),
+        KmCao_NCX   = ScalarParam(1.3e6,    unit="nM"),
+        KmNai_NCX   = ScalarParam(1.23e7,   unit="nM"),
+        KmNao_NCX   = ScalarParam(8.75e7,   unit="nM"),
+        ksat_NCX    = ScalarParam(0.04),
+        eta_NCX     = ScalarParam(0.70),
+        KdAct_NCX   = ScalarParam(4e1,      unit="nM"),      # [uM] 0.26
+        HNa_NCX     = ScalarParam(3.60),
+        Q10NCX      = ScalarParam(1.20),
+        nHillncx    = ScalarParam(3.44),
+        ScaleNCX    = ScalarParam(1)
+        )
+
+expressions("NCX")
+Nae_NCX     = Nae 
+Nai_NCX     = Nai*ScaleNCX 
+Cae_NCX     = Cae 
+nNae_NCX    = Nae_NCX
+QNCX        = Q10NCX**((T-310)/10)
+Ka          = 1/(1+(KdAct_NCX/Cai)**nHillncx)
+Z           = (Vpot*F)/(R*T)      # [J/C*C/mol]/[J/(mol-K)*K]
+delta       = (Nai_NCX**HNa_NCX)*Cae_NCX
+sigma       = (nNae_NCX**HNa_NCX)*Cai
+top_NCX     = Ka*QNCX*VmaxNCX*(exp(eta_NCX*Z)*delta - exp((eta_NCX-1)*Z)*sigma)
+bot_NCX     = (KmCai_NCX*(nNae_NCX**HNa_NCX)*(1+(Nai_NCX/KmNai_NCX)**HNa_NCX) + (KmNao_NCX**HNa_NCX)*Cai*(1+(Cai/KmCai_NCX)) + KmCao_NCX*(Nai_NCX**HNa_NCX) + delta + sigma)*(1 + ksat_NCX*exp((eta_NCX-1))*Z)
+## Current and influx via NCX
+INCX        = top_NCX/bot_NCX            # [A/F]
+JNCX        = (INCX*Cm)/(VcytMiG*F)*1e9  # [nM/s] 
+
+################################################################################
+## SERCA: The original equation is taken from Shannon-Bers
+## Parameters are fitted to microglia
+
+parameters("SERCA_ER", 
+        Q10ERCa     = ScalarParam(2.6),
+        VmaxSERCA   = ScalarParam(9.09e6, unit="nM/s"),  # p2y 5200 
+        Kmf_SERCA   = ScalarParam(2.80e2, unit="nM"),    # p2y 270    
+        Kmr_SERCA   = ScalarParam(2.1e6,  unit="nM"),     # p2y 2.5e6     
+        H_SERCA     = ScalarParam(1.787)                   # p2y 1.6
+        )
+
+expressions("SERCA_ER")
+nVmaxSERCA      = VmaxSERCA
+rV_SERCA        = rV_ER             # Volume ratio of ER to cytosol
+QERCa           = Q10ERCa**((T-310)/10)
+top_SERCA       = ((Cai/Kmf_SERCA)**H_SERCA) - ((CaER/Kmr_SERCA)**H_SERCA)
+bottom_SERCA    = 1 + ((Cai/Kmf_SERCA)**H_SERCA) + ((CaER/Kmr_SERCA)**H_SERCA)
+JERtoCyt        = QERCa*nVmaxSERCA*top_SERCA/bottom_SERCA # this term comes out as positive for ER domain
+JCyttoER        = JERtoCyt*rV_SERCA # nM/s
+
+
+parameters("Leakage",
+    #CaExt   = ScalarParam(2e6,  unit="nM"),        # External Ca concentration in [uM]
+    DExtoCy = ScalarParam(2.44, unit="1/s"),    # Diffusion constant of Ca from External to Cytosol - Fitted
+    DERtoCy = ScalarParam(1e-3, unit="1/s")     # Diffusion constant of Ca from ER to Cytosol
+    )
+
+expressions("Leakage")
+JExtoCy = DExtoCy*(Cae - Cai)
+JERtoCy = DERtoCy*(CaER - Cai)
+################################################################################
+################################################################################
+## p38 phosphorylation
+## Parameters are fitted to microglia
+## Where is coming from?
+parameters("p-p38",
+        kb_pp38     = ScalarParam(8.518519e-4, unit="1/s"),
+        kf_pp38     = ScalarParam(1.1e-2,       unit="1/s"),
+        kdcapp38    = ScalarParam(150,       unit="nM"),
+        ncapp38     = ScalarParam(5),
+        pp38t       = ScalarParam(100,          unit="molecule")
+        )
+
+states("p-p38",
+    pp38 = ScalarParam(60.08195516, unit="molecule")      
+    )
+
+expressions("p-p38")
+p38         = pp38t - pp38
+dpp38_dt    = -kb_pp38*pp38 + kf_pp38*p38/(1+(kdcapp38/Cai)**ncapp38)
+
+################################################################################
+## NFAT cycle from Coolings paper
+
+parameters("NFAT",
+        kf1_NFAT = ScalarParam(9.786e-7, unit="1/(nM*s)"),   
+        kr1_NFAT = ScalarParam(1.93e-2, unit="1/s"),        
+        kf2_NFAT = ScalarParam(7e-3, unit="1/s"),        
+        kf3_NFAT = ScalarParam(3.62e-4, unit="1/s"),        
+        kr3_NFAT = ScalarParam(4.71e-5, unit="1/(nM*s)"),   
+        kf4_NFAT = ScalarParam(1e-4, unit="1/s"),        
+        Ccn_NFAT = ScalarParam(10),                              # Volume ratio of Cytosol to Nucleus
+        NFATt    = ScalarParam(1.2,     unit="nM")
+        )
+
+states("NFAT",
+    NFATpc = ScalarParam(0.7167856244256521, unit="nM"),        # nM 0.994682667758
+    NFATpn = ScalarParam(0.1831040479764395, unit="nM"),        # nM 0.0463772043925
+    NFATNn = ScalarParam(0.29984916916479876, unit="nM")        # nM 0.0581439005689
+    )
+
+expressions("NFAT")
+actN_NFAT   = 0.1*Ca4_CN + 1*CaMCN                      # Need to explain how this becomes the ratio calculation
+CaMCN_NFAT  = CNt*actN_NFAT
+
+NFATNc      = NFATt - NFATpc - NFATpn - NFATNn
+## Intermediates 
+J1_NFAT     = kf1_NFAT*NFATpc*CaMCN_NFAT - kr1_NFAT*NFATNc*(1 - actN_NFAT)
+J2_NFAT     = NFATNc*kf2_NFAT
+J3_NFAT     = kf3_NFAT*NFATNn*(1-actN_NFAT) - kr3_NFAT*NFATpn*CaMCN_NFAT
+J4_NFAT     = NFATpn*kf4_NFAT   
+### ODEs
+dNFATpc_dt  = J4_NFAT/Ccn_NFAT - J1_NFAT     # in [nM/s]
+dNFATNn_dt  = J2_NFAT*Ccn_NFAT - J3_NFAT     # in [nM/s]
+dNFATpn_dt  = J3_NFAT - J4_NFAT              # in [nM/s]
+
+################################################################################
+## TNFa
+
+parameters("TNFa",
+    ktrnscrpt_TNF   = ScalarParam(2.78e-4,    unit="1/s"),               # [1/s]: k for transcription of mRNA from DNA per molecule
+    ktrnsl_TNF      = ScalarParam(2e-4,       unit="1/s"),                     # [1/s]: k for translation of TNFa from mRNA per molecule
+    kdegTNF_TNF     = ScalarParam(1.38e-2,    unit="1/s"),              # [1/s]: the rate of degradation of TNFa per molecule
+    kdegRNA_TNF     = ScalarParam(1.35e-4,    unit="1/s"),                 # [1/s]: the rate of degradation of mRNA per molecule
+    kgeneexpf_TNF   = ScalarParam(5.11e-4,    unit="1/(molecule*s)"),    # [1/(molecule-s)]: Gene expression
+    kgeneexpr_TNF   = ScalarParam(1.78e-4,    unit="1/s"),  
+    ### Hill equation related constants for activation of DNA dynamics/TNFa release
+    IC50pp38_TNF    = ScalarParam(75, unit="molecule"),
+    npp38_TNF       = ScalarParam(5.5),
+    IC50NNn_TNF     = ScalarParam(0.4),
+    nNNn_TNF        = ScalarParam(2),
+    Dnc             = ScalarParam(10, unit="1/s"),
+    Dce             = ScalarParam(5,  unit="1/s"),
+    kdQ2            = ScalarParam(0.5),
+    nQ              = ScalarParam(1),
+    kdCaTNF         = ScalarParam(25, unit="nM"),
+    Ca0             = ScalarParam(100.038, unit='nM'),
+    nCaTNF          = 1
+    )
+
+states("TNFa",
+    DNA_TNF     = ScalarParam(24.24479500884321,  unit="molecule"),      # arbitary entity
+    DNATNF      = ScalarParam(23.55520499105679,  unit="molecule"),       # arbitary entity
+    mRNA_TNF    = ScalarParam(23.388667509704252, unit="molecule"),     # arbitary entity
+    TNFa        = ScalarParam(0.3387139226974407, unit="molecule"),          # arbitary entity
+    TNFac       = ScalarParam(0.3387139226974407),
+    TNFae       = ScalarParam(0.3387139226974407)
+    )
+
+expressions("TNFa")
+# Rate of transcription
+Rtranscript_TNF = ktrnscrpt_TNF*DNA_TNF/(1+(IC50NNn_TNF/NFATNn)**nNNn_TNF)
+# Rate of translation
+Rtranslate_TNF  = ktrnsl_TNF*mRNA_TNF
+# Rate of TNF degradation
+RdegTNF_TNF     = kdegTNF_TNF*TNFa
+# Rate of RNA degradation
+RdegRNA_TNF     = kdegRNA_TNF*mRNA_TNF/(1+(pp38/IC50pp38_TNF)**npp38_TNF)
+# Rate of gene expression
+Rgeneexp_TNF    = kgeneexpf_TNF*DNA_TNF*TNFa - kgeneexpr_TNF*DNATNF # DNATNF is the complex of DNA and TNF
+
+## ODEs of TNFa production in cytoplasm 
+dDNA_TNF_dt     = -Rgeneexp_TNF
+dmRNA_TNF_dt    = Rtranscript_TNF - RdegRNA_TNF
+dDNATNF_dt      = Rgeneexp_TNF
+dTNFa_dt        = Rtranslate_TNF - RdegTNF_TNF - Rgeneexp_TNF - Dnc*(TNFa - TNFac) 
+
+## Exocytosis of TNFa by P2X7
+dTNFac_dt   = Dnc*(TNFa - TNFac) - (Dce/(1+(kdCaTNF/(Cai-Ca0))**nCaTNF))*(TNFac-TNFae)
+dTNFae_dt   = (Dce/(1+(kdCaTNF/(Cai-Ca0))**nCaTNF))*(TNFac-TNFae)
+
+################################################################################
+### P2Y class
+parameters("P2Y class",
+        kd_p2y      = ScalarParam(410,   unit="nM/s"),   # 1 freq [v] amp [] : 
+        hd_p2y      = ScalarParam(4,     unit="1/s"),    # 2 freq [v] amp [v] :
+        ld_p2y      = ScalarParam(0.3,   unit="nM/s"),   # 3 freq [v] amp [v] :
+        kc_p2y      = ScalarParam(1.5e6,   unit="nM/s"), # 4 freq [v] amp [] :
+        krec_p2y    = ScalarParam(0.01,  unit="1/s"),    # 5 freq [v] amp [] : 
+        hrec_p2y    = ScalarParam(10,    unit="1/s"),    # 6 freq [v] amp [] :
+        kg_p2y      = ScalarParam(20,    unit="1/s"),    # 7 freq [v] amp [] :
+        hg_p2y      = ScalarParam(2,     unit="1/s"),    # 8 freq [v] amp [] :
+        Kp_p2y      = ScalarParam(40,    unit="nM"),     # 9 freq [v] amp [] : 
+        Kc_p2y      = ScalarParam(100,   unit="nM"),     # 10 freq [] amp [v] :
+        Kg_p2y      = ScalarParam(50,    unit="nM"),     # 11 freq [v] amp [v] : 
+        Kd_p2y      = ScalarParam(5,     unit="nM"),     # 12 freq [v] amp [v] :
+        Ks_p2y      = ScalarParam(5,     unit="nM"),     # 13 freq [] amp [v] :
+        PH_p2y      = ScalarParam(0,     unit=""),       
+        ka_p2y      = ScalarParam(1000,   unit="mM"),    # 14 freq [v] amp [v] : 
+        Cce_p2y     = ScalarParam(11.43, unit=""),        
+        nCa_p2y     = ScalarParam(3,     unit=""),
+        p2ytot_p2y  = ScalarParam(200.0, unit="nM"),     # 15 freq [v] amp [v] : 
+        Gatot_p2y   = ScalarParam(200.0, unit="nM"),     # 16 freq [v] amp [v] : 
+        n_p2y       = ScalarParam(2,     unit=""),
+        m_p2y       = ScalarParam(4,    unit=""),
+        Kd_ATP_p2y  = ScalarParam(250,  unit="uM"),
+        Scale_p2y   = ScalarParam(3.7),
+        degCa       = 0.1                                # 17 freq [] amp [v] : it's degradation
+        )
+
+states("P2Y class",
+    GaGTP   = ScalarParam(0, unit="nM"),
+    p2ya    = ScalarParam(0, unit="nM"),
+    DAG     = ScalarParam(0, unit="nM"),
+    Cap2y   = ScalarParam(0),
+    )
+
+expressions("P2Y class")
+## Intermediates
+ATP_p2y     = 0.5 + Scale_p2y/(1+(Kd_ATP_p2y/ATP1)) # M -> mM This needs to be checked. 1000 uM -> 10 uM -> 1
+ScalebyATP  = Conditional(Eq(DegSwitch,1),ATP**1.5,1)
+IP3         = DAG
+da          = DAG/Kd_p2y
+ga          = GaGTP/Kg_p2y
+sa          = IP3/Ks_p2y
+
+RPKC        = (PH_p2y + DAG)*Cai/((Kc_p2y + Cai)*(Kp_p2y + PH_p2y*DAG))
+RPLC        = pow(da, n_p2y)*pow(ga, m_p2y)/((1 + pow(da, n_p2y))*(1 + pow(ga,m_p2y)))
+
+## ODEs
+dGaGTP_dt     = -hg_p2y*GaGTP + ATP_p2y*kg_p2y*(Gatot_p2y - GaGTP)*p2ya/(ATP_p2y + ka_p2y)
+dp2ya_dt      = ScalebyATP*krec_p2y*(p2ytot_p2y*rhop2yc - p2ya) - hrec_p2y*RPKC*p2ya
+dDAG_dt       = ld_p2y + kd_p2y*RPLC - hd_p2y*DAG
+CaIP3mediated = kc_p2y*ScalebyATP*pow(sa, nCa_p2y)/(1 + pow(sa,nCa_p2y)) - degCa*(Cap2y)*rhop2yc 
+dCap2y_dt     = CaIP3mediated
+
+################################################################################
+### P2Y12
+parameters("P2Y12",
+        kf1_p2y12 = 0.008, 
+        kf2_p2y12 = 0.1, 
+        kf3_p2y12 = 0.01,
+        kf4_p2y12 = 0.00001,
+        kf5_p2y12 = 0.001,
+        kf6_p2y12 = 0.001,
+        kb1_p2y12 = 0.02,
+        kb2_p2y12 = 0.01,
+        kb3_p2y12 = 0.01,
+        kb4_p2y12 = 0.01,
+        kb5_p2y12 = 0.1,
+        kb6_p2y12 = 0.01,
+        kdeg1_p2y12 = 0.05,
+        #Kd1_p2y12 = 50,  ## ADP base
+        #Kd2_p2y12 = 4,  ## G protein base
+        #Kd3_p2y12 = 80, ## Ca conc. base
+        #Kd4_p2y12 = 0.05, ## RPLC base 
+        #Kd5_p2y12 = 8,  ## PI3K activation base
+        #c_p2y12   = 0.45, ## Cont. by open
+        #n1_p2y12  = 1,
+        #n2_p2y12  = 1,
+        #n3_p2y12  = 10,
+        #n4_p2y12  = 3,
+        #n5_p2y12  = 3,
+        p2y12tot  = 100,
+        PI3Ktot   = 100,
+        Akttot    = 100,
+        )
+
+states("P2Y12",
+    Gb        = 0.0,
+    p2y12a    = 0.0,
+    PI3Ks     = 0.0,
+    PI3Ka     = 0.0,
+    pAkt      = 0.0,
+    signalCa    = 0.0,
+    )
+
+
+expressions("P2Y12")
+dp2y12a_dt  = kf1_p2y12*(p2y12tot*rhop2y12-p2y12a)*ATP3 - kb1_p2y12*p2y12a
+dGb_dt      = p2y12a*kf2_p2y12 - kdeg1_p2y12*Gb**2
+dsignalCa_dt  = kf6_p2y12*(Cai-Ca0) - kb6_p2y12*signalCa
+dPI3Ks_dt   = kf3_p2y12*signalCa*(PI3Ktot-PI3Ks-PI3Ka) - kb3_p2y12*PI3Ks - kf4_p2y12*PI3Ks*Gb
+dPI3Ka_dt   = kf4_p2y12*PI3Ks*Gb - kb4_p2y12*PI3Ka
+dpAkt_dt    = kf5_p2y12*(Akttot-pAkt)*PI3Ka - kb5_p2y12*pAkt 
+
+
+
+#dsignalCa_dt  = kf5_p2y12*(Cai-Ca0) - kb3_p2y12*signalCa
+#dPI3Ka_dt   = kf3_p2y12*signalCa*(0.2/(1+(Kd2_p2y12/Gb)**n2_p2y12) + 0.2/(1+(Kd4_p2y12/RPLC)))*(PI3Ktot-PI3Ka) - kb2_p2y12*PI3Ka
+#dpAkt_dt    = kf4_p2y12*(Akttot-pAkt)*PI3Ka - kb3_p2y12*pAkt
+
+
+
+################################################################################
+## CaM-mediated migration place holder 
+parameters("CaM signal", 
+        kfCM  = 0.0225, #0.00055,
+        krCM  = 0.5, #0.00001,
+        Po     = 1,
+        kdpakt = 0.4,
+        kdCaM  = 0.00001,
+        CaM0   = 0.000991597630309,
+        )    # 5
+ 
+states("CaM signal",
+    VelMig = 0,
+#    Dump = 0
+    Distance = 0
+    )
+
+expressions("CaM signal")
+SigpA = 1/(1+(kdpakt/pAkt)**1)
+SigCaM = 1/(1+(kdCaM/(Ca4_CaM-CaM0))**3)
+dVelMig_dt = kfCM*(SigpA + 0.05*SigCaM) - VelMig*krCM
+dDistance_dt = VelMig
+
+#################################################################################
+### Calcium Cascades
+
+expressions("Ca_ER")
+dCaER_dt = JERtoCyt - dCaS - JERtoCy*VMiG/VERMiG - Cap2y*0.5
+
+expressions("Ca_cyto")
+dCai_dt = (J_ptxf + J_ptxs + JExtoCy) - JCyttoER + JNCX + JERtoCy - (dCa2_CaM + dCa4_CaM + dCa4_CN + dCaF + dCaBex) + Cap2y  
+
