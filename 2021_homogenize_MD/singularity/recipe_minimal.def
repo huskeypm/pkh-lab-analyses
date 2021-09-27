@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%post
+  #General usage
+  apt -y update
+  apt -y install --no-install-recommends less vim nano
+  #Aliases for convenience
+  echo "" >> /etc/bash.bashrc
+  echo "#Aliases for convenience" >> /etc/bash.bashrc
+  echo "alias python=python3" >> /etc/bash.bashrc
+  echo "alias pip=pip3" >> /etc/bash.bashrc
+  echo "alias ipython=ipython3" >> /etc/bash.bashrc
+  #Python 3
+  apt -y install --no-install-recommends python3.6
+  #General scientific programming packages for python
+  apt -y install --no-install-recommends python3-pip python3-setuptools python3-numpy python3-scipy python3-tk python3-matplotlib ipython3 jupyter jupyter-notebook
+  pip3 install ruamel.yaml pandas doit
+  #gmsh
+  apt -y install --no-install-recommends ssh gmsh=3.0.6+dfsg1-1
+  #fenics
+  apt -y install --no-install-recommends software-properties-common
+  add-apt-repository ppa:fenics-packages/fenics
+  apt -y update
+  apt -y install --no-install-recommends fenics=1:2019.2.0.5~ppa1~bionic1 
+  apt -y install --no-install-recommends build-essential
+
+%runscript
+  /bin/bash
