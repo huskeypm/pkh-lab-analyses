@@ -1,0 +1,44 @@
+%YAML 1.2
+---
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions]
+{% for tag in tag_list %}
+# {{tag}}
+{%set mtag = other["meshes_by_tag"][tag]%}
+{% for ivar in ['D', 'pmf'] %}
+- !InterpolationSimulator
+  name: chan6.{{tag}}.interp.{{ivar|lower}}
+  mesh: !mesh_hdf5file {{mtag}}.hdf5
+  meshmeta: !meshmetafile {{mtag}}.yaml
+  conditions:
+    elementorder: 2
+    family: CG
+    functionname: {{function_names[ivar]}}
+    coordcolumns: [X, Y]
+    valuecolumn: {{value_columns[ivar]}}
+    outcolumns: ['dof_x','dof_y','value']
+    boundaryvalue: null
+    nonboundary_fillvalue: {{nonboundary_fillvalues[ivar][tag]}}
+  loaddata:
+{% if ivar == 'D'%}
+    - [load_csv, {infpath: !Processed Davg_{{tag}}.xz, attrpath: pointdata}]
+{% else %}
+    - [load_csv, {infpath: !Processed pmf_{{tag}}.xz, attrpath: pointdata}]
+{% endif %}
+  dataextraction:
+    # - [compute_residual_errors, {dfpath: pointdata, funcattr: soln, outattr: residuals}]
+    # - [save_csv, {attrpath: residuals, outfpath: !OwnSolutionFile residuals_{{ivar}}_{{tag}}.csv}]
+    - [save_csv, {attrpath: results, outfpath: !OwnSolutionFile dof_results_{{ivar}}_{{tag}}.csv}]
+    - [writefield, {outfpath: !OwnSolutionFile {{function_names[ivar]}}_{{tag}}.hdf5, outname: {{function_names[ivar] -}} }]
+    - [writefield, {outfpath: !OwnSolutionFile {{function_names[ivar]}}_{{tag}}.pvd}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile timing_{{ivar}}_{{tag}}.yaml
+        mapping:
+          total_sim_time: sim_timer.delta_str
+          interp_setup_time: interp_setup_timer.delta_str
+          interp_eval_time: interp_run_timer.delta_str
+{% endfor %}{#for ivar#}
+{% endfor %}{#for tag#}

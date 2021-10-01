@@ -1,0 +1,297 @@
+%YAML 1.2
+#Generate plots
+---
+#Folder Structure
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+  postprocfile: [postproc, 0]
+#channel widths, no homogenization
+- !FigureRequest
+  name: chan6.widths_plot
+  prepcommands:
+    - - load_csv
+      - infpath: !ManualInputFile analytical_series.csv
+        dtype_csv_fpath: !ManualInputFile analytical_series_dtypes.csv
+        attrpath: analytical_df
+    - - series_from_dataframe
+      - dfpath: analytical_df
+        xcol: channel_width
+        ycol: analytical_Deff
+        outattr: analytical_series
+        label: "Theoretical result\nfor constant $D$,\nno PMF"
+    - - load_csv
+      - infpath: !postprocfile collected.csv
+        dtype_csv_fpath: !postprocfile collected_dtypes.csv
+        attrpath: dframe
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff
+        outattr: dconst_nopmf
+        label: "Constant $D$,\nno PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == False) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff
+        outattr: dvar_nopmf
+        label: "Varying $D$,\nno PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == True) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff
+        outattr: dconst_wpmf
+        label: "Constant $D$,\nwith PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == False) & (vary_PMF == True)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff
+        outattr: dvar_wpmf
+        label: "Varying $D$,\nwith PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == True) & (vary_PMF == True)"
+  rcparams:
+    figure.dpi: 300
+    figure.autolayout: False
+  figures:
+    - !FigureProperties
+      figsize: [8,5]
+      outfpath: !postprocfile chan6_widths_nohomog.png
+  axes:
+    - !AxesProperties
+      xlabel:
+        xlabel: 'Channel Height [nm]'
+        fontsize: 20
+      ylabel:
+        ylabel: '$D_{eff}/D_{bulk}$'
+        fontsize: 20
+      xlim: [1.1,2.1]
+      #ylim: [0.0,0.35]
+      ylim: [0.0,1.0]
+  series: &widths_series
+    - !SeriesProperties
+      seriesattr: analytical_series
+      fmt: "ks"
+      kwargs:
+        markerfacecolor: 'none'
+    - !SeriesProperties
+      seriesattr: dconst_nopmf
+      fmt: "r--"
+    - !SeriesProperties
+      seriesattr: dvar_nopmf
+      fmt: "b--"
+    - !SeriesProperties
+      seriesattr: dconst_wpmf
+      fmt: "r-"
+    - !SeriesProperties
+      seriesattr: dvar_wpmf
+      fmt: "b-"
+  plotcommands:
+    - [axmethod, {method: legend, loc: "center left", numpoints: 1, bbox_to_anchor: [1, 0.5]}] 
+    - [axmethod, {method: set_title, label: "Results from flux calculation", fontsize: 20}]
+    - [figmethod, {method: subplots_adjust, bottom: 0.15, left: 0.1, right: 0.7}]
+#deprotonation levels, no homogenization
+- !FigureRequest
+  name: chan6.deprot_plot
+  prepcommands:
+    - - load_csv
+      - infpath: !postprocfile collected.csv
+        dtype_csv_fpath: !postprocfile collected_dtypes.csv
+        attrpath: dframe
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff
+        outattr: dconst_nopmf
+        label: "Constant $D$,\nno PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == False) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff
+        outattr: dvar_nopmf
+        label: "Varying $D$,\nno PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == True) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff
+        outattr: dconst_wpmf
+        label: "Constant $D$,\nwith PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == False) & (vary_PMF == True)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff
+        outattr: dvar_wpmf
+        label: "Varying $D$,\nwith PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == True) & (vary_PMF == True)"
+  rcparams:
+    figure.dpi: 300
+    figure.autolayout: False
+  figures:
+    - !FigureProperties
+      figsize: [8,5]
+      outfpath: !postprocfile chan6_deprot_nohomog.png
+  axes:
+    - !AxesProperties
+      xlabel:
+        xlabel: 'Deprotonation Level'
+        fontsize: 20
+      ylabel:
+        ylabel: '$D_{eff}/D_{bulk}$'
+        fontsize: 20
+      #xlim: [0.0,0.5]
+      #ylim: [0.0,0.35]
+      ylim: [0.0,1.0]
+  series: &deprot_series
+    - !SeriesProperties
+      seriesattr: dconst_nopmf
+      fmt: "r--"
+    - !SeriesProperties
+      seriesattr: dvar_nopmf
+      fmt: "b--"
+    - !SeriesProperties
+      seriesattr: dconst_wpmf
+      fmt: "r-"
+    - !SeriesProperties
+      seriesattr: dvar_wpmf
+      fmt: "b-"
+  plotcommands:
+    - [axmethod, {method: legend, loc: "center left", numpoints: 1, bbox_to_anchor: [1, 0.5]}] 
+    - [axmethod, {method: set_title, label: "Results from flux calculation", fontsize: 20}]
+    - [figmethod, {method: subplots_adjust, bottom: 0.15, left: 0.1, right: 0.7}]
+#channel widths, homogenized
+- !FigureRequest
+  name: chan6.widths_plot.homog
+  prepcommands:
+    - - load_csv
+      - infpath: !ManualInputFile analytical_series.csv
+        dtype_csv_fpath: !ManualInputFile analytical_series_dtypes.csv
+        attrpath: analytical_df
+    - - series_from_dataframe
+      - dfpath: analytical_df
+        xcol: channel_width
+        ycol: analytical_Deff
+        outattr: analytical_series
+        label: "Theoretical result\nfor constant $D$,\nno PMF"
+    - - load_csv
+      - infpath: !postprocfile collected.csv
+        dtype_csv_fpath: !postprocfile collected_dtypes.csv
+        attrpath: dframe
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff_homog
+        outattr: dconst_nopmf
+        label: "Constant $D$,\nno PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == False) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff_homog
+        outattr: dvar_nopmf
+        label: "Varying $D$,\nno PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == True) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff_homog
+        outattr: dconst_wpmf
+        label: "Constant $D$,\nwith PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == False) & (vary_PMF == True)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: width_nm
+        ycol: Deff_homog
+        outattr: dvar_wpmf
+        label: "Varying $D$,\nwith PMF"
+        query: "(deprot < 0.01) & (vary_Dlocal == True) & (vary_PMF == True)"
+  rcparams:
+    figure.dpi: 300
+    figure.autolayout: False
+  figures:
+    - !FigureProperties
+      figsize: [8,5]
+      outfpath: !postprocfile chan6_widths_homog.png
+  axes:
+    - !AxesProperties
+      xlabel:
+        xlabel: 'Channel Height [nm]'
+        fontsize: 20
+      ylabel:
+        ylabel: '$D_{eff}/D_{bulk}$'
+        fontsize: 20
+      xlim: [1.1,2.1]
+      #ylim: [0.0,0.35]
+      ylim: [0.0,1.0]
+  series: *widths_series
+  plotcommands:
+    - [axmethod, {method: legend, loc: "center left", numpoints: 1, bbox_to_anchor: [1, 0.5]}] 
+    - [axmethod, {method: set_title, label: "Results from homogenization", fontsize: 20}]
+    - [figmethod, {method: subplots_adjust, bottom: 0.15, left: 0.1, right: 0.7}]
+#deprotonation levels, homogenized
+- !FigureRequest
+  name: chan6.deprot_plot.homog
+  prepcommands:
+    - - load_csv
+      - infpath: !postprocfile collected.csv
+        dtype_csv_fpath: !postprocfile collected_dtypes.csv
+        attrpath: dframe
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff_homog
+        outattr: dconst_nopmf
+        label: "Constant $D$,\nno PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == False) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff_homog
+        outattr: dvar_nopmf
+        label: "Varying $D$,\nno PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == True) & (vary_PMF == False)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff_homog
+        outattr: dconst_wpmf
+        label: "Constant $D$,\nwith PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == False) & (vary_PMF == True)"
+    - - series_from_dataframe
+      - dfpath: dframe
+        xcol: deprot
+        ycol: Deff_homog
+        outattr: dvar_wpmf
+        label: "Varying $D$,\nwith PMF"
+        query: "(width_nm > 1.9) & (tag != 'na_27pct') & (vary_Dlocal == True) & (vary_PMF == True)"
+  rcparams:
+    figure.dpi: 300
+    figure.autolayout: False
+  figures:
+    - !FigureProperties
+      figsize: [8,5]
+      outfpath: !postprocfile chan6_deprot_homog.png
+  axes:
+    - !AxesProperties
+      xlabel:
+        xlabel: 'Deprotonation Level'
+        fontsize: 20
+      ylabel:
+        ylabel: '$D_{eff}/D_{bulk}$'
+        fontsize: 20
+      #xlim: [0.0,0.5]
+      #ylim: [0.0,0.35]
+      ylim: [0.0,1.0]
+  series: *deprot_series
+  plotcommands:
+    - [axmethod, {method: legend, loc: "center left", numpoints: 1, bbox_to_anchor: [1, 0.5]}] 
+    - [axmethod, {method: set_title, label: "Results from homogenization", fontsize: 20}]
+    - [figmethod, {method: subplots_adjust, bottom: 0.15, left: 0.1, right: 0.7}]

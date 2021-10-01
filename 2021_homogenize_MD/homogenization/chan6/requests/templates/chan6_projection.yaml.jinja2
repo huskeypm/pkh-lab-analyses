@@ -1,0 +1,35 @@
+%YAML 1.2
+---
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+{% for jobtup in joblist.itertuples() %}
+#{{jobtup.job_id}}
+- !ProjectionSimulator
+  name: chan6.{{jobtup.tag}}.projection
+  mesh: !mesh_hdf5file {{jobtup.tag}}.hdf5
+  meshmeta: !meshmetafile {{jobtup.tag}}.yaml
+  metadata:
+    A: {{jobtup.A}}
+    B: {{jobtup.B}}
+    Zmid: {{jobtup.Zmid}}
+    Zrefl: {{jobtup.Zrefl}}
+  conditions:
+    elementorder: 2
+    family: CG
+    functionname: pmf
+    functiontype: scalar
+  loaddata:
+    - - loadexpression
+      - attrpath: expr
+        spaceattr: V
+        expression: "A*pow((x[1]<=Zrefl)*(x[1]-Zmid)+(x[1]>Zrefl)*(x[1]+Zmid-2*Zrefl),2.0)+B"
+        parameters: [A, B, Zmid, Zrefl]
+  dataextraction:
+    - [writefield, {outfpath: !SetFile qpmf_{{jobtup.tag}}.hdf5, outname: pmf}]
+    - [writefield, {outfpath: !SetFile qpmf_{{jobtup.tag}}.pvd}]
+{%endfor%}{#for jobtup#}

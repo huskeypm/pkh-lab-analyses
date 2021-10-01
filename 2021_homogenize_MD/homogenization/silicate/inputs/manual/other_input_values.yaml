@@ -1,0 +1,75 @@
+#Bulk diffusion values
+#I selected this value based on the results of silicate_md p20201103a_ACF_comparison.ipynb
+#value is in units of nm^2/psec
+bulk_D: 3.0e-3
+
+#Meshes to use for each tag
+meshes_by_tag:
+  "12A": "12A"
+  "16A": "16A"
+  "20A": "20A"
+  "27pct": "27pct"
+  "50pct": "50pct"
+  "na_27pct": "27pct"
+
+#Actual channel widths (in nm) and deprotonation values
+channel_widths:
+  "12A": 1.2
+  "16A": 1.6
+  "20A": 2.0
+  "27pct": 2.0
+  "50pct": 2.0
+  "na_27pct": 2.0
+deprotonation_levels:
+  "12A": 0.0
+  "16A": 0.0
+  "20A": 0.0
+  "27pct": 0.27
+  "50pct": 0.5
+  "na_27pct": 0.27
+
+#PMF shift values
+#Selected based on the data in silicate_md notebook p20201130b_wdens_dlocal_pmf.ipynb
+#Units are kT
+# pmf_shift_values:
+#   "12A": -7.5
+#   "16A": -7.0
+#   #"20A": -4.5 #for original set. The one below is "alt"
+#   "20A": -3.5
+#   "27pct": -0.5
+#   "50pct": -1.0
+#   "na_27pct": -22.5
+pmf_shift_values:
+  "12A": 0.0
+  "16A": 0.0
+  "20A": 0.0
+  "27pct": 0.0
+  "50pct": 0.0
+  "na_27pct": 0.0
+
+#PMF Scaling values
+#Requested by Pete, values selected by me
+# pmf_scaling_values:
+#   "12A": 0.25
+#   "16A": 0.25
+#   "20A": 0.25
+#   "27pct": 0.25
+#   "50pct": 0.25
+#   "na_27pct": 0.25
+pmf_scaling_values:
+  "12A": 1.0
+  "16A": 1.0
+  "20A": 1.0
+  "27pct": 1.0
+  "50pct": 1.0
+  "na_27pct": 1.0
+
+#Maximum D value
+#I selected the value, after agreeing to the principle in a meeting with Pete 13-Aug-2020
+#Units: normalized to bulk value
+limiting_D: 2.0
+
+#Maximum PMF value
+#I selected the value from looking at the output data
+#(see, for example, silicate_md p20201117a_pmf_plots.ipynb)
+limiting_pmf: 25.0 #kT

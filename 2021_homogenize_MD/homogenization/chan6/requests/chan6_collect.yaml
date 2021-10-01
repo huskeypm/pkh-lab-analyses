@@ -1,0 +1,79 @@
+%YAML 1.2
+---
+#Folder Structure
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+  postprocfile: [postproc, 0]
+- !FromListCollectionRequest
+  name: chan6.collection
+  modules:
+    - !modulefile collection.py
+  methods:
+    - get_by_tag
+  listfile: !JobFile joblist.csv
+  dtype_listfile: !JobFile joblist_dtypes.csv
+  outfile: !postprocfile collected.csv
+  dtype_outfile: !postprocfile collected_dtypes.csv
+  structure:
+    - - results_path
+      - tag: tag
+        vary_Dlocal: vary_Dlocal
+        vary_PMF: vary_PMF
+        actual_width: actual_width
+        cell_delta_x: cell_delta_x
+        full_thickness: full_thickness
+        area_start: area_start
+        area_end: area_end
+        area_mid: area_mid
+        flux_start: flux_start
+        flux_end: flux_end
+        flux_mid: flux_mid
+        Deff: Deff
+        Dnoslab: Dnoslab
+    - - homog_results_path
+      - full_volume: full_volume
+        mesh_volume: mesh_volume
+        Dbar: Dbar
+        Deff_homog: Deff_homog
+  calculations:
+    - [load_yaml, {infpath: !ManualInputFile other_input_values.yaml, attrpath: other_input}]
+    - [get_by_tag, {newcol: width_nm, attrpath: other_input.channel_widths}]
+    - [get_by_tag, {newcol: deprot, attrpath: other_input.deprotonation_levels}]
+- !FromListCollectionRequest
+  name: chan6.quadcollection
+  modules:
+    - !modulefile collection.py
+  methods:
+    - get_by_tag
+  listfile: !ManualInputFile quadratic_joblist.csv
+  dtype_listfile: !ManualInputFile quadratic_joblist_dtypes.csv
+  outfile: !postprocfile collected_quad.csv
+  dtype_outfile: !postprocfile collected_quad_dtypes.csv
+  structure:
+    - - results_path
+      - tag: tag
+        actual_width: actual_width
+        cell_delta_x: cell_delta_x
+        full_thickness: full_thickness
+        area_start: area_start
+        area_end: area_end
+        area_mid: area_mid
+        flux_start: flux_start
+        flux_end: flux_end
+        flux_mid: flux_mid
+        Deff: Deff
+        Dnoslab: Dnoslab
+    - - homog_results_path
+      - full_volume: full_volume
+        mesh_volume: mesh_volume
+        Dbar: Dbar
+        Deff_homog: Deff_homog
+  calculations:
+    - [load_yaml, {infpath: !ManualInputFile other_input_values.yaml, attrpath: other_input}]
+    - [get_by_tag, {newcol: width_nm, attrpath: other_input.channel_widths}]
+    - [get_by_tag, {newcol: deprot, attrpath: other_input.deprotonation_levels}]

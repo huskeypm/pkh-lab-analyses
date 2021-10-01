@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+#Limits of the meshes, manually generated from:
+#  - the mesh data in inputs/unprocessed/data_limits.yaml
+#  - plots of the PMF data in the silicate_md repo notebooks
+12A:
+  x: [5.250, 5.350]
+  y: [5.760, 6.940] #Reflected at y=6.350
+  z: [4.750, 7.150] #Reflected at z=5.950
+16A:
+  x: [5.700, 5.800]
+  y: [4.910, 6.090] #Reflected at y=5.500
+  z: [4.700, 7.900] #Reflected at z=6.300
+20A:
+  x: [5.750, 5.850]
+  y: [5.410, 6.590] #Reflected at y=6.000
+  z: [4.650, 8.650] #Reflected at z=6.650
+27pct:
+  x: [5.577, 5.677]
+  y: [4.610, 5.790] #Reflected at y=5.200
+  z: [4.600, 8.600] #Reflected at z=6.600
+50pct:
+  x: [5.650, 5.750]
+  y: [4.410, 5.590] #Reflected at y=5.000
+  z: [4.600, 8.600] #Reflected at z=6.600

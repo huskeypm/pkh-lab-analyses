@@ -1,0 +1,97 @@
+%YAML 1.2
+---
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+{% for jobtup in joblist.itertuples() %}
+{% set dloc_name = dloc_name_dict[jobtup.use_Dlocal] %}
+{% set pmf_name = pmf_name_dict[jobtup.use_PMF] %}
+{% set mtag = other["meshes_by_tag"][jobtup.tag] %}
+# {{jobtup.job_id}}: {{jobtup.tag}}, {{dloc_name}}, {{pmf_name}}
+- !SUSimulator
+  name: chan6.{{jobtup.tag}}.{{jobtup.job_id}}
+  mesh: !mesh_hdf5file {{mtag}}.hdf5
+  meshmeta: !meshmetafile {{mtag}}.yaml
+  modules:
+    - !modulefile simcalcs.py
+  methods:
+    - calc_ratio
+    - calc_delta
+    - calc_full_thickness
+    - effective_D
+  solver_parameters:
+{%if jobtup.job_id in solver_setting_overrides.keys()%}
+{%for skey,sval in solver_setting_overrides[jobtup.job_id].items()%}
+    {{skey}}: {{sval}}
+{%endfor%}{#for skey,sval#}
+{%else%}{#if jobtup.job_id#}
+    linear_solver: gmres
+    preconditioner: petsc_amg
+{%endif%}{#if jobtup.job_id#}
+  conditions:
+    elementorder: 2
+    dirichlet:
+      1112: [100.0]
+      3132: [10.0]
+    var_Dlocal: True
+    beta: 1.0 #1/kT (for PMF in units of kT)
+    potential_dirichlet:
+      1112: 0.0
+      3132: 0.0
+    species:
+      - {symbol: A, z: 1, D: 1.0}
+  loaddata:
+    - [set_nested, {dpath: tag, val: {{jobtup.tag}}}]
+    - [set_nested, {dpath: vary_Dlocal, val: {{jobtup.use_Dlocal}}}]
+    - [set_nested, {dpath: vary_PMF, val: {{jobtup.use_PMF}}}]
+{%if jobtup.use_Dlocal%}
+    - [loadfield, {attrpath: Dlocal, infpath: !SetFile spatial_D_{{jobtup.tag}}.hdf5, fieldtag: spatial_D}]
+{%else%}{#if jobtup.use_Dlocal#}
+    - [setconstant, {attrpath: Dlocal, constval: 1.0}]
+{%endif%}{#if jobtup.use_Dlocal#}
+{%if jobtup.use_PMF%}
+    - [loadfield, {attrpath: potential, infpath: !SetFile pmf_{{jobtup.tag}}.hdf5, fieldtag: pmf}]
+{%else%}{#if jobtup.use_PMF#}
+    - [setconstant, {attrpath: potential, constval: 0.0}]
+{%endif%}{#if jobtup.use_PMF#}
+  dataextraction:
+    - [calc_delta, {vmin: !Stored meshinfo.metadata.Ymin, vmax: !Stored meshinfo.metadata.Ymax, outattr: actual_width}]
+    - [calc_delta, {vmin: !Stored meshinfo.metadata.Xmin, vmax: !Stored meshinfo.metadata.Xmax, outattr: cell_delta_x}]
+    - [calc_full_thickness, {width_nm: !Stored actual_width, slab_thickness: {{other["slab_thickness"]}}, outattr: full_thickness}]
+    - [facet_area, {pfacet: 1112, attrpath: area_start, internal: False}]
+    - [facet_area, {pfacet: 3132, attrpath: area_end, internal: False}]
+    - [facet_area, {pfacet: 2122, attrpath: area_mid, internal: True}]
+    - [transform_back, {}]
+    - [writefield, {outfpath: !OwnSolutionFile Dbar.pvd, attrpath: [Dbar_proj, 0]}]
+    - [writefield, {outfpath: !OwnSolutionFile conc.pvd, attrpath: [clist, 0]}]
+    - [writefield, {outfpath: !OwnSolutionFile cbar.pvd, attrpath: [cbarlist, 0]}]
+    - [calcflux, {solnattr: [cbarlist, 0], attrpath: flux, Dattr: [Dbar_proj, 0]}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_{{sim_id}}.pvd, attrpath: flux}]
+    - [fluxintegral, {pfacet: 1112, attrpath: flux_start, internal: False, fluxattr: flux}]
+    - [fluxintegral, {pfacet: 3132, attrpath: flux_end, internal: False, fluxattr: flux}]
+    - [fluxintegral, {pfacet: 2122, attrpath: flux_mid, internal: True, fluxsign: '-', fluxattr: flux}]
+    - [effective_D, {outattr: Dnoslab, fluxattr: flux_mid, areaattr: actual_width, start_conc_attr: [conditions, dirichlet, 1112, 0], end_conc_attr: [conditions, dirichlet, 3132, 0], delta_s_attr: cell_delta_x}]
+    - [effective_D, {outattr: Deff, fluxattr: flux_mid, areaattr: full_thickness, start_conc_attr: [conditions, dirichlet, 1112, 0], end_conc_attr: [conditions, dirichlet, 3132, 0], delta_s_attr: cell_delta_x}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile results.yaml
+        mapping:
+          tag: tag
+          vary_Dlocal: vary_Dlocal
+          vary_PMF: vary_PMF
+          actual_width: actual_width
+          cell_delta_x: cell_delta_x
+          full_thickness: full_thickness
+          area_start: area_start
+          area_end: area_end
+          area_mid: area_mid
+          flux_start: flux_start
+          flux_end: flux_end
+          flux_mid: flux_mid
+          Deff: Deff
+          Dnoslab: Dnoslab
+          run_time: sim_timer.delta_str
+{%endfor%}{#for jobtup#}

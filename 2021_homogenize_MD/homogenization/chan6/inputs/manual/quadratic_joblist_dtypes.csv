@@ -1,0 +1,9 @@
+,0
+job_id,object
+tag,object
+A,float64
+B,float64
+Zmid,float64
+analytical_Deff,float64
+results_path,object
+homog_results_path,object

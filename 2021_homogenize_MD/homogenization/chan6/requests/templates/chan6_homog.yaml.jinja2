@@ -1,0 +1,83 @@
+%YAML 1.2
+---
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+{% for jobtup in joblist.itertuples() %}
+{% set dloc_name = dloc_name_dict[jobtup.use_Dlocal] %}
+{% set pmf_name = pmf_name_dict[jobtup.use_PMF] %}
+{% set mtag = other["meshes_by_tag"][jobtup.tag] %}
+# {{jobtup.job_id}}: {{jobtup.tag}}, {{dloc_name}}, {{pmf_name}}
+- !HomogSmolSimulator
+  name: chan6.{{jobtup.tag}}.{{jobtup.job_id}}.homog
+  mesh: !mesh_hdf5file {{mtag}}.hdf5
+  meshmeta: !meshmetafile {{mtag}}.yaml
+  modules:
+    - !modulefile homogcalcs.py
+  methods:
+    - calc_ratio
+    - calc_product
+    - calc_delta
+    - calc_full_thickness
+    - project_exp_pot
+  solver_parameters:
+{%if jobtup.job_id in solver_setting_overrides.keys()%}
+{%for skey,sval in solver_setting_overrides[jobtup.job_id].items()%}
+    {{skey}}: {{sval}}
+{%endfor%}{#for skey,sval#}
+{%else%}{#if jobtup.job_id#}
+    linear_solver: gmres
+    preconditioner: amg
+{%endif%}{#if jobtup.job_id#}
+  conditions:
+    elementorder: 2
+    family: CG
+    beta: 1.0 #1/kT (for PMF in units of kT)
+    boundaries:
+      - 1112
+      - 1121
+      - 1222
+      - 2131
+      - 2232
+      - 3132
+  loaddata:
+    - [set_nested, {dpath: tag, val: {{jobtup.tag}}}]
+    - [set_nested, {dpath: vary_Dlocal, val: {{jobtup.use_Dlocal}}}]
+    - [set_nested, {dpath: vary_PMF, val: {{jobtup.use_PMF}}}]
+{%if jobtup.use_Dlocal%}
+    - [loadfield, {attrpath: D, infpath: !SetFile spatial_D_{{jobtup.tag}}.hdf5, fieldtag: spatial_D}]
+{%else%}{#if jobtup.use_Dlocal#}
+    - [setconstant, {attrpath: D, constval: 1.0}]
+{%endif%}{#if jobtup.use_Dlocal#}
+{%if jobtup.use_PMF%}
+    - [loadfield, {attrpath: potential, infpath: !SetFile pmf_{{jobtup.tag}}.hdf5, fieldtag: pmf}]
+{%else%}{#if jobtup.use_PMF#}
+    - [setconstant, {attrpath: potential, constval: 0.0}]
+{%endif%}{#if jobtup.use_PMF#}
+  dataextraction:
+    - [domain_volume, {attrpath: mesh_volume}]
+    - [calc_delta, {vmin: !Stored meshinfo.metadata.Ymin, vmax: !Stored meshinfo.metadata.Ymax, outattr: mesh_channel_width}]
+    - [calc_delta, {vmin: !Stored meshinfo.metadata.Xmin, vmax: !Stored meshinfo.metadata.Xmax, outattr: cell_delta_x}]
+    - [calc_full_thickness, {width_nm: !Stored mesh_channel_width, slab_thickness: {{other["slab_thickness"]}}, outattr: full_thickness}]
+    - [calc_product, {factor1: !Stored full_thickness, factor2: !Stored cell_delta_x, outattr: full_volume}]
+    - [macroscale_diffusion, {respath: Dbar_matrix, attrpath: soln, volpath: full_volume}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile homog_results.yaml
+        mapping:
+          tag: tag
+          vary_Dlocal: vary_Dlocal
+          vary_PMF: vary_PMF
+          mesh_channel_width: mesh_channel_width
+          cell_delta_x: cell_delta_x
+          full_thickness: full_thickness
+          full_volume: full_volume
+          mesh_volume: mesh_volume
+          Dbar_matrix: Dbar_matrix
+          Dbar: [Dbar_matrix, 0, 0]
+          Deff_homog: [Dbar_matrix, 0, 0]
+          run_time: sim_timer.delta_str
+{%endfor%}{#for jobtup#}

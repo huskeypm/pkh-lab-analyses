@@ -1,0 +1,30 @@
+{% extends "common.geo.jinja2" %}
+{# parameter definitions section for 2D box in the y-z plane, with internal line #}
+
+{# Required input variables:
+    - mcar1 = mesh density parameter
+    - xmin, xmax, ymin, ymax, zmin, zmax = model limts
+  No optional input variables.
+  Use trim_blocks=True.
+  #}
+
+{% block paramdefs %}
+//Mesh density control
+mcar1={{ mcar1 }};
+
+//Geometric inputs
+{# Convert from y-z plane to X-Y plane, required for interpolation step #}
+Xmin={{ymin}};
+Xmax={{ymax}};
+Ymin={{zmin}};
+Ymax={{zmax}};
+Xmid=(Xmin+Xmax)/2.0;
+Ymid=(Ymin+Ymax)/2.0;
+
+//Point ordinates
+X1=Xmin;
+X2=Xmid;
+X3=Xmax;
+Y1=Ymin;
+Y2=Ymax;
+{% endblock %}

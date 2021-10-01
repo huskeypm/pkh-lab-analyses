@@ -1,0 +1,127 @@
+%YAML 1.2
+#Generate request files from templates
+---
+#Folder Structure
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+  postprocfile: [postproc, 0]
+- !DumpFolderStructure
+  name: chan6.dump_folder_structure
+  outfile: !JobFile folder_structure.yaml
+#For mesh generation
+- !TemplateFileRequest
+  name: chan6.mesh-request.template
+  tmplfile: !RequestTemplate chan6_mesh.yaml.jinja2
+  outfile: !GeneratedRequest chan6_mesh.yaml
+  prepcommands:
+    - [load_yaml, {infpath: !ManualInputFile mesh_bboxes.yaml, attrpath: data.limits}]
+  data:
+    taglist: ["12A", "16A", "20A", "27pct", "50pct"] #Mesh tags
+#For interpolation from the MD output points
+- !TemplateFileRequest
+  name: chan6.interp.template
+  tmplfile: !RequestTemplate chan6_interp.yaml.jinja2
+  outfile: !GeneratedRequest chan6_interp.yaml
+  prepcommands:
+    - [load_yaml, {infpath: !ManualInputFile other_input_values.yaml, attrpath: data.other}]
+    # - [load_yaml, {infpath: !Processed profile_data.yaml, attrpath: data.profile_data}]
+  data:
+    tag_list: &tag_list [12A, 16A, 20A, 27pct, 50pct, na_27pct] #Data set tags
+    function_names:
+      D: spatial_D
+      pmf: pmf
+    value_columns: &value_columns
+      D: Davg
+      pmf: PMF
+    nonboundary_fillvalues:
+      D:
+        12A: 0.01
+        16A: 0.01
+        20A: 0.01
+        27pct: 0.01
+        50pct: 0.01
+        na_27pct: 0.01
+      pmf: #Use the limiting value here
+        12A: 25.0
+        16A: 25.0
+        20A: 25.0
+        27pct: 25.0
+        50pct: 25.0
+        na_27pct: 25.0
+    profiles: &profiles
+      D: [A_dloc, B_dloc, C_dloc, D_dloc]
+      pmf: [A_pmf, B_pmf, C_pmf, D_pmf]
+#Job list
+- !JobListRequest
+  name: chan6.job_list
+  modules:
+    - !modulefile joblist_calcfuncs.py
+  methods:
+    - calc_resfile
+  outfile: !JobFile joblist.csv
+  dtype_outfile: !JobFile joblist_dtypes.csv
+  rangefields:
+    tag: [12A, 16A, 20A, 27pct, 50pct] #Simulation tags
+    use_PMF: [False, True]
+    use_Dlocal: [False, True]
+  calcfields:
+    - [results_path, calc_resfile, {setname: chan6, fname: results.yaml}]
+    - [homog_results_path, calc_resfile, {setname: chan6, fname: homog_results.yaml}]
+#For projecting the expressions for the quadratic potential simulation
+- !TemplateFileRequest
+  name: chan6.projection.template
+  tmplfile: !RequestTemplate chan6_projection.yaml.jinja2
+  outfile: !GeneratedRequest chan6_projection.yaml
+  prepcommands:
+    - [load_csv, {infpath: !ManualInputFile quadratic_joblist.csv, attrpath: data.joblist, dtype_csv_fpath: !ManualInputFile quadratic_joblist_dtypes.csv}]
+  data: {}
+#For running the simulations
+- !TemplateFileRequest
+  name: chan6.sims.template
+  tmplfile: !RequestTemplate chan6_sims.yaml.jinja2
+  outfile: !GeneratedRequest chan6_sims.yaml
+  prepcommands:
+    - [load_csv, {infpath: !JobFile joblist.csv, attrpath: data.joblist, dtype_csv_fpath: !JobFile joblist_dtypes.csv}]
+    - [load_yaml, {infpath: !ManualInputFile other_input_values.yaml, attrpath: data.other}]
+  data:
+    pmf_name_dict: &pmf_name_dict
+      False: const-pmf
+      True: vary-pmf
+    dloc_name_dict: &dloc_name_dict
+      False: const-D
+      True: vary-D
+    solver_setting_overrides: {}
+#For running the homogenization simulations
+- !TemplateFileRequest
+  name: chan6.homog.template
+  tmplfile: !RequestTemplate chan6_homog.yaml.jinja2
+  outfile: !GeneratedRequest chan6_homog.yaml
+  data:
+    pmf_name_dict: *pmf_name_dict
+    dloc_name_dict: *dloc_name_dict
+    solver_setting_overrides: {}
+  prepcommands:
+    - [load_csv, {infpath: !JobFile joblist.csv, attrpath: data.joblist, dtype_csv_fpath: !JobFile joblist_dtypes.csv}]
+    - [load_yaml, {infpath: !ManualInputFile other_input_values.yaml, attrpath: data.other}]
+#For quadratic potential simulations (flux-based and homogenized)
+- !TemplateFileRequest
+  name: chan6.quadsims.template
+  tmplfile: !RequestTemplate chan6_quadsims.yaml.jinja2
+  outfile: !GeneratedRequest chan6_quadsims.yaml
+  data:
+    solver_setting_overrides:
+      quad16A:
+        flux:
+          linear_solver: gmres
+          preconditioner: petsc_amg
+        homog:
+          linear_solver: gmres
+          preconditioner: petsc_amg
+  prepcommands:
+    - [load_csv, {infpath: !ManualInputFile quadratic_joblist.csv, attrpath: data.joblist, dtype_csv_fpath: !ManualInputFile quadratic_joblist_dtypes.csv}]
+    - [load_yaml, {infpath: !ManualInputFile other_input_values.yaml, attrpath: data.other}]

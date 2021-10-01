@@ -1,0 +1,38 @@
+%YAML 1.2
+---
+#Mesh Generation
+- !GeometryDefinition
+  name: geomdef
+  store_globally: True
+  dimensions: 2
+  tmplfile: !geotemplate box2D_yz_midline.geo.jinja2
+  tmplvars: [mcar1, xmin, xmax, ymin, ymax, zmin, zmax]
+  outvars: [mcar1, Xmin, Xmax, Xmid, Ymin, Ymax, Ymid]
+  ptdict:
+    11: mcar1
+    21: mcar1
+    31: mcar1
+    12: mcar1
+    22: mcar1
+    32: mcar1
+  geomtable:
+    1: [11, 21, 22, 12, 11]
+    2: [21, 31, 32, 22, 21]
+  surfloops: {}
+  nonplanar: []
+{%for tag in taglist%}
+#{{tag}}
+- !BuildGeomRequest
+  name: chan6.{{tag}}.geo
+  geomdef: !Stored [__allnames__, geomdef]
+  geofile: !geofile {{tag}}.geo
+  parameters:
+    mcar1: 0.05
+{%for coord in ["x","y","z"]%}
+    {{coord}}min: {{limits[tag][coord][0]}}
+    {{coord}}max: {{limits[tag][coord][1]}}
+{%endfor%}
+- !GeoToHDF5Request
+  name: chan6.{{tag}}.mesh
+  mesh_stem: {{tag}}
+{%endfor%}

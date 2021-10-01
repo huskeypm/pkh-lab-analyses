@@ -1,0 +1,4 @@
+job_id,tag,A,B,Zmid,Zrefl,analytical_Deff,results_path,homog_results_path
+quad12A,12A,61.111,-2,5.4,5.95,0.28885255365930773,solutions/chan6/12A/quad12A/results.yaml,solutions/chan6/12A/quad12A/homog_results.yaml
+quad16A,16A,34.375,-2,5.55,6.3,0.36028887917904456,solutions/chan6/16A/quad16A/results.yaml,solutions/chan6/16A/quad16A/homog_results.yaml
+quad20A,20A,22,-2,5.7,6.65,0.4230664869147871,solutions/chan6/20A/quad20A/results.yaml,solutions/chan6/20A/quad20A/homog_results.yaml

@@ -1,0 +1,25 @@
+%YAML 1.2
+#First, run mk_chan6.yaml to generate the files necessary for this one.
+---
+- !UpdateFolderStructure
+  ManualInputFile: [inputs, manual]
+  Processed: [inputs, processed]
+  Unprocessed: [inputs, unprocessed]
+  JobFile: [solutions, 0]
+  SetFile: [solutions, 0, 1]
+  OwnSolutionFile: [solutions, 0, 1, 2]
+  postprocfile: [postproc, 0]
+- !DumpFolderStructure
+  name: chan6.dump_folder_structure
+  outfile: !JobFile folder_structure.yaml
+- !RequestFileListRequest
+  requestfiles:
+    # - !RequestFile mk_chan6.yaml #To make the following generated request files
+    - !GeneratedRequest chan6_mesh.yaml #Mesh generation
+    - !GeneratedRequest chan6_interp.yaml #Function interpolation
+    - !GeneratedRequest quadratic_projection.yaml #Expression projection for the quadratic PMF
+    - !GeneratedRequest chan6_sims.yaml #Smoluchowski simulations
+    - !GeneratedRequest chan6_homog.yaml #Homogenization simulations
+    - !GeneratedRequest chan6_quadsims.yaml #Homogenization and Smoluchowski simulations for quadratic potential
+    - !RequestFile chan6_collect.yaml #To collect simulation results into a DataFrame
+    - !RequestFile chan6_plot.yaml #To collect simulation results into a DataFrame

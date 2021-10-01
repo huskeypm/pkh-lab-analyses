@@ -1,0 +1,89 @@
+#Bulk diffusion values
+#I selected this value based on the results of silicate_md p20201103a_ACF_comparison.ipynb
+#value is in units of nm^2/psec
+bulk_D: 3.0e-3
+
+#Slab thickness
+#Used in the homogenization calculation, to determine the global unit cell volume
+#NOTE: this is DOUBLED because of the reflection in the z-direction
+slab_thickness: 4.6 #nm (doubled from 2.3 nm)
+
+#Meshes to use for each tag
+meshes_by_tag:
+  "12A": "12A"
+  "16A": "16A"
+  "20A": "20A"
+  "27pct": "27pct"
+  "50pct": "50pct"
+  "na_27pct": "27pct"
+
+#y and z-values for lines of reflection
+reflection_lines:
+  "12A": [6.350, 5.950]
+  "16A": [5.500, 6.300]
+  "20A": [6.000, 6.650]
+  "27pct": [5.200, 6.600]
+  "50pct": [5.000, 6.600]
+
+#Actual channel widths (in nm) and deprotonation values
+channel_widths:
+  "12A": 1.2
+  "16A": 1.6
+  "20A": 2.0
+  "27pct": 2.0
+  "50pct": 2.0
+  "na_27pct": 2.0
+deprotonation_levels:
+  "12A": 0.0
+  "16A": 0.0
+  "20A": 0.0
+  "27pct": 0.27
+  "50pct": 0.5
+  "na_27pct": 0.27
+
+#PMF shift values
+#Units are kT
+# pmf_shift_values:
+#   "12A": 0.0
+#   "16A": 0.0
+#   "20A": 0.0
+#   "27pct": 0.0
+#   "50pct": 0.0
+#   "na_27pct": 0.0
+#From zeolite repo notebook p2021-0429b_PMF_gauge_selection.ipynb
+#data in zeolites repo silicate/postproc/2021_0429/gauge_values.yaml
+#but negated, of course
+pmf_shift_values:
+  "12A": -6.817205372867685
+  "16A": -7.6944744761027675
+  "20A": -5.0407252942961005
+  "27pct": -0.8161306234161042
+  "50pct": -1.3272349092360218
+  "na_27pct": -25.813070419224907
+
+#PMF Scaling values
+#Requested by Pete, values selected by me
+# pmf_scaling_values:
+#   "12A": 0.25
+#   "16A": 0.25
+#   "20A": 0.25
+#   "27pct": 0.25
+#   "50pct": 0.25
+#   "na_27pct": 0.25
+pmf_scaling_values:
+  "12A": 1.0
+  "16A": 1.0
+  "20A": 1.0
+  "27pct": 1.0
+  "50pct": 1.0
+  "na_27pct": 1.0
+
+#Maximum D value
+#I selected the value, after agreeing to the principle in a meeting with Pete 13-Aug-2020
+#Units: normalized to bulk value
+limiting_D: 2.0
+
+#Maximum PMF value
+#I selected the value from looking at the output data
+#(see, for example, silicate_md p20201117a_pmf_plots.ipynb)
+limiting_pmf: 25.0 #kT
