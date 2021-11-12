@@ -5,7 +5,7 @@ The contents are as follows:
 
 - silicate_md: code for preparing input files for gromacs
 - simproc: python code using Fenics to conduct FEM homogenization simulations
-- singularity: recipes for singularity images containing the software needed to run the simulations
+- singularity: recipes for singularity images containing the software needed to run the FEM simulations
 - sphinx: for building basic documentation of the simproc module using `sphinx`
 - homogenization: homogenization simulations using the FEM code in `simproc`
 
