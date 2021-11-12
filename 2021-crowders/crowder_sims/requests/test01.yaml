@@ -1,0 +1,138 @@
+%YAML 1.2
+#Functionality testing
+---
+#Set up logging
+- !ConfigLogging
+  stem: test01
+  level: TIMING
+- !PythonPathRequest
+  folders: [modules]
+#Mesh Generation
+- !TemplateFileRequest
+  name: test01.geo
+  tmplfile: !geotemplate tmpl009.geo.jinja2
+  outfile: !geofile test01.geo
+  modules:
+    - !modulefile mesh.py
+  methods:
+    get_template_input: mesh_get_template_input
+  data:
+    inclusionlist:
+      - [1000,0.0,0.0, 35.0,1.25]
+      - [1100,0.0,0.0, 30.0,1.25]
+    pore_radius: 4.0
+    RevW: 12
+    RevH: 12
+    RevD: 40.0
+    pore_length: 80.0
+    mscale: 1.0
+    mcar1: 5.0
+    mcar2: 2.0
+    mcar3: 0.8
+    mcar4: 0.5
+- !GeoToHDF5Request
+  name: test01.mesh
+  mesh_stem: test01
+#Solve the Linearized Poisson-Boltzmann Equation
+- !LPBSimulator
+  name: test01.lpb
+  mesh: !mesh_hdf5file test01.hdf5
+  solver_parameters:
+    linear_solver: gmres
+    preconditioner: ilu
+  conditions:
+    elementorder: 2
+    kappa: 1.0
+    dirichlet: &potential_dirichlet
+      9: 0.0
+      10: 0.0
+      5: 0.0
+      1000: -25.0e-3
+      1100: -25.0e-3
+  dataextraction:
+    - [writefield, {outfpath: !OwnSolutionFile potential.pvd}]
+    - [writefield, {outfpath: !OwnSolutionFile potential.hdf5, outname: potential}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile lpb_solvetime.yaml
+        mapping:
+          elapsed_time: sim_timer.delta_str
+#Solve the Smoluchowski Equation
+- !SUSimulator
+  &smol_basic_def
+  name: test01.smol.solve
+  mesh: !mesh_hdf5file test01.hdf5
+  meshmeta: !meshmetafile test01.yaml
+  solver_parameters:
+    linear_solver: gmres
+    preconditioner: ilu
+  loaddata:
+    - [loadfield, {attrpath: potential, infpath: !OtherSolutionFile test01/lpb/potential.hdf5, fieldtag: potential}]
+  conditions:
+    elementorder: 2
+    dirichlet:
+      9: [6.02214e-4, 0.0, 0.0]
+      10: [0.0, 0.0, 0.0]
+      1000: [0.0, null, null]
+      1100: [null, 0.0, null]
+    species:
+      - {symbol: A, z: 0, D: 1.0}
+      - {symbol: B, z: 0, D: 1.0}
+      - {symbol: C, z: 0, D: 1.0}
+    reactive:
+      1000: [A, B]
+      1100: [B, C]
+    beta: 38.94135
+    potential_dirichlet: *potential_dirichlet
+  dataextraction:
+    - [writefield, {outfpath: !OwnSolutionFile soln.hdf5, attrpath: soln, outname: soln}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile smol_solvetime.yaml
+        mapping:
+          elapsed_time: sim_timer.delta_str
+#Extract the data
+- !SUSimulator
+  <<: *smol_basic_def
+  name: test01.smol.extract
+  skipsolve: True
+  loaddata:
+    - [loadfield, {attrpath: potential, infpath: !OtherSolutionFile test01/lpb/potential.hdf5, fieldtag: potential}]
+    - [loadfield, {attrpath: soln, infpath: !OtherSolutionFile test01/smol/soln.hdf5, fieldtag: soln}]
+  dataextraction:
+    - [writefield, {outfpath: !OwnSolutionFile conc_A.pvd, attrpath: clist, idx: 0}]
+    - [writefield, {outfpath: !OwnSolutionFile conc_B.pvd, attrpath: clist, idx: 1}]
+    - [writefield, {outfpath: !OwnSolutionFile conc_C.pvd, attrpath: clist, idx: 2}]
+    - [calcflux, {solnattr: solnlist, idx: 0, attrpath: flux_A}]
+    - [calcflux, {solnattr: solnlist, idx: 1, attrpath: flux_B}]
+    - [calcflux, {solnattr: solnlist, idx: 2, attrpath: flux_C}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_A.pvd, attrpath: flux_A}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_B.pvd, attrpath: flux_B}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_C.pvd, attrpath: flux_C}]
+    - [fluxintegral, {fluxattr: flux_A, pfacet: 30, attrpath: totflux_A_pore, internal: True, fluxsign: '-'}]
+    - [fluxintegral, {fluxattr: flux_B, pfacet: 30, attrpath: totflux_B_pore, internal: True, fluxsign: '-'}]
+    - [fluxintegral, {fluxattr: flux_C, pfacet: 30, attrpath: totflux_C_pore, internal: True, fluxsign: '-'}]
+    - [fluxintegral, {fluxattr: flux_A, pfacet: 1000, attrpath: totflux_A_1000}]
+    - [fluxintegral, {fluxattr: flux_B, pfacet: 1000, attrpath: totflux_B_1000}]
+    - [fluxintegral, {fluxattr: flux_C, pfacet: 1000, attrpath: totflux_C_1000}]
+    - [fluxintegral, {fluxattr: flux_A, pfacet: 1100, attrpath: totflux_A_1100}]
+    - [fluxintegral, {fluxattr: flux_B, pfacet: 1100, attrpath: totflux_B_1100}]
+    - [fluxintegral, {fluxattr: flux_C, pfacet: 1100, attrpath: totflux_C_1100}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile info.yaml
+        mapping:
+          totflux_A_pore: totflux_A_pore
+          totflux_B_pore: totflux_B_pore
+          totflux_C_pore: totflux_C_pore
+          totflux_A_1000: totflux_A_1000
+          totflux_B_1000: totflux_B_1000
+          totflux_C_1000: totflux_C_1000
+          totflux_A_1100: totflux_A_1100
+          totflux_B_1100: totflux_B_1100
+          totflux_C_1100: totflux_C_1100
+          elapsed_time: sim_timer.delta_str
+          D_bulk_A: [conditions, species, 0, D]
+          D_bulk_B: [conditions, species, 1, D]
+          D_bulk_C: [conditions, species, 2, D]
+          bulk_conc_A: [conditions, dirichlet, 9, 0]
+    - [new_odict, {dpath: plots}]
+    - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotpath: plots.CL_A, label: 'concentration of A along centerline', attrpath: clist, idx: 0}]
+    - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotpath: plots.CL_B, label: 'concentration of B along centerline', attrpath: clist, idx: 1}]

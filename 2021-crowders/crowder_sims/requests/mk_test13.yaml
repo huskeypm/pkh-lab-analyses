@@ -1,0 +1,54 @@
+%YAML 1.2
+---
+#Set up logging
+- !ConfigLogging
+  stem: test13  #Don't forget to update this throughout this file when starting a new test
+  level: TIMING
+#Folder Structure
+- !UpdateFolderStructure
+  GroupFile: [solutions, test13]
+- !DumpFolderStructure
+  name: dump_folder_structure_mk
+  outfile: !GroupFile folder_structure_mk.yaml
+#Generate job list
+- !JobListRequest
+  name: joblist
+  constfields:
+    incrad: 2.0 #Radius of non-reactive inclusions (nm)
+    x1000: 0.0 #X-value of center of reactive inclusion 1000 (nm)
+    y1000: 0.0 #Y-value of center of reactive inclusion 1000 (nm)
+    z1000: 7.5 #Z-value of center of reactive inclusion 1000 (nm)
+    r1000: 2.0 #Radius of inclusion reactive 1000 (nm)
+    pore_radius: 8.0 #Radius of pore (nm)
+    RevW: 32.0 #Reservoir Width (nm)
+    RevH: 32.0 #Reservoir Height (nm)
+    RevD: 40.0 #Reservoir Depth (nm)
+    pore_length: 90.0 #Length of pore (nm)
+    kappa: 1.0 #Kappa = inverse of Debye length (1/nm)
+    vpore: 0.0 #Electric potential of pore (V)
+    zA: 0 #Electric charge of species A
+    zB: 0 #Electric charge of species B
+    tol1000: 1.0 #Tolerance value for reactive inclusion 1000 (nm)
+    refpt1000: [0.0, 0.0, 12.0] #Reference point for reactive inclusion 1000 (coordinates in nm)
+    perturbation_rounds: 10 #Number of times to attempt a perturbation of the position of each crowder
+    perturbation_stdev: 0.1 #Standard deviation of the perturbation magnitude (nm)
+  rangefields:
+    iteration: [1,2,3] #Number of separate runs with different crowder perturbations
+    sep_buffer: [1.0] #Separation distance for inclusions
+    crowder_potential: [0.0] #Electric potential for non-reactive inclusions
+    areafrac1000: [1.0] #Area fraction for reactive inclusion 1000
+    v1000: [0.0] #Electric potential of reactive inclusion 1000 (V)
+    pore_conc_A: [null] #Concentration boundary condition on the pore for species A, for reflecting boundary set to null
+    pore_conc_B: [null] #Concentration boundary condition on the pore for species B, for reflecting boundary set to null
+  outfile: !GroupFile joblist.csv
+  dtype_outfile: !GroupFile joblist_dtypes.csv
+#Generate the inner request file
+- !TemplateFileRequest
+  name: template
+  tmplfile: !RequestTemplate test13.yaml.jinja2
+  outfile: !GeneratedRequest test13.yaml
+  prepcommands:
+    - [load_csv, {infpath: !GroupFile joblist.csv, attrpath: data.joblist, dtype_csv_fpath: !GroupFile joblist_dtypes.csv}]
+  data:
+    testname: test13
+    numproc: 8

@@ -1,0 +1,310 @@
+//Body-centered pore with spherical inclusions
+//Parameters:
+//  Scalar numerical values:
+//   - pore_radius, pore_length
+//   - RevW, RevH, RevD
+//   - mscale, mcar1, mcar2, mcar3, mcar4
+//  Strings:
+//   - top_inclusion_ids, bot_inclusion_ids = strings listing inclusion IDs by location
+//  Other types:
+//   - inclusionlist = list of tuples (inc_id, xcen, ycen, zcen, rad)
+
+//Geometric parameters
+pore_radius = {{pore_radius}}; // radius of pore
+RevW = {{RevW}}; // width of reservoir (X)
+RevH = {{RevH}}; // height of reservoir (Y)
+RevD = {{RevD}}; // depth of reservoir (Z)
+pore_length = {{pore_length}}; // length of pore
+
+//Characteristic lengths for mesh refinement
+mcar1 = {{mscale}}*{{mcar1}}; //coarsest scale, for ends of reservoirs
+mcar2 = {{mscale}}*{{mcar2}}; //for porous surface away from pore
+mcar3 = {{mscale}}*{{mcar3}}; //for pore boundaries
+mcar4 = {{mscale}}*{{mcar4}}; //finest scale, for spherical inclusions
+
+//Calculate key coordinates
+//These coordinates are defined for positve values only, so they can be negated about any axis.
+//Note that there may not be a geometric feature at all negative coordinates, though.
+X0 = 0.0; //Center of model
+X2 = pore_radius; //Edge of pore
+X3 = RevW/2;  //Model boundary
+Y0 = 0.0; //Center of model
+Y4 = pore_radius; //Edge of pore
+Y5 = RevH/2; //Model boundary
+Z0 = 0.0; //Midline of the channel
+Z4 = pore_length/2.0; //End of pore
+Z5 = pore_length/2.0 + RevD; //Model boundary
+
+//Spherical inclusions
+vol_inclusion_total = 0;
+{% for inc_id, xcen, ycen, zcen, rad in inclusionlist -%}
+//Inclusion {{inc_id}}
+vol_inclusion_total = vol_inclusion_total + 4/3 * Pi * {{rad}}^3;
+//center point
+Point({{inc_id}}) = { {{- xcen -}},{{- ycen -}},{{- zcen -}}, mcar4};
+//points on extremum of each coordinate axis
+Point({{inc_id+1}}) = { {{- xcen+rad -}},{{- ycen -}},{{- zcen -}}, mcar4};
+Point({{inc_id+2}}) = { {{- xcen-rad -}},{{- ycen -}},{{- zcen -}}, mcar4};
+Point({{inc_id+3}}) = { {{- xcen -}},{{- ycen+rad -}},{{- zcen -}}, mcar4};
+Point({{inc_id+4}}) = { {{- xcen -}},{{- ycen-rad -}},{{- zcen -}}, mcar4};
+Point({{inc_id+5}}) = { {{- xcen -}},{{- ycen -}},{{- zcen+rad -}}, mcar4};
+Point({{inc_id+6}}) = { {{- xcen -}},{{- ycen -}},{{- zcen-rad -}}, mcar4};
+//quarter-circles, by plane, ordered by right-hand rule, starting in ++ quadrant
+//x-plane
+Circle({{inc_id+1 }})={ {{- inc_id+3}},{{inc_id}},{{inc_id+5 -}} };
+Circle({{inc_id+2 }})={ {{- inc_id+5}},{{inc_id}},{{inc_id+4 -}} };
+Circle({{inc_id+3 }})={ {{- inc_id+4}},{{inc_id}},{{inc_id+6 -}} };
+Circle({{inc_id+4 }})={ {{- inc_id+6}},{{inc_id}},{{inc_id+3 -}} };
+//y-plane
+Circle({{inc_id+5 }})={ {{- inc_id+5}},{{inc_id}},{{inc_id+1 -}} };
+Circle({{inc_id+6 }})={ {{- inc_id+1}},{{inc_id}},{{inc_id+6 -}} };
+Circle({{inc_id+7 }})={ {{- inc_id+6}},{{inc_id}},{{inc_id+2 -}} };
+Circle({{inc_id+8 }})={ {{- inc_id+2}},{{inc_id}},{{inc_id+5 -}} };
+//z-plane
+Circle({{inc_id+9 }})={ {{- inc_id+1}},{{inc_id}},{{inc_id+3 -}} };
+Circle({{inc_id+10}})={ {{- inc_id+3}},{{inc_id}},{{inc_id+2 -}} };
+Circle({{inc_id+11}})={ {{- inc_id+2}},{{inc_id}},{{inc_id+4 -}} };
+Circle({{inc_id+12}})={ {{- inc_id+4}},{{inc_id}},{{inc_id+1 -}} };
+//line Loops, by octant, lines ordered by plane (x,y,z)
+Line Loop({{inc_id+1}})={ {{inc_id+1}}, {{inc_id+5}}, {{inc_id+9 -}} };
+Line Loop({{inc_id+2}})={-{{inc_id+4}},-{{inc_id+6}}, {{inc_id+9 -}} };
+Line Loop({{inc_id+3}})={-{{inc_id+2}}, {{inc_id+5}},-{{inc_id+12 -}} };
+Line Loop({{inc_id+4}})={ {{inc_id+3}},-{{inc_id+6}},-{{inc_id+12 -}} };
+Line Loop({{inc_id+5}})={ {{inc_id+1}},-{{inc_id+8}},-{{inc_id+10 -}} };
+Line Loop({{inc_id+6}})={-{{inc_id+4}}, {{inc_id+7}},-{{inc_id+10 -}} };
+Line Loop({{inc_id+7}})={-{{inc_id+2}},-{{inc_id+8}}, {{inc_id+11 -}} };
+Line Loop({{inc_id+8}})={ {{inc_id+3}}, {{inc_id+7}}, {{inc_id+11 -}} };
+//surfaces
+Surface({{inc_id+1}}) = { {{- inc_id+1 -}} };
+Surface({{inc_id+2}}) = { {{- inc_id+2 -}} };
+Surface({{inc_id+3}}) = { {{- inc_id+3 -}} };
+Surface({{inc_id+4}}) = { {{- inc_id+4 -}} };
+Surface({{inc_id+5}}) = { {{- inc_id+5 -}} };
+Surface({{inc_id+6}}) = { {{- inc_id+6 -}} };
+Surface({{inc_id+7}}) = { {{- inc_id+7 -}} };
+Surface({{inc_id+8}}) = { {{- inc_id+8 -}} };
+//surface Loop for sphere boundary
+Surface Loop({{inc_id}}) = { {{- inc_id+1}},{{inc_id+2}},{{inc_id+3}},{{inc_id+4}},{{inc_id+5}},{{inc_id+6}},{{inc_id+7}},{{inc_id+8 -}} };
+{% endfor %}
+
+//Cylinder
+//Centers of circles
+pcyl00 = newp; Point(pcyl00) = {X0, Y0, -Z4, mcar3};
+pcyl10 = newp; Point(pcyl10) = {X0, Y0, Z4, mcar3};
+pcyl20 = newp; Point(pcyl20) = {X0, Y0, Z0, mcar3};
+//Points on lower circle, counter-clockwise from above
+pcyl01 = newp; Point(pcyl01) = {X0, -Y4, -Z4, mcar3};
+pcyl02 = newp; Point(pcyl02) = {X2, Y0, -Z4, mcar3};
+pcyl03 = newp; Point(pcyl03) = {X0, Y4, -Z4, mcar3};
+pcyl04 = newp; Point(pcyl04) = {-X2, Y0, -Z4, mcar3};
+//Points on upper circle, counter-clockwise from above
+pcyl11 = newp; Point(pcyl11) = {X0, -Y4, Z4, mcar3};
+pcyl12 = newp; Point(pcyl12) = {X2, Y0, Z4, mcar3};
+pcyl13 = newp; Point(pcyl13) = {X0, Y4, Z4, mcar3};
+pcyl14 = newp; Point(pcyl14) = {-X2, Y0, Z4, mcar3};
+//Points on middle circle, counter-clockwise from above
+pcyl21 = newp; Point(pcyl21) = {X0, -Y4, Z0, mcar3};
+pcyl22 = newp; Point(pcyl22) = {X2, Y0, Z0, mcar3};
+pcyl23 = newp; Point(pcyl23) = {X0, Y4, Z0, mcar3};
+pcyl24 = newp; Point(pcyl24) = {-X2, Y0, Z0, mcar3};
+//Lower circle
+ccyl01 = newl; Circle(ccyl01) = {pcyl01, pcyl00, pcyl02};
+ccyl02 = newl; Circle(ccyl02) = {pcyl02, pcyl00, pcyl03};
+ccyl03 = newl; Circle(ccyl03) = {pcyl03, pcyl00, pcyl04};
+ccyl04 = newl; Circle(ccyl04) = {pcyl04, pcyl00, pcyl01};
+//Upper circle
+ccyl11 = newl; Circle(ccyl11) = {pcyl11, pcyl10, pcyl12};
+ccyl12 = newl; Circle(ccyl12) = {pcyl12, pcyl10, pcyl13};
+ccyl13 = newl; Circle(ccyl13) = {pcyl13, pcyl10, pcyl14};
+ccyl14 = newl; Circle(ccyl14) = {pcyl14, pcyl10, pcyl11};
+//Middle circle
+ccyl21 = newl; Circle(ccyl21) = {pcyl21, pcyl20, pcyl22};
+ccyl22 = newl; Circle(ccyl22) = {pcyl22, pcyl20, pcyl23};
+ccyl23 = newl; Circle(ccyl23) = {pcyl23, pcyl20, pcyl24};
+ccyl24 = newl; Circle(ccyl24) = {pcyl24, pcyl20, pcyl21};
+//Vertical lines
+lcyl01 = newl; Line(lcyl01) = {pcyl01, pcyl21};
+lcyl02 = newl; Line(lcyl02) = {pcyl02, pcyl22};
+lcyl03 = newl; Line(lcyl03) = {pcyl03, pcyl23};
+lcyl04 = newl; Line(lcyl04) = {pcyl04, pcyl24};
+lcyl11 = newl; Line(lcyl11) = {pcyl21, pcyl11};
+lcyl12 = newl; Line(lcyl12) = {pcyl22, pcyl12};
+lcyl13 = newl; Line(lcyl13) = {pcyl23, pcyl13};
+lcyl14 = newl; Line(lcyl14) = {pcyl24, pcyl14};
+//Line loops
+//sides
+Lcyl01 = newll; Line Loop(Lcyl01) = {ccyl01, lcyl02, -ccyl21, -lcyl01};
+Lcyl02 = newll; Line Loop(Lcyl02) = {ccyl02, lcyl03, -ccyl22, -lcyl02};
+Lcyl03 = newll; Line Loop(Lcyl03) = {ccyl03, lcyl04, -ccyl23, -lcyl03};
+Lcyl04 = newll; Line Loop(Lcyl04) = {ccyl04, lcyl01, -ccyl24, -lcyl04};
+Lcyl11 = newll; Line Loop(Lcyl11) = {ccyl21, lcyl12, -ccyl11, -lcyl11};
+Lcyl12 = newll; Line Loop(Lcyl12) = {ccyl22, lcyl13, -ccyl12, -lcyl12};
+Lcyl13 = newll; Line Loop(Lcyl13) = {ccyl23, lcyl14, -ccyl13, -lcyl13};
+Lcyl14 = newll; Line Loop(Lcyl14) = {ccyl24, lcyl11, -ccyl14, -lcyl14};
+//top and bottom (connection to reservoirs) and middle
+Lcyl10 = newll; Line Loop(Lcyl10) = {ccyl01, ccyl02, ccyl03, ccyl04};
+Lcyl20 = newll; Line Loop(Lcyl20) = {ccyl11, ccyl12, ccyl13, ccyl14};
+Lcyl30 = newll; Line Loop(Lcyl30) = {ccyl21, ccyl22, ccyl23, ccyl24};
+//Surfaces
+scyl01 = news; Surface(scyl01) = {Lcyl01};
+scyl02 = news; Surface(scyl02) = {Lcyl02};
+scyl03 = news; Surface(scyl03) = {Lcyl03};
+scyl04 = news; Surface(scyl04) = {Lcyl04};
+scyl11 = news; Surface(scyl11) = {Lcyl11};
+scyl12 = news; Surface(scyl12) = {Lcyl12};
+scyl13 = news; Surface(scyl13) = {Lcyl13};
+scyl14 = news; Surface(scyl14) = {Lcyl14};
+//top, bottom, and middle
+scyl10 = news; Surface(scyl10) = {Lcyl10};
+scyl20 = news; Surface(scyl20) = {Lcyl20};
+scyl30 = news; Surface(scyl30) = {Lcyl30};
+
+//Top reservoir
+//points
+ptop01 = newp; Point(ptop01) = {-X3, -Y5, Z4, mcar2};
+ptop02 = newp; Point(ptop02) = {X3, -Y5, Z4, mcar2};
+ptop03 = newp; Point(ptop03) = {X3, Y5, Z4, mcar2};
+ptop04 = newp; Point(ptop04) = {-X3, Y5, Z4, mcar2};
+ptop11 = newp; Point(ptop11) = {-X3, -Y5, Z5, mcar1};
+ptop12 = newp; Point(ptop12) = {X3, -Y5, Z5, mcar1};
+ptop13 = newp; Point(ptop13) = {X3, Y5, Z5, mcar1};
+ptop14 = newp; Point(ptop14) = {-X3, Y5, Z5, mcar1};
+//lines
+ltop01 = newl; Line(ltop01) = {ptop01, ptop02};
+ltop02 = newl; Line(ltop02) = {ptop02, ptop03};
+ltop03 = newl; Line(ltop03) = {ptop03, ptop04};
+ltop04 = newl; Line(ltop04) = {ptop04, ptop01};
+ltop11 = newl; Line(ltop11) = {ptop11, ptop12};
+ltop12 = newl; Line(ltop12) = {ptop12, ptop13};
+ltop13 = newl; Line(ltop13) = {ptop13, ptop14};
+ltop14 = newl; Line(ltop14) = {ptop14, ptop11};
+ltop21 = newl; Line(ltop21) = {ptop01, ptop11};
+ltop22 = newl; Line(ltop22) = {ptop02, ptop12};
+ltop23 = newl; Line(ltop23) = {ptop03, ptop13};
+ltop24 = newl; Line(ltop24) = {ptop04, ptop14};
+//line loops
+Ltop1 = newll; Line Loop(Ltop1) = {ltop01, ltop02, ltop03, ltop04};
+Ltop2 = newll; Line Loop(Ltop2) = {ltop01, ltop22, -ltop11, -ltop21};
+Ltop3 = newll; Line Loop(Ltop3) = {ltop02, ltop23, -ltop12, -ltop22};
+Ltop4 = newll; Line Loop(Ltop4) = {ltop03, ltop24, -ltop13, -ltop23};
+Ltop5 = newll; Line Loop(Ltop5) = {ltop04, ltop21, -ltop14, -ltop24};
+Ltop6 = newll; Line Loop(Ltop6) = {ltop11, ltop12, ltop13, ltop14};
+//surfaces
+stop1 = news; Surface(stop1) = {Ltop1, Lcyl20};
+stop2 = news; Surface(stop2) = {Ltop2};
+stop3 = news; Surface(stop3) = {Ltop3};
+stop4 = news; Surface(stop4) = {Ltop4};
+stop5 = news; Surface(stop5) = {Ltop5};
+stop6 = news; Surface(stop6) = {Ltop6};
+
+//Bottom reservoir
+//points
+pbot01 = newp; Point(pbot01) = {-X3, -Y5, -Z4, mcar2};
+pbot02 = newp; Point(pbot02) = {X3, -Y5, -Z4, mcar2};
+pbot03 = newp; Point(pbot03) = {X3, Y5, -Z4, mcar2};
+pbot04 = newp; Point(pbot04) = {-X3, Y5, -Z4, mcar2};
+pbot11 = newp; Point(pbot11) = {-X3, -Y5, -Z5, mcar1};
+pbot12 = newp; Point(pbot12) = {X3, -Y5, -Z5, mcar1};
+pbot13 = newp; Point(pbot13) = {X3, Y5, -Z5, mcar1};
+pbot14 = newp; Point(pbot14) = {-X3, Y5, -Z5, mcar1};
+//lines
+lbot01 = newl; Line(lbot01) = {pbot01, pbot02};
+lbot02 = newl; Line(lbot02) = {pbot02, pbot03};
+lbot03 = newl; Line(lbot03) = {pbot03, pbot04};
+lbot04 = newl; Line(lbot04) = {pbot04, pbot01};
+lbot11 = newl; Line(lbot11) = {pbot11, pbot12};
+lbot12 = newl; Line(lbot12) = {pbot12, pbot13};
+lbot13 = newl; Line(lbot13) = {pbot13, pbot14};
+lbot14 = newl; Line(lbot14) = {pbot14, pbot11};
+lbot21 = newl; Line(lbot21) = {pbot01, pbot11};
+lbot22 = newl; Line(lbot22) = {pbot02, pbot12};
+lbot23 = newl; Line(lbot23) = {pbot03, pbot13};
+lbot24 = newl; Line(lbot24) = {pbot04, pbot14};
+//line loops
+Lbot1 = newll; Line Loop(Lbot1) = {lbot01, lbot02, lbot03, lbot04};
+Lbot2 = newll; Line Loop(Lbot2) = {lbot01, lbot22, -lbot11, -lbot21};
+Lbot3 = newll; Line Loop(Lbot3) = {lbot02, lbot23, -lbot12, -lbot22};
+Lbot4 = newll; Line Loop(Lbot4) = {lbot03, lbot24, -lbot13, -lbot23};
+Lbot5 = newll; Line Loop(Lbot5) = {lbot04, lbot21, -lbot14, -lbot24};
+Lbot6 = newll; Line Loop(Lbot6) = {lbot11, lbot12, lbot13, lbot14};
+//surfaces
+sbot1 = news; Surface(sbot1) = {Lbot1, Lcyl10};
+sbot2 = news; Surface(sbot2) = {Lbot2};
+sbot3 = news; Surface(sbot3) = {Lbot3};
+sbot4 = news; Surface(sbot4) = {Lbot4};
+sbot5 = news; Surface(sbot5) = {Lbot5};
+sbot6 = news; Surface(sbot6) = {Lbot6};
+
+//Suface Loops for exterior
+Sext1 = newsl; Surface Loop(Sext1) = {scyl30, scyl01, scyl02, scyl03, scyl04, sbot1, sbot2, sbot3, sbot4, sbot5, sbot6};
+Sext2 = newsl; Surface Loop(Sext2) = {scyl30, scyl11, scyl12, scyl13, scyl14, stop1, stop2, stop3, stop4, stop5, stop6};
+
+//Volume
+vol1 = newv; Volume(vol1) = {Sext1 {{- bot_inclusion_ids -}} };
+vol2 = newv; Volume(vol2) = {Sext2 {{- top_inclusion_ids -}} };
+
+//Physical surfaces and volumes
+Physical Surface(5) = {scyl01, scyl02, scyl03, scyl04, scyl11, scyl12, scyl13, scyl14}; //Full pore surface
+Physical Surface(9) = {stop6}; //Reservoir top
+Physical Surface(10) = {sbot6}; //Reservoir bottom
+Physical Surface(30) = {scyl30}; //Plane at pore midpoint
+{% for inc_id, xcen, ycen, zcen, rad in inclusionlist -%}
+Physical Surface({{inc_id}}) = { {{- inc_id+1}},{{inc_id+2}},{{inc_id+3}},{{inc_id+4}},{{inc_id+5}},{{inc_id+6}},{{inc_id+7}},{{inc_id+8 -}} };
+{% endfor %}
+//Physical Surface(31) = {scyl10}; //Plane at top of pore //causes a dolfin-convert error, not sure why
+//Physical Surface(32) = {scyl20}; //Plane at bottom of pore //causes a dolfin-convert error, not sure why
+Physical Volume(1) = {vol1}; //bottom volume
+Physical Volume(2) = {vol2}; //top volume
+
+
+//Mesh metadata output
+Printf("# Mesh metadata output") > meshmetafile;
+Printf("pore_radius: %f", pore_radius) >> meshmetafile;
+Printf("RevW: %f", RevW) >> meshmetafile;
+Printf("RevH: %f", RevH) >> meshmetafile;
+Printf("RevD: %f", RevD) >> meshmetafile;
+Printf("pore_length: %f", pore_length) >> meshmetafile;
+Printf("mcar1: %f", mcar1) >> meshmetafile;
+Printf("mcar2: %f", mcar2) >> meshmetafile;
+Printf("mcar3: %f", mcar3) >> meshmetafile;
+Printf("mcar4: %f", mcar4) >> meshmetafile;
+Printf("X0: %f", X0) >> meshmetafile;
+Printf("X2: %f", X2) >> meshmetafile;
+Printf("X3: %f", X3) >> meshmetafile;
+Printf("Y0: %f", Y0) >> meshmetafile;
+Printf("Y4: %f", Y4) >> meshmetafile;
+Printf("Y5: %f", Y5) >> meshmetafile;
+Printf("Z0: %f", Z0) >> meshmetafile;
+Printf("Z4: %f", Z4) >> meshmetafile;
+Printf("Z5: %f", Z5) >> meshmetafile;
+Printf("nZ4: %f", -Z4) >> meshmetafile;
+Printf("nZ5: %f", -Z5) >> meshmetafile;
+//Volumes
+vol_each_reservoir = RevW * RevH * RevD;
+vol_pore_gross = Pi * pore_radius^2 * pore_length;
+vol_domain_gross = 2*vol_each_reservoir + vol_pore_gross;
+vol_domain_net = vol_domain_gross - vol_inclusion_total;
+vol_pore_net = vol_pore_gross - vol_inclusion_total;
+free_vol_fraction = vol_pore_net / vol_pore_gross;
+Printf("volumes:") >>meshmetafile;
+Printf("  each_reservoir: %f", vol_each_reservoir) >>meshmetafile;
+Printf("  pore_gross: %f", vol_pore_gross) >>meshmetafile;
+Printf("  domain_gross: %f", vol_domain_gross) >>meshmetafile;
+Printf("  inclusion_total: %f", vol_inclusion_total) >>meshmetafile;
+Printf("  pore_net: %f", vol_pore_net) >>meshmetafile;
+Printf("  domain_net: %f", vol_domain_net) >>meshmetafile;
+Printf("free_vol_fraction: %f", free_vol_fraction) >>meshmetafile;
+//Inclusions
+Printf("inclusion_count: %f", {{inclusionlist|length}}) >> meshmetafile;
+Printf("inclusion_list:") >>meshmetafile;
+{% for inc_id, xcen, ycen, zcen, rad in inclusionlist -%}
+Printf("  - [{{inc_id}}, {{xcen}}, {{ycen}}, {{zcen}}, {{rad}}]") >> meshmetafile;
+{% endfor %}
+
+//Define mesh
+Mesh 3;
+
+//Blank lines
+
+
+

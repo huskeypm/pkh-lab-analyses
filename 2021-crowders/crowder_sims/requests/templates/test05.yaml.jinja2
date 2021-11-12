@@ -1,0 +1,259 @@
+%YAML 1.2
+#Test increasing numbers of crowders by reducing the buffer separation distance
+---
+{% set testname='test05' %} #Don't forget to update this for new tests!
+#Set up logging
+- !ConfigLogging
+  stem: {{testname}}
+  level: TIMING
+#Add modules folder to python path
+- !PythonPathRequest
+  folders: [modules]
+#Folder Structure
+- !UpdateFolderStructure
+  OwnSolutionFile: [solutions, 0, 1, 2]
+  SiblingSolutionFile: [solutions, 0]
+  postprocfile: [postproc, 0]
+- !DumpFolderStructure
+  name: {{testname}}.dump_folder_structure
+  outfile: !SiblingSolutionFile folder_structure.yaml
+#Mesh Generation
+{% set idlist=[] %}
+{% for sep_buffer in sep_buffer_range %}
+{%set id="%04d"|format(loop.index0)%}
+{% do idlist.append(id) %}
+{%if sep_buffer > 0.5 %}
+{% set mcar4=0.5%}
+{% else %}
+{% set mcar4=0.4%}
+{% endif %}
+#id={{id}}
+- !TemplateFileRequest
+  name: {{testname}}.geo.{{id}}
+  tmplfile: !geotemplate crowder_template.geo.jinja2
+  outfile: !geofile {{testname}}-{{id}}.geo
+  modules:
+    - !modulefile mesh.py
+  methods:
+    get_template_input: mesh_get_template_input
+  data:
+    lattice:
+      id_start: 2000
+      incrad: 0.5
+      sep_buffer: {{sep_buffer}}
+    inclusionlist:
+      - [1000,0.0,0.0, 7.5,2.0]
+      - [1100,0.0,0.0,30.5,2.0]
+    pore_radius: 8.0
+    RevW: 32.0
+    RevH: 32.0
+    RevD: 40.0
+    pore_length: 90.0
+    mscale: 1.0
+    mcar1: 5.0
+    mcar2: 2.0
+    mcar3: 1.0
+    mcar4: {{mcar4}}
+  postcommands:
+    - ['save_csv', {attrpath: inclusions_df, outfpath: !OwnSolutionFile inclusionlist.csv}]
+- !GeoToHDF5Request
+  name: {{testname}}.mesh.{{id}}
+  mesh_stem: {{testname}}-{{id}}
+#Solve the Linearized Poisson-Boltzmann Equation
+- !LPBSimulator
+  name: {{testname}}.lpb.{{id}}
+  modules:
+    - !modulefile model.py
+  methods:
+    assign_crowder_potential: assign_crowder_potential
+  mesh: !mesh_hdf5file {{testname}}-{{id}}.hdf5
+  solver_parameters:
+    linear_solver: gmres
+    preconditioner: ilu
+  conditions:
+    elementorder: 2
+    kappa: 1.0
+{% if loop.index==1 %}
+    dirichlet: &potential_dirichlet
+      9: 0.0
+      10: 0.0
+      5: 0.0
+      1000: 0.0
+      1100: 0.0
+{% else %}
+    dirichlet: *potential_dirichlet
+{% endif %}
+{% if crowder_potential is not none %}
+  loaddata:
+    - [load_csv, {infpath: !SiblingSolutionFile geo/{{id}}/inclusionlist.csv, attrpath: inclusions_df}]
+    - [assign_crowder_potential, {potential: {{crowder_potential}}, df_attrpath: inclusions_df}]
+{% endif %}
+  dataextraction:
+    - [writefield, {outfpath: !OwnSolutionFile potential.pvd}]
+    - [writefield, {outfpath: !OwnSolutionFile potential.hdf5, outname: potential}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile lpb_solvetime.yaml
+        mapping:
+          elapsed_time: sim_timer.delta_str
+#Solve the Smoluchowski Equation and extract the data
+- !SUSimulator
+  name: {{testname}}.smol.{{id}}
+  mesh: !mesh_hdf5file {{testname}}-{{id}}.hdf5
+  meshmeta: !meshmetafile {{testname}}-{{id}}.yaml
+  solver_parameters:
+    linear_solver: gmres
+    preconditioner: ilu
+  metadata:
+    sep_buffer: {{sep_buffer}}
+  loaddata:
+    - [loadfield, {attrpath: potential, infpath: !SiblingSolutionFile lpb/{{id}}/potential.hdf5, fieldtag: potential}]
+  conditions:
+    elementorder: 2
+    dirichlet:
+      9: [6.02214e-4, 0.0, 0.0]
+      10: [0.0, 0.0, 0.0]
+      1000: [0.0, null, null]
+      1100: [null, 0.0, null]
+    species:
+      - {symbol: A, z: 0, D: 1.0}
+      - {symbol: B, z: 0, D: 1.0}
+      - {symbol: C, z: 0, D: 1.0}
+    reactive:
+      1000: [A, B]
+      1100: [B, C]
+    beta: 38.94135
+    potential_dirichlet: *potential_dirichlet
+  dataextraction:
+    - [writefield, {outfpath: !OwnSolutionFile soln.hdf5, attrpath: soln, outname: soln}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile smol_solvetime.yaml
+        mapping:
+          elapsed_time: sim_timer.delta_str
+    - [writefield, {outfpath: !OwnSolutionFile conc_A.pvd, attrpath: clist, idx: 0}]
+    - [writefield, {outfpath: !OwnSolutionFile conc_B.pvd, attrpath: clist, idx: 1}]
+    - [writefield, {outfpath: !OwnSolutionFile conc_C.pvd, attrpath: clist, idx: 2}]
+    - [calcflux, {solnattr: solnlist, idx: 0, attrpath: flux_A}]
+    - [calcflux, {solnattr: solnlist, idx: 1, attrpath: flux_B}]
+    - [calcflux, {solnattr: solnlist, idx: 2, attrpath: flux_C}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_A.pvd, attrpath: flux_A}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_B.pvd, attrpath: flux_B}]
+    - [writefield, {outfpath: !OwnSolutionFile flux_C.pvd, attrpath: flux_C}]
+    - [fluxintegral, {fluxattr: flux_A, pfacet: 30, attrpath: totflux_A_pore, internal: True, fluxsign: '-'}]
+    - [fluxintegral, {fluxattr: flux_B, pfacet: 30, attrpath: totflux_B_pore, internal: True, fluxsign: '-'}]
+    - [fluxintegral, {fluxattr: flux_C, pfacet: 30, attrpath: totflux_C_pore, internal: True, fluxsign: '-'}]
+    - [fluxintegral, {fluxattr: flux_A, pfacet: 1000, attrpath: totflux_A_1000}]
+    - [fluxintegral, {fluxattr: flux_B, pfacet: 1000, attrpath: totflux_B_1000}]
+    - [fluxintegral, {fluxattr: flux_C, pfacet: 1000, attrpath: totflux_C_1000}]
+    - [fluxintegral, {fluxattr: flux_A, pfacet: 1100, attrpath: totflux_A_1100}]
+    - [fluxintegral, {fluxattr: flux_B, pfacet: 1100, attrpath: totflux_B_1100}]
+    - [fluxintegral, {fluxattr: flux_C, pfacet: 1100, attrpath: totflux_C_1100}]
+    - [domain_volume, {attrpath: volume_domain_total}]
+    - [cell_volume, {pcell: 1, attrpath: volume_bottom}]
+    - [cell_volume, {pcell: 2, attrpath: volume_top}]
+    - - reportvalues
+      - outfpath: !OwnSolutionFile info.yaml
+        mapping:
+          vol_domain_fenics: volume_domain_total
+          vol_bottom_fenics: volume_bottom
+          vol_top_fenics: volume_top
+          vol_inclusion_total: meshinfo.metadata.volumes.inclusion_total
+          vol_each_reservoir: meshinfo.metadata.volumes.each_reservoir
+          vol_pore_gross: meshinfo.metadata.volumes.pore_gross
+          vol_domain_gross: meshinfo.metadata.volumes.domain_gross
+          vol_domain_net: meshinfo.metadata.volumes.domain_net
+          vol_pore_net: meshinfo.metadata.volumes.pore_net
+          inclusion_count: meshinfo.metadata.inclusion_count
+          sep_buffer: metadata.sep_buffer
+          totflux_A_pore: totflux_A_pore
+          totflux_B_pore: totflux_B_pore
+          totflux_C_pore: totflux_C_pore
+          totflux_A_1000: totflux_A_1000
+          totflux_B_1000: totflux_B_1000
+          totflux_C_1000: totflux_C_1000
+          totflux_A_1100: totflux_A_1100
+          totflux_B_1100: totflux_B_1100
+          totflux_C_1100: totflux_C_1100
+          elapsed_time: sim_timer.delta_str
+          D_bulk_A: [conditions, species, 0, D]
+          D_bulk_B: [conditions, species, 1, D]
+          D_bulk_C: [conditions, species, 2, D]
+          bulk_conc_A: [conditions, dirichlet, 9, 0]
+    - [new_odict, {dpath: plots}]
+    - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotpath: plots.CL_A, label: 'concentration of A along centerline', attrpath: clist, idx: 0}]
+    - [line_profile, {startloc: [X0,Y0,nZ5], endloc: [X0,Y0,Z5], num: 1000, indep: 2, plotpath: plots.CL_B, label: 'concentration of B along centerline', attrpath: clist, idx: 1}]
+    - [save_pickle, {attrpath: plots, outfpath: !OwnSolutionFile profiles.pkl}]
+{% endfor %}
+
+# Collection
+- !RawCollectionRequest
+  name: {{testname}}.collection
+  outpath: !postprocfile results.pkl
+  modules:
+    - !modulefile calculations.py
+  methods:
+    - calc_ratio_column
+  calculations:
+    - - calc_ratio_column
+      - numcol: totflux_B_1100
+        dencol: totflux_B_1000
+        const: -1.0
+        newcol: ratio_J_B
+    - [save_csv, {attrpath: df, outfpath: !postprocfile results.csv}]
+  definitions:
+    - mapping:
+        sep_buffer: sep_buffer
+        vol_domain_fenics: vol_domain_fenics
+        #vol_bottom_fenics: vol_bottom_fenics
+        #vol_top_fenics: vol_top_fenics
+        #vol_inclusion_total: vol_inclusion_total
+        #vol_each_reservoir: vol_each_reservoir
+        #vol_pore_gross: vol_pore_gross
+        #vol_domain_gross: vol_domain_gross
+        vol_domain_net: vol_domain_net
+        vol_pore_net: vol_pore_net
+        inclusion_count: inclusion_count
+        totflux_A_1000: totflux_A_1000
+        totflux_A_1100: totflux_A_1100
+        totflux_A_pore: totflux_A_pore
+        totflux_B_1000: totflux_B_1000
+        totflux_B_1100: totflux_B_1100
+        totflux_B_pore: totflux_B_pore
+        totflux_C_1000: totflux_C_1000
+        totflux_C_1100: totflux_C_1100
+        totflux_C_pore: totflux_C_pore
+      file_list:
+{% for id in idlist %}
+        - !DataFile solutions/{{testname}}/smol/{{id}}/info.yaml
+{% endfor %}
+
+# Plotting
+- !FigureRequest
+  name: {{testname}}.plot
+  loadfiles:
+    dframe: !postprocfile results.pkl
+  prepcommands:
+    - [series_from_dataframe, {dfpath: dframe, xcol: sep_buffer, ycol: ratio_J_B, outattr: series_1, label: "$K_{eff}$"}]
+  rcparams:
+    figure.dpi: 300
+    figure.autolayout: False
+  figures:
+    - !FigureProperties
+      figsize: [8,5]
+      outfpath: !postprocfile plot.png
+  axes:
+    - !AxesProperties
+      xlabel:
+        xlabel: 'Inclusion buffer separation distance [nm]'
+        fontsize: 20
+      ylabel:
+        ylabel: '$K_{eff}$'
+        fontsize: 20
+      #xlim: [3.0,5.0]
+      #ylim: [0.25,0.75]
+  series:
+    - !SeriesProperties
+      seriesattr: series_1
+      fmt: "k-"
+  plotcommands:
+    - [axmethod, {method: legend, loc: "center left", numpoints: 1, bbox_to_anchor: [1, 0.5]}] 
+    - [figmethod, {method: subplots_adjust, bottom: 0.15, left: 0.1, right: 0.7}]

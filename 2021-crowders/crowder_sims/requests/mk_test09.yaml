@@ -1,0 +1,52 @@
+%YAML 1.2
+---
+#Set up logging
+- !ConfigLogging
+  stem: test09  #Don't forget to update this throughout this file when starting a new test
+  level: TIMING
+#Folder Structure
+- !UpdateFolderStructure
+  GroupFile: [solutions, test09]
+- !DumpFolderStructure
+  name: dump_folder_structure_mk
+  outfile: !GroupFile folder_structure_mk.yaml
+#Generate job list
+- !JobListRequest
+  name: joblist
+  constfields:
+    incrad: 2.0 #Radius of non-reactive inclusions (nm)
+    x1000: 0.0 #X-value of center of reactive inclusion 1000 (nm)
+    y1000: 0.0 #Y-value of center of reactive inclusion 1000 (nm)
+    z1000: 7.5 #Z-value of center of reactive inclusion 1000 (nm)
+    r1000: 2.0 #Radius of inclusion reactive 1000 (nm)
+    x1100: 0.0 #X-value of center of reactive inclusion 1100 (nm)
+    y1100: 0.0 #Y-value of center of reactive inclusion 1100 (nm)
+    z1100: 30.5 #Z-value of center of reactive inclusion 1100 (nm)
+    r1100: 2.0 #Radius of inclusion reactive 1100 (nm)
+    pore_radius: 8.0 #Radius of pore (nm)
+    RevW: 32.0 #Reservoir Width (nm)
+    RevH: 32.0 #Reservoir Height (nm)
+    RevD: 40.0 #Reservoir Depth (nm)
+    pore_length: 90.0 #Length of pore (nm)
+    kappa: 1.0 #Kappa = inverse of Debye length (1/nm)
+    v1000: 0.0 #Electric potential of reactive inclusion 1000 (V)
+    v1100: 0.0 #Electric potential of reactive inclusion 1100 (V)
+    vpore: 0.0 #Electric potential of pore (V)
+    zA: 0 #Electric charge of species A
+    zB: 0 #Electric charge of species B
+    zC: 0 #Electric charge of species C
+  rangefields:
+    sep_buffer: [1.0, 0.9] #Separation distance for inclusions
+    crowder_potential: [0.0, 1.0] #Electric potential for non-reactive inclusions
+  outfile: !GroupFile joblist.csv
+  dtype_outfile: !GroupFile joblist_dtypes.csv
+#Generate the inner request file
+- !TemplateFileRequest
+  name: template
+  tmplfile: !RequestTemplate test09.yaml.jinja2
+  outfile: !GeneratedRequest test09.yaml
+  prepcommands:
+    - [load_csv, {infpath: !GroupFile joblist.csv, attrpath: data.joblist, dtype_csv_fpath: !GroupFile joblist_dtypes.csv}]
+  data:
+    testname: test09
+    numproc: 8

@@ -1,0 +1,160 @@
+%YAML 1.2
+#Cleanup of data files
+---
+#Set up logging (otherwise you can't clean the log files)
+- !ConfigLogging
+  stem: cleaning
+  level: TIMING
+#Path changes needed to load the requests
+- !PythonPathRequest
+  folders: [modules]
+#Request to clean log files
+- !CleanLogFilesRequest
+  name: clean_logs
+
+#Clean up output from request files
+
+#test01
+- !OutputCleanupRequest
+  name: test01.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile test01.yaml
+#test02
+- !OutputCleanupRequest
+  name: test02.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile test02.yaml
+#test03
+- !OutputCleanupRequest
+  name: test03.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test03.yaml
+- !OutputCleanupRequest
+  name: mk_test03.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test03.yaml
+#test04
+- !OutputCleanupRequest
+  name: test04.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test04.yaml
+- !OutputCleanupRequest
+  name: mk_test04.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test04.yaml
+#test05
+- !OutputCleanupRequest
+  name: test05.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test05.yaml
+- !OutputCleanupRequest
+  name: mk_test05.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test05.yaml
+#test06
+- !OutputCleanupRequest
+  name: test06.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test06.yaml
+- !OutputCleanupRequest
+  name: mk_test06.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test06.yaml
+#test07
+- !OutputCleanupRequest
+  name: test07.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test07.yaml
+- !OutputCleanupRequest
+  name: mk_test07.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test07.yaml
+#test08
+- !OutputCleanupRequest
+  name: test08.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test08.yaml
+- !OutputCleanupRequest
+  name: mk_test08.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test08.yaml
+#test09
+- !OutputCleanupRequest
+  name: test09.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test09.yaml
+- !OutputCleanupRequest
+  name: mk_test09.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test09.yaml
+#test10
+- !OutputCleanupRequest
+  name: test10.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test10.yaml
+- !OutputCleanupRequest
+  name: mk_test10.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test10.yaml
+#test11
+- !OutputCleanupRequest
+  name: test11.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test11.yaml
+- !OutputCleanupRequest
+  name: mk_test11.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test11.yaml
+#test12
+- !OutputCleanupRequest
+  name: test12.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test12.yaml
+- !OutputCleanupRequest
+  name: mk_test12.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test12.yaml
+#test13
+- !OutputCleanupRequest
+  name: test13.yaml
+  clean:
+    - !RequestFileRequest
+      skip_nonexist: True
+      requestfile: !GeneratedRequest test13.yaml
+- !OutputCleanupRequest
+  name: mk_test13.yaml
+  clean:
+    - !RequestFileRequest
+      requestfile: !RequestFile mk_test12.yaml

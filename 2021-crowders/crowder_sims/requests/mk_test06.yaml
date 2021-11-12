@@ -1,0 +1,20 @@
+%YAML 1.2
+#Test increasing numbers of crowders by reducing the buffer separation distance
+---
+#Set up logging
+- !ConfigLogging
+  stem: test06
+  level: TIMING
+#Folder Structure
+- !DumpFolderStructure
+  name: test06.dump_folder_structure_mk
+  outfile: !OtherSolutionFile test06/folder_structure_mk.yaml
+#Generate the inner request file
+- !TemplateFileRequest
+  name: test06.template
+  tmplfile: !RequestTemplate test06.yaml.jinja2
+  outfile: !GeneratedRequest test06.yaml
+  data:
+    sep_buffer_range: [1.0, 0.9, 0.8, 0.7]
+    crowder_potential: 0.0
+    numproc: 8
