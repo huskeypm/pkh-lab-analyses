@@ -1,0 +1,40 @@
+
+parm ../new-trajectories/2atp-1.prmtop
+trajin ../wrap-trajectories/2atp-1.dcd 1 last 10
+trajin ../wrap-trajectories/2atp-2.dcd 1 last 10
+trajin ../wrap-trajectories/2atp-3.dcd 1 last 10
+strip :WAT
+strip :Cl-
+strip :K+ 
+
+distance mg975-o1g :975@MG :976@O1G out mg-2atp-dist.out geom noimage type neo
+distance mg975-o2g :975@MG :976@O2G out mg-2atp-dist.out geom noimage type neo
+distance mg975-o3g :975@MG :976@O3G out mg-2atp-dist.out geom noimage type neo
+distance mg975-o3b :975@MG :976@O3B out mg-2atp-dist.out geom noimage type neo
+distance mg975-o1b :975@MG :976@O1B out mg-2atp-dist.out geom noimage type neo
+distance mg975-o2b :975@MG :976@O2B out mg-2atp-dist.out geom noimage type neo
+distance mg975-o3a :975@MG :976@O3A out mg-2atp-dist.out geom noimage type neo
+distance mg975-o1a :975@MG :976@O1A out mg-2atp-dist.out geom noimage type neo
+distance mg975-o2a :975@MG :976@O2A out mg-2atp-dist.out geom noimage type neo
+distance mg975-o5' :975@MG :976@O5' out mg-2atp-dist.out geom noimage type neo
+distance mg975-o2' :975@MG :976@O2' out mg-2atp-dist.out geom noimage type neo
+distance mg975-o3' :975@MG :976@O3' out mg-2atp-dist.out geom noimage type neo
+distance mg975-o4' :975@MG :976@O4' out mg-2atp-dist.out geom noimage type neo
+
+distance mg973-o1g :973@MG :977@O1G out mg-2atp-dist.out geom noimage type neo
+distance mg973-o2g :973@MG :977@O2G out mg-2atp-dist.out geom noimage type neo
+distance mg973-o3g :973@MG :977@O3G out mg-2atp-dist.out geom noimage type neo
+distance mg973-o3b :973@MG :977@O3B out mg-2atp-dist.out geom noimage type neo
+distance mg973-o1b :973@MG :977@O1B out mg-2atp-dist.out geom noimage type neo
+distance mg973-o2b :973@MG :977@O2B out mg-2atp-dist.out geom noimage type neo
+distance mg973-o3a :973@MG :977@O3A out mg-2atp-dist.out geom noimage type neo
+distance mg973-o1a :973@MG :977@O1A out mg-2atp-dist.out geom noimage type neo
+distance mg973-o2a :973@MG :977@O2A out mg-2atp-dist.out geom noimage type neo
+distance mg973-o5' :973@MG :977@O5' out mg-2atp-dist.out geom noimage type neo
+distance mg973-o2' :973@MG :977@O2' out mg-2atp-dist.out geom noimage type neo
+distance mg973-o3' :973@MG :977@O3' out mg-2atp-dist.out geom noimage type neo
+distance mg973-o4' :973@MG :977@O4' out mg-2atp-dist.out geom noimage type neo
+
+analyze statistics all out mg-2atp-dist.noe.dat 
+run
+
