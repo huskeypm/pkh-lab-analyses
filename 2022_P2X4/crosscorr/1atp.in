@@ -1,0 +1,7 @@
+trajin /data/jalenciks/P2X4.mg/wrap-trajectories/1atp-1.dcd 1 -1 50
+trajin /data/jalenciks/P2X4.mg/wrap-trajectories/1atp-2.dcd 1 -1 50
+trajin /data/jalenciks/P2X4.mg/wrap-trajectories/1atp-3.dcd 1 -1 50
+
+rms ../wrap-trajectories/1atp-1.pdb
+matrix correl @CA out 1atp-3mg.dat byres
+

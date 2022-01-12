@@ -1,0 +1,9 @@
+trajin /data/jalenciks/P2X4.mg/wrap-trajectories/3atp-1.dcd 1 -1 50
+trajin /data/jalenciks/P2X4.mg/wrap-trajectories/3atp-2.dcd 1 -1 50
+trajin /data/jalenciks/P2X4.mg/wrap-trajectories/3atp-3.dcd 1 -1 50
+
+#nativecontacts :1-972&!@H= writecontacts cout resout residupair out numofctact first resoffset 6 contactpdb ../../wrap-trajectories/3atp-1.pdb byresidue map mapout cmap # within TnC itself
+
+rms ../wrap-trajectories/3atp-1.pdb
+matrix correl @CA out 3atp-3mg.dat byres
+
