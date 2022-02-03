@@ -1,0 +1,13 @@
+#!/bin/bash
+
+$ROSETTA3/main/source/bin/mp_dock.mpi.linuxgccrelease \
+-nstruct 1000 \
+-in:file:s prepackOutputs/complex1_ignorechain_prepacked_noMEM.pdb \
+-score:weights mpframework_docking_fa_2015.wts \
+-score:docking_interface_score 1 \
+-mp:setup:spanfiles inputs/3wgu.span \
+-mp:scoring:hbond \
+-docking:partners A_B \
+-docking:dock_pert 3 8 \
+-out:path:all dockOutputs \
+-out:suffix _dock

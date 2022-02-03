@@ -1,0 +1,12 @@
+#!/bin/bash
+
+$ROSETTA3/main/source/bin/docking_prepack_protocol.default.linuxgccrelease \
+-nstruct 10 \
+-in:file:s inputs/complex1_ignorechain.pdb \
+-score:weights mpframework_docking_fa_2015.wts \
+-mp:setup:spanfiles inputs/3wgu.span \
+-mp:scoring:hbond \
+-packing:pack_missing_sidechains 0 \
+-partners A_B \
+-out:path:all prepackOutputs \
+-out:suffix _prepacked \

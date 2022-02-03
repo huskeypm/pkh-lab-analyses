@@ -1,0 +1,4 @@
+#!/bin/bash
+
+$ROSETTA3/main/source/bin/mp_span_from_pdb.default.linuxgccrelease \
+-in:file:s inputs/3wgu.trpdb \
