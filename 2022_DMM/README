@@ -2,6 +2,7 @@ Code to support DMM article (PMID TBD)
 
 To install
 * Clone the github repo (git@bitbucket.org:pkhlab/pathwayanalysis.git) 
+git clone git@bitbucket.org:pkhlab/pathwayanalysis.git
 
 To run
 python3 pathwaySearch.py -mansuyaubert
