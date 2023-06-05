@@ -1,0 +1,8 @@
+-in:file:s min.pdb
+-remodel:blueprint missing.remodel
+-run:chain A
+-remodel:num_trajectory 1 
+-nstruct 500
+
+
+-out:path:all output
