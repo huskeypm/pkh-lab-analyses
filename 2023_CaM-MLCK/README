@@ -1,5 +1,5 @@
-ipython notebooks used in support of our CaM/MLCK modeling are available in this repository. 
-We have provided roughly 2Gb of finalized simulation data at the DOI  (Zenodo).
+Rosetta input files, MD starting structures, MD input files, analysis scripts, and ipython notebooks used in support of our CaM/MLCK modeling are available in this repository. 
+We have provided roughly 2Gb of finalized simulation data at the DOI 10.5281/zenodo.8075316 (Zenodo).
 Raw, full-length MD simulation data are also available by request and are redundantly stored on the Stritch School of Medicine computing center.
 
 
