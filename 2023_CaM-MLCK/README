@@ -1,7 +1,12 @@
-Raw MD simulation data are available by request. The paths to our data (on the internal network) are at
+ipython notebooks used in support of our CaM/MLCK modeling are available in this repository. 
+We have provided roughly 2Gb of finalized simulation data at the DOI  (Zenodo).
+Raw, full-length MD simulation data are also available by request and are redundantly stored on the Stritch School of Medicine computing center.
+
+
+The paths to our data (on the internal network) are at
 /home/xfang2/backup/faust_backup/mlck/smMLCK/md  
 
 
-ipython notebooks used for our manuscripts are located in this repository. 
+
 
 
