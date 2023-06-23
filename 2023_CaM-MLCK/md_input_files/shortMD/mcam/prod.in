@@ -1,0 +1,12 @@
+# heat to target temperature
+  &cntrl
+  imin=0, ntx=1, irest=0,
+  ntb=2,cut=10,ntp=1,taup=2,
+  ntc=2, ntf=2,
+  ntxo=2,
+  tempi=300, temp0=300, ntt=3, gamma_ln=3,
+  nstlim=25000000, dt=0.002,
+  ntpr=4000, ntwr=4000, ntwx=10000,
+  /
+ &wt type='END' /
+ 
