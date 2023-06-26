@@ -1,0 +1,11 @@
+receptor, weight, pathway, ligand
+['TLR2', 5.75, ['TLR2', 'RAC1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['PAMPs']]
+['TLR1', 6.0, ['TLR1', 'RAC1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['PAMPs']]
+['TLR4', 6.0, ['TLR4', 'TICAM2', 'TICAM1', 'TBK1', 'IKBKE', 'IRF3', 'M1_polarization'], ['PAMPs']]
+['CCR1', 6.0, ['CCR1', 'GNAI1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['CCL3', 'CCL5']]
+['CCR3', 6.0, ['CCR3', 'GNAI1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['CCL5']]
+['CCR5', 6.0, ['CCR5', 'GNAI1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['CCL3', 'CCL4', 'CCL5']]
+['TNFRSF1B', 7.0, ['TNFRSF1B', 'TRAF2', 'RIPK1', 'MAP3K1', 'MAP2K7', 'MAPK8', 'IRF3', 'M1_polarization'], ['TNF']]
+['ITGAL', 7.0, ['ITGAL', 'PTK2B', 'RAC1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['ICAM1']]
+['ITGB2', 7.0, ['ITGB2', 'PTK2B', 'RAC1', 'PI3K', 'PDPK1', 'AKT', 'NFKB1', 'IL1B', 'M1_polarization'], ['ICAM1']]
+['TNFRSF1A', 7.5, ['TNFRSF1A', 'TRADD', 'FADD', 'RIPK1', 'MAP3K1', 'MAP2K7', 'MAPK8', 'IRF3', 'M1_polarization'], ['TNF']]
