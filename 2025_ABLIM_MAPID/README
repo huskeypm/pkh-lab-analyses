@@ -1,6 +1,8 @@
 Raw MD simulation data are available by request. The paths to our data (on the internal network) are at
 /home/pkh-lab-shared/papers/<DIRNAME>    
 
+We have provided finalized simulation data at the DOI: https://doi.org/10.5281/zenodo.15224329
+
 ipython notebooks used for our manuscripts are located in this repository. 
 
 
